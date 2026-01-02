@@ -1,0 +1,69 @@
+[gd_scene load_steps=8 format=3 uid="uid://depomp517hedg"]
+
+[ext_resource type="Texture2D" uid="uid://w85r1i4k6xhp" path="res://Assets/Sprites/World/mountains.png" id="1_c8m3x"]
+[ext_resource type="Texture2D" uid="uid://bh35y4hy2bm7" path="res://Assets/Sprites/World/Clouds/Clouds 3/1.png" id="2_kc7sw"]
+[ext_resource type="Texture2D" uid="uid://g6ix2by1tbo4" path="res://Assets/Sprites/World/Clouds/Clouds 3/3.png" id="2_laxsj"]
+[ext_resource type="Texture2D" uid="uid://buflg6lqe3858" path="res://Assets/Sprites/World/Clouds/Clouds 3/4.png" id="3_etw40"]
+[ext_resource type="Texture2D" uid="uid://hbma3vw4tkiu" path="res://Assets/Sprites/World/Clouds/Clouds 3/2.png" id="5_etw40"]
+
+[sub_resource type="Curve" id="Curve_etw40"]
+_data = [Vector2(0.171756, 0.128405), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="CurveTexture" id="CurveTexture_27ak2"]
+curve = SubResource("Curve_etw40")
+
+[node name="ParallaxBackground" type="ParallaxBackground"]
+
+[node name="Sky" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.5, 0)
+motion_mirroring = Vector2(475, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Sky"]
+scale = Vector2(0.828125, 0.737473)
+texture = ExtResource("2_kc7sw")
+centered = false
+
+[node name="Cloud2" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.5, 0)
+motion_mirroring = Vector2(475, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Cloud2"]
+position = Vector2(0, 2)
+scale = Vector2(0.829861, 0.737473)
+texture = ExtResource("2_laxsj")
+centered = false
+
+[node name="Cloud1" type="ParallaxLayer" parent="."]
+position = Vector2(2, 30)
+motion_scale = Vector2(0.5, 0)
+motion_mirroring = Vector2(475, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Cloud1"]
+position = Vector2(1, -34)
+scale = Vector2(0.826389, 0.737473)
+texture = ExtResource("3_etw40")
+centered = false
+
+[node name="Mountains" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.5, 0)
+motion_mirroring = Vector2(475, 0)
+
+[node name="Sprite2D2" type="Sprite2D" parent="Mountains"]
+position = Vector2(240.5, 425)
+scale = Vector2(1.8711, 146)
+texture = SubResource("CurveTexture_27ak2")
+
+[node name="Sprite2D" type="Sprite2D" parent="Mountains"]
+scale = Vector2(1.86719, 1.29412)
+texture = ExtResource("1_c8m3x")
+centered = false
+
+[node name="Moon" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.5, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Moon"]
+position = Vector2(-209, -69)
+scale = Vector2(1.86719, 1.29412)
+texture = ExtResource("5_etw40")
+centered = false

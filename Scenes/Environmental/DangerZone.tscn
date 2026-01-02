@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://dmq5j2x3y8k4l"]
+
+[ext_resource type="Script" uid="uid://w6ranqqe08o3" path="res://Assets/Scripts/Environmental/DangerZone.cs" id="1_script"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hazard"]
+size = Vector2(124, 24.5992)
+
+[node name="DangerZone" type="Area2D"]
+collision_layer = 4
+collision_mask = 2147483647
+script = ExtResource("1_script")
+RespawnDelay = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_hazard")
+debug_color = Color(0.9, 0.1, 0.1, 0.4)
+
+[connection signal="body_entered" from="." to="." method="OnBodyEntered"]

@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://v5xr7nmgmv68"]
+
+[ext_resource type="Script" uid="uid://dv0oyitfpfqxq" path="res://Assets/Scripts/UI/HealthBar.cs" id="1_sd512"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sd512"]
+bg_color = Color(0.419608, 0.815686, 0, 1)
+
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HealthBar" type="ProgressBar" parent="Control"]
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 27.0
+theme_override_styles/background = SubResource("StyleBoxFlat_sd512")
+rounded = true
+script = ExtResource("1_sd512")
