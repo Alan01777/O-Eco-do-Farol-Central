@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://dri0h7dik26sr"]
+
+[ext_resource type="Texture2D" uid="uid://chrxen5bhglj8" path="res://Assets/Environment/Village/background.png" id="1_ti2lo"]
+[ext_resource type="Texture2D" uid="uid://d0kin4nbayr3q" path="res://Assets/Environment/Village/middleground.png" id="2_kj680"]
+
+[node name="Day" type="ParallaxBackground"]
+
+[node name="background" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0, 0)
+motion_mirroring = Vector2(384, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="background"]
+texture = ExtResource("1_ti2lo")
+centered = false
+
+[node name="middleground" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0, 0)
+motion_mirroring = Vector2(384, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="middleground"]
+texture = ExtResource("2_kj680")
+centered = false

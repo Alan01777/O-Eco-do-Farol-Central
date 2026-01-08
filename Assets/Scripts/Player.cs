@@ -1,10 +1,13 @@
+using System;
 using Godot;
+using Helpers;
+using DialogueManagerRuntime;
 
 namespace EcoDoFarolCentral
 {
     public partial class Player : Actor
     {
-        public enum PlayerStates { Idle, Running, Jumping, DoubleJump, Attacking, JumpAttack, Dashing, Hurt, Dead, Cast }
+        public enum PlayerStates { Idle, Running, Jumping, Falling, DoubleJump, Attacking, JumpAttack, Dashing, Hurt, Dead, Cast }
 
         private PlayerStates _lastState;
         public PlayerStates CurrentStateEnum { get; set; } = PlayerStates.Idle;
@@ -29,12 +32,14 @@ namespace EcoDoFarolCentral
         public float DashDirection { get; private set; } = 1f;
 
         // Variáveis de dano (recebido)
+        [ExportGroup("Damage")]
         [Export] public float HurtDuration = 0.3f; // Duração Iframes
         [Export] public Vector2 KnockbackIntensity = new Vector2(300, -200);
         public float HurtTimer { get; private set; } = 0f;
         public float DamageSourceDirection { get; private set; } = 0f; // Direção que o jogador olha quando toma dano
 
         // Variáveis de combate
+        [ExportGroup("Combat")]
         [Export] public float Combo1Damage = 20f;
         [Export] public float Combo2Damage = 30f;
         [Export] public float Combo3Damage = 50f;
@@ -56,6 +61,15 @@ namespace EcoDoFarolCentral
         private CollisionPolygon2D _hitBoxShape2;
         private CollisionPolygon2D _hitBoxShape3;
         private CollisionPolygon2D _hitBoxShapeJump;
+        public string _playerAudioPath = "res://Assets/Audio/Player/";
+
+        public Area2D InteractableArea;
+
+        // Sistema de diálogo - desabilita movimento durante diálogos
+        public bool IsInDialogue { get; private set; } = false;
+
+        // Rastreamento de direção para detectar mudanças
+        private float _lastDirection = 0f;
 
         public override void _Ready()
         {
@@ -64,9 +78,14 @@ namespace EcoDoFarolCentral
             _invincibilityTimer = GetNodeOrNull<Timer>("Timer to take damage");
 
             AnimControllerInstance = new AnimationController();
-            AnimControllerInstance = new AnimationController();
-            AnimControllerInstance.Initialize(_sprite);
+            AnimControllerInstance.Initialize(
+                _sprite,
+                GetNode<AudioStreamPlayer>("Audio_SFX"),
+                GetNode<AudioStreamPlayer>("Audio_Steps"),
+                GetNode<AudioStreamPlayer>("Audio_Voice")
+            );
             _sprite.AnimationFinished += OnAnimationFinished;
+            _sprite.FrameChanged += OnSpriteFrameChanged;
 
             // Configura CastPoint (Ponto de Disparo) da fireball
             CastPoint = GetNodeOrNull<Marker2D>("CastPoint");
@@ -82,11 +101,11 @@ namespace EcoDoFarolCentral
             // Configura dados de ataque
             _comboAttacks = new CombatAttackData[]
             {
-                new CombatAttackData("attack_lvl1", Combo1Damage, 0, "attack_lvl1"),
-                new CombatAttackData("attack_lvl2", Combo2Damage, 0, "attack_lvl2"),
-                new CombatAttackData("attack_lvl3", Combo3Damage, 0, "attack_lvl3")
+                new CombatAttackData("attack_lvl1", Combo1Damage, 0, "attack_lvl1", _playerAudioPath + "attack1.wav"),
+                new CombatAttackData("attack_lvl2", Combo2Damage, 0, "attack_lvl2", _playerAudioPath + "attack2.wav"),
+                new CombatAttackData("attack_lvl3", Combo3Damage, 0, "attack_lvl3", _playerAudioPath + "attack3.wav")
             };
-            _jumpAttack = new CombatAttackData("jump_attack", JumpAttackDamage, 0, "jump_attack");
+            _jumpAttack = new CombatAttackData("jump_attack", JumpAttackDamage, 0, "jump_attack", _playerAudioPath + "attack1.wav");
 
             // Configura hitboxes da espada
             _swordHitBox = GetNodeOrNull<Area2D>("Sword HitBox");
@@ -128,6 +147,7 @@ namespace EcoDoFarolCentral
             var dash = new PlayerDashingState();
             var hurt = new PlayerHurtState();
             var cast = new PlayerCastState();
+            var falling = new PlayerFallingState();
 
             idle.Initialize(this, StateMachineInstance);
             run.Initialize(this, StateMachineInstance);
@@ -136,6 +156,7 @@ namespace EcoDoFarolCentral
             dash.Initialize(this, StateMachineInstance);
             hurt.Initialize(this, StateMachineInstance);
             cast.Initialize(this, StateMachineInstance);
+            falling.Initialize(this, StateMachineInstance);
 
             StateMachineInstance.AddState("Idle", idle);
             StateMachineInstance.AddState("Running", run);
@@ -144,11 +165,31 @@ namespace EcoDoFarolCentral
             StateMachineInstance.AddState("Dashing", dash);
             StateMachineInstance.AddState("Hurt", hurt);
             StateMachineInstance.AddState("Cast", cast);
+            StateMachineInstance.AddState("Falling", falling);
 
             StateMachineInstance.ChangeState("Idle");
 
             // Define última posição segura
             _lastSafePosition = GlobalPosition;
+
+            // Registra no GameManager para persistir dados entre cenas
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.RegisterPlayer(this);
+            }
+
+            // Conecta aos sinais do singleton GDScript do DialogueManager
+            var dialogueMgrInstance = DialogueManager.Instance;
+            if (dialogueMgrInstance != null)
+            {
+                dialogueMgrInstance.Connect("dialogue_started", Callable.From((Resource res) => OnDialogueStarted(res)));
+                dialogueMgrInstance.Connect("dialogue_ended", Callable.From((Resource res) => OnDialogueEnded(res)));
+                GD.Print("[PLAYER] Connected to DialogueManager signals");
+            }
+            else
+            {
+                GD.PrintErr("[PLAYER] DialogueManager instance not found!");
+            }
         }
 
         public override void _PhysicsProcess(double delta)
@@ -177,16 +218,55 @@ namespace EcoDoFarolCentral
                 }
             }
 
+            // Não processa movimento se estiver em diálogo
+            if (IsInDialogue)
+            {
+                UpdateAnimations();
+                MoveAndSlide();
+                return;
+            }
+
             StateMachineInstance.PhysicsUpdate(delta);
 
             UpdateAnimations();
             MoveAndSlide();
+            HandleInteract();
         }
 
         public override void _Input(InputEvent @event)
         {
             if (CurrentStateEnum == PlayerStates.Dead) return;
+            if (IsInDialogue) return; // Bloqueia input durante diálogos
             StateMachineInstance.HandleInput(@event);
+        }
+
+        public void HandleInteract()
+        {
+            InteractableArea = GetNodeOrNull<Area2D>("ActionArea");
+            if (InteractableArea == null) return;
+
+            // Espelha a área de interação baseado na direção do sprite
+            float xOffset = Mathf.Abs(InteractableArea.Position.X);
+            InteractableArea.Position = new Vector2(
+                _sprite.FlipH ? -xOffset : xOffset,
+                InteractableArea.Position.Y
+            );
+
+            // Não processa interação durante diálogos
+            if (IsInDialogue) return;
+            
+            if (Input.IsActionJustPressed("ui_interact"))
+            {
+                if (CurrentStateEnum != PlayerStates.Idle && CurrentStateEnum != PlayerStates.Running) return;
+
+                // Verifica se há áreas interagíveis sobrepostas
+                var areas = InteractableArea.GetOverlappingAreas();
+                if (areas.Count > 0 && areas[0] is Actionable actionable)
+                {
+                    actionable.Action();
+                    Velocity = Vector2.Zero;
+                }
+            }
         }
 
         public void HandleMovement(float direction = 0, float speedMultiplier = 1)
@@ -198,6 +278,15 @@ namespace EcoDoFarolCentral
 
             if (direction != 0)
             {
+                // Detecta mudança de direção no chão
+                if (IsOnFloor() && _lastDirection != 0 && Mathf.Sign(direction) != Mathf.Sign(_lastDirection))
+                {
+                    // Player mudou de direção - toca som de "passo"
+                    AnimControllerInstance.PlaySteps(_playerAudioPath + "step.wav", 0.95f, 1.05f, -3f);
+                }
+
+                _lastDirection = direction;
+
                 velocity.X = direction * Speed * speedMultiplier;
                 _sprite.FlipH = direction < 0;
 
@@ -210,7 +299,10 @@ namespace EcoDoFarolCentral
                 }
             }
             else
+            {
                 velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
+                _lastDirection = 0; // Reseta quando parado
+            }
 
             Velocity = velocity;
         }
@@ -278,6 +370,9 @@ namespace EcoDoFarolCentral
             IsAttacking = false;
             HurtTimer = 0;
             DisableAllHitBoxes();
+
+            // Exibe tela de game over após animação de morte
+            GetTree().CreateTimer(2.0).Timeout += () => GameOverScreen.ShowGameOver();
         }
 
         public override void TakeDamage(float amount, Vector2? sourcePosition = null)
@@ -368,6 +463,7 @@ namespace EcoDoFarolCentral
                 PlayerStates.JumpAttack => currentAttack.AnimationName,
                 PlayerStates.Attacking => currentAttack.AnimationName,
                 PlayerStates.Jumping => "jump",
+                PlayerStates.Falling => "falling",
                 PlayerStates.DoubleJump => "jump",
                 PlayerStates.Running => "run",
                 PlayerStates.Dashing => "dash",
@@ -464,6 +560,50 @@ namespace EcoDoFarolCentral
                 float xPos = Mathf.Abs(CastPoint.Position.X);
                 CastPoint.Position = new Vector2(_sprite.FlipH ? -xPos : xPos, CastPoint.Position.Y);
             }
+        }
+
+        /// <summary>
+        /// Toca áudio de passos sincronizado com os frames da animação de corrida.
+        /// </summary>
+        private void OnSpriteFrameChanged()
+        {
+            // Só toca passos durante a animação de corrida
+            if (_sprite.Animation != "run" || CurrentStateEnum != PlayerStates.Running)
+                return;
+
+            // Frames onde o pé toca o chão: 0, 2, 4
+            if (_sprite.Frame == 0 || _sprite.Frame == 4)
+            {
+                AnimControllerInstance.PlaySteps(_playerAudioPath + "step.wav", 0.9f, 1.1f);
+            }
+        }
+
+        // Métodos públicos para acessar dados de ataque
+        public CombatAttackData GetComboAttackData(int comboIndex)
+        {
+            if (comboIndex >= 0 && comboIndex < _comboAttacks.Length)
+                return _comboAttacks[comboIndex];
+            return default;
+        }
+
+        public CombatAttackData GetJumpAttackData()
+        {
+            return _jumpAttack;
+        }
+
+        // Callbacks do DialogueManager para controlar movimento durante diálogos
+        private void OnDialogueStarted(Resource dialogueResource)
+        {
+            IsInDialogue = true;
+            Velocity = Vector2.Zero; // Para o jogador imediatamente
+            StateMachineInstance.ChangeState("Idle"); // Força estado idle
+            GD.Print("[PLAYER] Dialogue started - movement disabled");
+        }
+
+        private void OnDialogueEnded(Resource dialogueResource)
+        {
+            IsInDialogue = false;
+            GD.Print("[PLAYER] Dialogue ended - movement enabled");
         }
     }
 }

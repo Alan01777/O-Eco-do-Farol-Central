@@ -7,13 +7,17 @@ namespace EcoDoFarolCentral
     /// </summary>
     public partial class Actor : CharacterBody2D
     {
+        [ExportGroup("Movement")]
         [Export] public float Speed = 300.0f;
         [Export] public float JumpVelocity = -400.0f;
         [Export] public float DoubleJumpVelocity = -350.0f;
 
+        [ExportGroup("Dash")]
         [Export] public float DashSpeed = 800.0f;
         [Export] public float DashDuration = 0.2f;
         [Export] public float DashCooldown = 0.5f;
+
+        [ExportGroup("Health")]
         [Export] public float MaxHealth = 100;
         [Export] public float CurrentHealth = 100;
         protected bool _isDead = false;

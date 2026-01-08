@@ -1,0 +1,16 @@
+~ start
+Homen Estranho: Ei… você veio de fora, certo? Da região das montanhas?
+Homen Estranho: Não é seguro ficar muito tempo aqui na praça. As sombras ainda rondam… mas se precisar de algo, posso tentar ajudar.
+- Como está a situação no vilarejo?
+	Homen Estranho: Quem pôde, fugiu. Quem ficou… se tranca ao anoitecer. O ancião diz que ainda há esperança, mas…
+Homen Estranho: A ponte que leva até o farol foi destruida por aqueles monstros...
+Homen Estranho: Agora, o único caminho que leva até lá, é pelas cavernas de onde as próprias sombras vieram.
+Homen Estranho: Mas aquele lugar está infestado de sombras...
+Homen Estranho: O ancião da vila ainda está por lá, esperando sua chegada. Por favor, se o encontrar, diga pra ele voltar o mais rápido possível.
+- Você sabe algo sobre a caverna à frente?
+	Homen Estranho: Apenas que é de lá que as sombras vieram.
+	Homen Estranho: Contavamos histórias pra assustar as crianças da vila sobre como haviam monstros naquele lugar, sabe?
+	Homen Estranho: Nunca pensei que elas se tornariam verdade...
+- Obrigada, preciso ir
+	Homen Estranho: Cuidado lá fora. E… boa sorte.
+=> END

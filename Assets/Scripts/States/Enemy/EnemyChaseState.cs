@@ -7,6 +7,11 @@ namespace EcoDoFarolCentral
     /// </summary>
     public class EnemyChaseState : EnemyState
     {
+        public override void Enter()
+        {
+            Enemy.PlayChaseSound();
+        }
+
         public override void PhysicsUpdate(double delta)
         {
             if (Enemy.TargetPlayer == null)

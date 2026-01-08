@@ -11,6 +11,7 @@ namespace EcoDoFarolCentral
         {
             _timeInState = 0f;
             Player.CurrentStateEnum = Player.PlayerStates.Jumping;
+            Player.AnimControllerInstance.PlayVoice(Player._playerAudioPath + "jump.wav");
             Player.DoJump();
         }
 
@@ -18,10 +19,16 @@ namespace EcoDoFarolCentral
         {
             _timeInState += (float)delta;
 
-            // Espera pelo menos 0.1s antes de checar chão para evitar transição imediata para Idle
             if (_timeInState > 0.1f && Player.IsOnFloor() && Player.Velocity.Y >= 0)
             {
                 StateMachine.ChangeState("Idle");
+                return;
+            }
+
+            // Começou a cair (Falling)
+            if (Player.Velocity.Y > 0)
+            {
+                StateMachine.ChangeState("Falling");
                 return;
             }
 
@@ -52,6 +59,15 @@ namespace EcoDoFarolCentral
             if (Input.IsActionJustPressed("special_1") && Player.Abilities.CanCastFireball)
             {
                 StateMachine.ChangeState("Cast");
+                return;
+            }
+
+            // Dash no ar
+            if (Input.IsActionJustPressed("dash") &&
+                Player.CanDash() &&
+                Player.Abilities.CanDash)
+            {
+                StateMachine.ChangeState("Dashing");
                 return;
             }
 

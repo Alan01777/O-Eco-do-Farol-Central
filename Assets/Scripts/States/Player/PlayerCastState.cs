@@ -15,6 +15,7 @@ namespace EcoDoFarolCentral
 
             // Animação de conjuração
             Player.AnimControllerInstance.Play("special_1", true);
+            Player.AnimControllerInstance.PlayVoice(Player._playerAudioPath + "fireball.wav", 0.9f, 1.1f);
         }
 
         public override void PhysicsUpdate(double delta)

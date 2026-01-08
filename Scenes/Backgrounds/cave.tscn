@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://cvo24mocs5o57"]
+
+[ext_resource type="Texture2D" uid="uid://bmuqpfannhey" path="res://Assets/Environment/Underground/background.png" id="1_cp3ox"]
+
+[node name="Cave" type="ParallaxBackground"]
+
+[node name="background" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0, 0)
+motion_mirroring = Vector2(301, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="background"]
+texture = ExtResource("1_cp3ox")
+centered = false

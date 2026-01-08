@@ -11,9 +11,9 @@ namespace EcoDoFarolCentral
         public override void _Ready()
         {
             // Obtém botões
-            _newGameButton = GetNode<Button>("CenterContainer/VBoxContainer/NewGameButton");
-            _continueButton = GetNode<Button>("CenterContainer/VBoxContainer/ContinueButton");
-            _quitButton = GetNode<Button>("CenterContainer/VBoxContainer/QuitButton");
+            _newGameButton = GetNode<Button>("CanvasLayer/CenterContainer/VBoxContainer/NewGameButton");
+            _continueButton = GetNode<Button>("CanvasLayer/CenterContainer/VBoxContainer/ContinueButton");
+            _quitButton = GetNode<Button>("CanvasLayer/CenterContainer/VBoxContainer/QuitButton");
 
             // Conecta sinais
             _newGameButton.Pressed += OnNewGamePressed;
@@ -48,7 +48,7 @@ namespace EcoDoFarolCentral
                 GameManager.Instance.NewGame();
             }
 
-            GetTree().ChangeSceneToFile("res://Scenes/game.tscn");
+            GetTree().ChangeSceneToFile("res://Scenes/Levels/level_1.tscn");
         }
 
         private void OnContinuePressed()
@@ -61,7 +61,7 @@ namespace EcoDoFarolCentral
                 GameManager.Instance.LoadGame();
             }
 
-            GetTree().ChangeSceneToFile("res://Scenes/game.tscn");
+            GetTree().ChangeSceneToFile("res://Scenes/Levels/level_1.tscn");
         }
 
         private void OnQuitPressed()

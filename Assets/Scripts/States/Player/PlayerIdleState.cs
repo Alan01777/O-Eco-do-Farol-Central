@@ -15,6 +15,13 @@ namespace EcoDoFarolCentral
                 return;
             }
 
+            // Caiu da plataforma
+            if (!Player.IsOnFloor() && Player.Velocity.Y > 0)
+            {
+                StateMachine.ChangeState("Falling");
+                return;
+            }
+
             if (Input.IsActionJustPressed("jump"))
             {
                 StateMachine.ChangeState("Jumping");

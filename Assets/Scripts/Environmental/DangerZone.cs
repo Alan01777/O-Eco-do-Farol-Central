@@ -4,8 +4,7 @@ using System;
 namespace EcoDoFarolCentral
 {
     /// <summary>
-    /// Area that deals damage and teleports player to last safe ground.
-    /// Used for spikes, lava, bottomless pits, etc.
+    /// Area que dá dano e teleporta o player pra um terreno seguro
     /// </summary>
     public partial class DangerZone : Area2D
     {
@@ -15,7 +14,6 @@ namespace EcoDoFarolCentral
 
         public override void _Ready()
         {
-            // Ensure we detect bodies
             BodyEntered += OnBodyEntered;
         }
 
@@ -29,13 +27,10 @@ namespace EcoDoFarolCentral
                 }
                 else
                 {
-                    // Pass GlobalPosition so Player knows direction for knockback/hurt state
                     player.TakeDamage(Damage, GlobalPosition);
 
-                    // Only respawn if player is still alive
                     if (player.CurrentHealth > 0)
                     {
-                        // Slight delay before respawn for impact
                         var timer = GetTree().CreateTimer(RespawnDelay);
                         timer.Timeout += () => RespawnPlayer(player);
                     }

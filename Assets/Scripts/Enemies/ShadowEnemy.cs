@@ -12,6 +12,7 @@ namespace EcoDoFarolCentral
         public AnimatedSprite2D SpriteInstance => _sprite;
 
         private float _attackCooldownTimer = 0f;
+        [ExportGroup("General")]
         [Export] public float HurtDuration = 0.4f;
         [Export] public Vector2 KnockbackIntensity = new Vector2(150f, -50f);
         [Export] public float DetectionRange = 250f;
@@ -22,6 +23,7 @@ namespace EcoDoFarolCentral
 
         public float NextAttackRange => GD.Randf() > 0.5f ? Attack1Range : Attack2Range; // Escolhe aleatoriamente entre Attack1Range e Attack2Range
 
+        [ExportGroup("Combat")]
         [Export] public int ContactDamage = 10;
         [Export] public float AttackCooldown = 1.5f;
 
@@ -39,6 +41,11 @@ namespace EcoDoFarolCentral
         private CollisionPolygon2D _attackShape1;
         private CollisionPolygon2D _attackShape2;
 
+        // Sistema de áudio
+        private AudioStreamPlayer _audioSFX;
+        private const string AUDIO_PATH = "res://Assets/Audio/shadows/";
+        private readonly string[] HIT_SOUNDS = { "hit 1.wav", "hit 2.wav", "hit 3.wav" };
+
         public override void _Ready()
         {
             _attack1 = new CombatAttackData("attack_1", Attack1Damage, Attack1Range, "AttackArea");
@@ -46,8 +53,18 @@ namespace EcoDoFarolCentral
             _currentAttack = _attack1;
 
             _sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+
+            // Configura áudio - cria AudioStreamPlayer se não existir
+            _audioSFX = GetNodeOrNull<AudioStreamPlayer>("AudioSFX");
+            if (_audioSFX == null)
+            {
+                _audioSFX = new AudioStreamPlayer();
+                _audioSFX.Name = "AudioSFX";
+                AddChild(_audioSFX);
+            }
+
             AnimControllerInstance = new AnimationController();
-            AnimControllerInstance.Initialize(_sprite);
+            AnimControllerInstance.Initialize(_sprite, _audioSFX, null, null);
             _sprite.AnimationFinished += OnAnimationFinished;
 
             _sleepTimer = GetNode<Timer>("Timer");
@@ -203,6 +220,10 @@ namespace EcoDoFarolCentral
         {
             _currentAttack = GD.Randf() > 0.5f ? _attack1 : _attack2;
             AnimControllerInstance.Play(_currentAttack.AnimationName);
+
+            // Toca som de hit aleatório
+            PlayRandomHitSound();
+
             UpdateHitBox();
         }
 
@@ -231,6 +252,9 @@ namespace EcoDoFarolCentral
             CurrentStateEnum = EnemyStates.Dead;
             AnimControllerInstance.Play("death");
             Velocity = Vector2.Zero;
+
+            // Toca som de morte
+            AnimControllerInstance.PlaySFX(AUDIO_PATH + "monster dying.wav", 0.9f, 1.1f);
 
             // Limpeza de colisões, evita que o player tome dano de contato com o cadaver do mob
             CollisionLayer = 0;
@@ -284,6 +308,19 @@ namespace EcoDoFarolCentral
             {
                 if (contactHitBox != null && !_isDead) contactHitBox.SetDeferred("monitoring", true);
             }
+        }
+
+        // Métodos de áudio
+        public void PlayRandomHitSound()
+        {
+            // Escolhe um som de hit aleatório
+            string hitSound = HIT_SOUNDS[GD.RandRange(0, HIT_SOUNDS.Length - 1)];
+            AnimControllerInstance.PlaySFX(AUDIO_PATH + hitSound, 0.9f, 1.1f);
+        }
+
+        public void PlayChaseSound()
+        {
+            AnimControllerInstance.PlaySFX(AUDIO_PATH + "chase.wav", 0.95f, 1.05f, -3f);
         }
     }
 }

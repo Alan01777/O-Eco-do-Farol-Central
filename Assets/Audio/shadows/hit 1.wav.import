@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://yhear28b1qs6"
+path="res://.godot/imported/hit 1.wav-c77cce31c15a883232d8071ca7faf34f.sample"
+
+[deps]
+
+source_file="res://Assets/Audio/shadows/hit 1.wav"
+dest_files=["res://.godot/imported/hit 1.wav-c77cce31c15a883232d8071ca7faf34f.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

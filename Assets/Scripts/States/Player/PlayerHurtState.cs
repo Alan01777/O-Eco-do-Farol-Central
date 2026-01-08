@@ -10,6 +10,8 @@ namespace EcoDoFarolCentral
 
             // Encara a fonte do dano
             Player.SpriteInstance.FlipH = Player.DamageSourceDirection < 0;
+            Player.AnimControllerInstance.PlayVoice(Player._playerAudioPath + "hurt.wav", 0.9f, 1.1f);
+            Player.AnimControllerInstance.PlaySFX(Player._playerAudioPath + "hit.wav", 0.9f, 1.1f, -16f);
         }
 
         public override void PhysicsUpdate(double delta)

@@ -110,7 +110,7 @@ namespace EcoDoFarolCentral
             _isPaused = false;
 
             // Retorna ao menu principal
-            GetTree().ChangeSceneToFile("res://Scenes/MainMenu.tscn");
+            GetTree().ChangeSceneToFile("res://Scenes/UI/MainMenu.tscn");
         }
     }
 }

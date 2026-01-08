@@ -21,12 +21,18 @@ namespace EcoDoFarolCentral
         public string SaveDate { get; set; } = "";
         public float PlayTime { get; set; } = 0f;
 
-        // TODO: salvar habilidades desbloqueadas
+        // Habilidades desbloqueadas
         public Dictionary<string, bool> UnlockedAbilities { get; set; }
+        public int MaxComboLevel { get; set; } = 1;
+
+        // Itens coletados (IDs únicos)
+        public List<string> CollectedItems { get; set; }
 
         public SaveData()
         {
             SaveDate = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            UnlockedAbilities = new Dictionary<string, bool>();
+            CollectedItems = new List<string>();
         }
 
         /// <summary>
@@ -34,6 +40,13 @@ namespace EcoDoFarolCentral
         /// </summary>
         public Dictionary<string, Variant> ToDictionary()
         {
+            // Converte o dicionário de habilidades para Godot.Collections.Dictionary para ser compatível com Variant
+            Godot.Collections.Dictionary<string, bool> abilitiesDict = new Godot.Collections.Dictionary<string, bool>();
+            foreach (var kvp in UnlockedAbilities)
+            {
+                abilitiesDict[kvp.Key] = kvp.Value;
+            }
+
             var dict = new Dictionary<string, Variant>
             {
                 { "player_position_x", PlayerPosition.X },
@@ -42,7 +55,10 @@ namespace EcoDoFarolCentral
                 { "max_health", MaxHealth },
                 { "current_scene", CurrentScene },
                 { "save_date", SaveDate },
-                { "play_time", PlayTime }
+                { "play_time", PlayTime },
+                { "unlocked_abilities", (Godot.Collections.Dictionary)abilitiesDict },
+                { "max_combo_level", MaxComboLevel },
+                { "collected_items", CollectedItems.ToArray() }
             };
 
             return dict;
@@ -63,8 +79,45 @@ namespace EcoDoFarolCentral
                 MaxHealth = dict.GetValueOrDefault("max_health", 100f).AsSingle(),
                 CurrentScene = dict.GetValueOrDefault("current_scene", "res://Scenes/game.tscn").AsString(),
                 SaveDate = dict.GetValueOrDefault("save_date", "").AsString(),
-                PlayTime = dict.GetValueOrDefault("play_time", 0f).AsSingle()
+                PlayTime = dict.GetValueOrDefault("play_time", 0f).AsSingle(),
+                MaxComboLevel = dict.GetValueOrDefault("max_combo_level", 1).AsInt32()
             };
+
+            // Recupera habilidades
+            if (dict.ContainsKey("unlocked_abilities"))
+            {
+                var abilitiesVariant = dict["unlocked_abilities"];
+                // Tenta converter de volta
+                try
+                {
+                    // Variant pode ser um Dictionary Godot
+                    var godotDict = abilitiesVariant.AsGodotDictionary<string, bool>();
+                    foreach (var kvp in godotDict)
+                    {
+                        data.UnlockedAbilities[kvp.Key] = kvp.Value;
+                    }
+                }
+                catch
+                {
+                    // Fallback ou log se falhar
+                    Godot.GD.PrintErr("Failed to load unlocked_abilities from save data");
+                }
+            }
+
+            // Recupera itens coletados
+            if (dict.ContainsKey("collected_items"))
+            {
+                // Normalmente arrays vem como Godot.Collections.Array ou string[]
+                try
+                {
+                    var itemsArray = dict["collected_items"].AsStringArray();
+                    data.CollectedItems = new List<string>(itemsArray);
+                }
+                catch
+                {
+                    Godot.GD.PrintErr("Failed to load collected_items");
+                }
+            }
 
             return data;
         }

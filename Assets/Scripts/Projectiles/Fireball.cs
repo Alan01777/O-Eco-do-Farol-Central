@@ -54,14 +54,6 @@ namespace EcoDoFarolCentral
             {
                 _sprite.FlipH = true;
             }
-            // If called before _Ready, we can check in _Ready or assume Setup is called immediately after instance
-            // Ideally Setup is called after Instantiate, but before AddChild logic completes frame? 
-            // Actually Instantiate -> Setup -> AddChild -> _Ready.
-            // So _sprite will be null here.
-
-            // Fix: Rotate/Flip logic should be handled or stored. 
-            // But usually we just store direction and apply in _PhysicsProcess or _Ready.
-            // Let's just store the flip state need.
         }
 
         public override void _PhysicsProcess(double delta)

@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://v5xr7nmgmv68"]
+
+[ext_resource type="Script" uid="uid://dv0oyitfpfqxq" path="res://Assets/Scripts/UI/HealthBar.cs" id="1_sd512"]
+[ext_resource type="Script" uid="uid://d4n28o0htgh08" path="res://Assets/Scripts/UI/AbilitiesHUD.cs" id="3_abilities"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sd512"]
+bg_color = Color(0.419608, 0.815686, 0, 1)
+
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 13.0
+offset_top = 23.0
+offset_right = 53.0
+offset_bottom = 63.0
+
+[node name="HealthBar" type="ProgressBar" parent="Control"]
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 27.0
+theme_override_styles/background = SubResource("StyleBoxFlat_sd512")
+rounded = true
+script = ExtResource("1_sd512")
+
+[node name="AbilitiesContainer" type="HBoxContainer" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -200.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 50.0
+grow_horizontal = 0
+alignment = 2
+script = ExtResource("3_abilities")

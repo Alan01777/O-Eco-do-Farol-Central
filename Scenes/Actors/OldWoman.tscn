@@ -1,0 +1,116 @@
+[gd_scene load_steps=19 format=3 uid="uid://dwxptyi3dhukp"]
+
+[ext_resource type="Script" uid="uid://bd1rapkg86jbm" path="res://Assets/Scripts/NPCs/OldMan.cs" id="1_684eh"]
+[ext_resource type="Texture2D" uid="uid://doyjura8321j8" path="res://Assets/Sprites/Villagers/2 Old_woman/Old_woman_idle.png" id="1_tw5w8"]
+[ext_resource type="Texture2D" uid="uid://bgx2o8i57hgtf" path="res://Assets/Sprites/Villagers/2 Old_woman/Old_woman_walk.png" id="2_684eh"]
+[ext_resource type="Script" uid="uid://b8bt4vc7jwmmq" path="res://Assets/Scripts/Helpers/Actionable.cs" id="3_pafcd"]
+[ext_resource type="Resource" uid="uid://ddaa5qyf005l7" path="res://dialogues/old_man.dialogue" id="4_eyrnh"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4jas4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lq8u0"]
+atlas = ExtResource("1_tw5w8")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g2af3"]
+atlas = ExtResource("1_tw5w8")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5idyh"]
+atlas = ExtResource("1_tw5w8")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4jas4"]
+atlas = ExtResource("1_tw5w8")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_msbst"]
+atlas = ExtResource("2_684eh")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4lx6j"]
+atlas = ExtResource("2_684eh")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gus05"]
+atlas = ExtResource("2_684eh")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mhwpg"]
+atlas = ExtResource("2_684eh")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3rct8"]
+atlas = ExtResource("2_684eh")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_08uvw"]
+atlas = ExtResource("2_684eh")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fat1m"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lq8u0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g2af3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5idyh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4jas4")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_msbst")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4lx6j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gus05")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mhwpg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3rct8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_08uvw")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 6.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tlgf6"]
+radius = 20.025
+
+[node name="Old Woman" type="CharacterBody2D"]
+script = ExtResource("1_684eh")
+
+[node name="CharacterBody2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_4jas4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(15, -12)
+scale = Vector2(1.4, 1.4)
+sprite_frames = SubResource("SpriteFrames_fat1m")
+animation = &"idle"
+
+[node name="Actionable" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 16
+script = ExtResource("3_pafcd")
+DialogueResource = ExtResource("4_eyrnh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Actionable"]
+shape = SubResource("CircleShape2D_tlgf6")

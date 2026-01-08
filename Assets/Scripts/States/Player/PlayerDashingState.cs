@@ -12,6 +12,7 @@ namespace EcoDoFarolCentral
         public override void Enter()
         {
             Player.CurrentStateEnum = Player.PlayerStates.Dashing;
+            Player.AnimControllerInstance.PlaySFX(Player._playerAudioPath + "dash.wav", 0.9f, 1.1f);
             Player.StartDash();
             _dashTimer = Player.DashDuration;
         }
@@ -23,7 +24,11 @@ namespace EcoDoFarolCentral
             if (_dashTimer <= 0)
             {
                 Player.EndDash();
-                StateMachine.ChangeState("Idle");
+
+                if (Player.IsOnFloor())
+                    StateMachine.ChangeState("Idle");
+                else
+                    StateMachine.ChangeState("Falling");
             }
         }
 

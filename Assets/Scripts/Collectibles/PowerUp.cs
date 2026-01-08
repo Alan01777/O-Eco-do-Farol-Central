@@ -25,6 +25,9 @@ namespace EcoDoFarolCentral
         [Export(PropertyHint.MultilineText)] public string Description { get; set; } = "Allows you to jump in mid-air!";
         [Export] public float HealthUpgradeAmount { get; set; } = 25f;
 
+        [ExportGroup("Persistence")]
+        [Export] public string ID { get; set; } = "";
+
         [ExportGroup("Visual")]
         [Export] public Texture2D CustomIcon { get; set; }
 
@@ -35,6 +38,21 @@ namespace EcoDoFarolCentral
 
         public override void _Ready()
         {
+            // Verifica se já foi coletado
+            if (!string.IsNullOrEmpty(ID) && GameManager.Instance != null)
+            {
+                if (GameManager.Instance.IsItemCollected(ID))
+                {
+                    QueueFree();
+                    return;
+                }
+            }
+            else if (string.IsNullOrEmpty(ID))
+            {
+                // Aviso para o dev não esquecer de setar ID
+                GD.PushWarning($"[POWER-UP] Item '{ItemName}' at {GlobalPosition} has no ID! It will respawn after save/load.");
+            }
+
             _area = GetNode<Area2D>("Area2D");
             _sprite = GetNode<Sprite2D>("Sprite2D");
             _animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
@@ -63,6 +81,12 @@ namespace EcoDoFarolCentral
                 UnlockAbility(player);
                 PlayCollectionEffect();
 
+                // Registra coleta se tiver ID
+                if (!string.IsNullOrEmpty(ID) && GameManager.Instance != null)
+                {
+                    GameManager.Instance.RegisterCollectedItem(ID);
+                }
+
                 // Remove do mundo após pequeno delay
                 GetTree().CreateTimer(0.3).Timeout += QueueFree;
             }
@@ -78,6 +102,17 @@ namespace EcoDoFarolCentral
                 abilities.Name = "Abilities";
                 player.AddChild(abilities);
             }
+
+            // Obtém o ícone visual do power-up (sprite ou customIcon)
+            Texture2D iconTexture = CustomIcon;
+            if (iconTexture == null && _sprite != null)
+            {
+                iconTexture = _sprite.Texture;
+            }
+
+            // Registra os dados do power-up para uso na UI
+            var powerUpData = new PowerUpData(Type, ItemName, Description, iconTexture);
+            abilities.RegisterPowerUpData(powerUpData);
 
             // Desbloqueia baseado no tipo
             switch (Type)
@@ -142,8 +177,20 @@ namespace EcoDoFarolCentral
 
         private void ShowMessage(string message)
         {
-            // TODO: Mostrar mensagem na UI
-            GD.Print($"[POWER-UP MESSAGE] {message}");
+            // Instancia o modal de power-up
+            var modalScene = GD.Load<PackedScene>("res://Scenes/UI/PowerUpModal.tscn");
+            if (modalScene == null)
+            {
+                GD.PrintErr("[POWER-UP] PowerUpModal.tscn not found!");
+                GD.Print($"[POWER-UP MESSAGE] {message}");
+                return;
+            }
+
+            var modal = modalScene.Instantiate<PowerUpModal>();
+            GetTree().Root.AddChild(modal);
+
+            // Configura o modal com os dados do power-up
+            modal.Setup(CustomIcon, ItemName, Description);
         }
     }
 }

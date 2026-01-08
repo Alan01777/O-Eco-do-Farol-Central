@@ -1,0 +1,15 @@
+~ start
+Ancião da Vila: Saudações, Guardiã. O Farol Central enfraquece e as sombras não esperam.
+Ancião da Vila: O vilarejo foi selado para conter o avanço. Eu sou o último que restou deste lado...
+Ancião da Vila: Eu nasci e cresci neste lugar. Nada mais justo que morra aqui também...
+Ancião da Vila: As sombras na caverna à frente são mais densas e perigosas do que qualquer coisa que você enfrentou até agora. 
+Ancião da Vila: Elas se alimentam da hesitação. Está pronta?
+- Estou pronta. É por isso que vim.
+	Ancião da Vila: “Que sua luz não se apague. A caverna é logo adiante.”
+- Não
+	Ancião da Vila: Então somos dois. Mas o tempo se esgota, Guardiã. A escuridão… não negocia.
+	Ancião da Vila: Que os deuses nos protejam...
+- O que exatamente vou encontrar lá?
+	Ancião da Vila: Sombras que tomam forma de pesadelos. Elas atacam a mente antes do corpo.
+Ancião da Vila: Cuide-se Guardiã.
+=> END 

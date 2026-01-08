@@ -1,0 +1,61 @@
+[gd_scene load_steps=2 format=3 uid="uid://c3n2hjgpliqra"]
+
+[ext_resource type="Script" uid="uid://b4dmsk3l7mhrm" path="res://Assets/Scripts/UI/PowerUpModal.cs" id="1_modal"]
+
+[node name="PowerUpModal" type="CanvasLayer"]
+process_mode = 3
+layer = 100
+script = ExtResource("1_modal")
+
+[node name="Background" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.7)
+
+[node name="Panel" type="PanelContainer" parent="Background"]
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -150.0
+offset_right = 200.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="Background/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Icon" type="TextureRect" parent="Background/Panel/VBox"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="Background/Panel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Power-Up Name"
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="Background/Panel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Power-up description goes here."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Continue" type="Label" parent="Background/Panel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
+theme_override_font_sizes/font_size = 14
+text = "Pressione qualquer botão para continuar..."
+horizontal_alignment = 1
