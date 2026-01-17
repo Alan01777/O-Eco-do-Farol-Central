@@ -8,7 +8,8 @@ namespace EcoDoFarolCentral
     {
         public AnimationPlayer transitionScene;
         public Player player;
-        [Export] public PackedScene caveArea;
+        [Export] public string caveAreaPath = "res://Scenes/Levels/Level_2.tscn";
+
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
         {
@@ -45,8 +46,10 @@ namespace EcoDoFarolCentral
                 await ToSignal(transitionScene, AnimationPlayer.SignalName.AnimationFinished);
             }
 
+            // Carrega a cena dinamicamente para evitar referência circular
+            var caveArea = GD.Load<PackedScene>(caveAreaPath);
             GetTree().ChangeSceneToPacked(caveArea);
-        }
 
+        }
     }
 }

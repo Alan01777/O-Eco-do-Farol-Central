@@ -6,7 +6,6 @@ namespace EcoDoFarolCentral
     {
         private Control _menuContainer;
         private Button _resumeButton;
-        private Button _saveButton;
         private Button _restartButton;
         private Button _quitButton;
 
@@ -17,13 +16,11 @@ namespace EcoDoFarolCentral
             // Obtém nodes da UI
             _menuContainer = GetNode<Control>("MenuContainer");
             _resumeButton = GetNode<Button>("MenuContainer/VBoxContainer/ResumeButton");
-            _saveButton = GetNode<Button>("MenuContainer/VBoxContainer/SaveButton");
             _restartButton = GetNode<Button>("MenuContainer/VBoxContainer/RestartButton");
             _quitButton = GetNode<Button>("MenuContainer/VBoxContainer/QuitButton");
 
             // Conecta sinais dos botões
             _resumeButton.Pressed += OnResumePressed;
-            _saveButton.Pressed += OnSavePressed;
             _restartButton.Pressed += OnRestartPressed;
             _quitButton.Pressed += OnQuitPressed;
 
@@ -73,34 +70,36 @@ namespace EcoDoFarolCentral
             _isPaused = false;
         }
 
-        private void OnSavePressed()
-        {
-            GD.Print("[PAUSE MENU] Saving game...");
 
-            // Save via GameManager
-            bool success = GameManager.Instance?.SaveGame() ?? false;
-
-            if (success)
-            {
-                // Feedback visual
-                _saveButton.Text = "✓ Saved!";
-                GetTree().CreateTimer(1.5).Timeout += () => _saveButton.Text = "Save Game";
-            }
-            else
-            {
-                _saveButton.Text = "✗ Save Failed";
-                GetTree().CreateTimer(1.5).Timeout += () => _saveButton.Text = "Save Game";
-            }
-        }
 
         private void OnRestartPressed()
         {
-            GD.Print("[PAUSE MENU] Restarting game...");
+            GD.Print("[PAUSE MENU] Loading last checkpoint...");
             Resume();
             _isPaused = false;
 
-            // Recarrega cena atual
-            GetTree().ReloadCurrentScene();
+            // Carrega o último checkpoint salvo
+            if (SaveSystem.SaveFileExists())
+            {
+                GameManager.Instance?.LoadGame();
+
+                // Troca para a cena salva (aplica os dados automaticamente via GameManager)
+                var savedScene = GameManager.Instance?.CurrentSave?.CurrentScene;
+                if (!string.IsNullOrEmpty(savedScene))
+                {
+                    GetTree().ChangeSceneToFile(savedScene);
+                }
+                else
+                {
+                    // Fallback: recarrega cena atual se não houver cena salva
+                    GetTree().ReloadCurrentScene();
+                }
+            }
+            else
+            {
+                // Sem save disponível, apenas recarrega a cena
+                GetTree().ReloadCurrentScene();
+            }
         }
 
         private void OnQuitPressed()

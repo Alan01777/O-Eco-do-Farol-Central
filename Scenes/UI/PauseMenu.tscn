@@ -53,7 +53,7 @@ theme_override_constants/separation = 15
 
 [node name="Title" type="Label" parent="MenuContainer/VBoxContainer"]
 layout_mode = 2
-text = "PAUSED"
+text = "PAUSE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -64,19 +64,14 @@ layout_mode = 2
 [node name="ResumeButton" type="Button" parent="MenuContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-text = "Resume"
-
-[node name="SaveButton" type="Button" parent="MenuContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-text = "Save Game"
+text = "Continuar"
 
 [node name="RestartButton" type="Button" parent="MenuContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-text = "Restart"
+text = "Carregar Checkpoint"
 
 [node name="QuitButton" type="Button" parent="MenuContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-text = "Quit to Menu"
+text = "Menu Inical"

@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 GameManager="*res://Assets/Scripts/SaveSystem/GameManager.cs"
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
+HitStop="*res://Assets/Scripts/Effects/HitStop.cs"
 
 [dialogue_manager]
 

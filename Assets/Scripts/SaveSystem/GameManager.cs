@@ -22,6 +22,9 @@ namespace EcoDoFarolCentral
         // Rastreia se tem dados de transição de cena pendentes
         private bool _sceneTransitionPending = false;
 
+        // Posição de spawn após transição de cena (opcional)
+        public Vector2? TransitionSpawnPosition { get; set; } = null;
+
         public override void _Ready()
         {
             Instance = this;
@@ -180,6 +183,14 @@ namespace EcoDoFarolCentral
             // Aplica vida
             CurrentPlayer.CurrentHealth = CurrentSave.CurrentHealth;
             CurrentPlayer.MaxHealth = CurrentSave.MaxHealth;
+
+            // Aplica posição de spawn de transição se definida
+            if (TransitionSpawnPosition.HasValue)
+            {
+                CurrentPlayer.GlobalPosition = TransitionSpawnPosition.Value;
+                GD.Print($"[GAME MANAGER] Player positioned at transition spawn: {TransitionSpawnPosition.Value}");
+                TransitionSpawnPosition = null; // Limpa após usar
+            }
 
             // Restaura habilidades
             if (CurrentPlayer.Abilities != null)

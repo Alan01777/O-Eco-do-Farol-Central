@@ -71,6 +71,9 @@ namespace EcoDoFarolCentral
         // Rastreamento de direção para detectar mudanças
         private float _lastDirection = 0f;
 
+        // Referência à câmera para efeito de shake
+        private CameraShake _camera;
+
         public override void _Ready()
         {
             AddToGroup("player");
@@ -190,6 +193,9 @@ namespace EcoDoFarolCentral
             {
                 GD.PrintErr("[PLAYER] DialogueManager instance not found!");
             }
+
+            // Obtém referência da câmera para screen shake
+            _camera = GetNodeOrNull<CameraShake>("Camera2D");
         }
 
         public override void _PhysicsProcess(double delta)
@@ -254,7 +260,7 @@ namespace EcoDoFarolCentral
 
             // Não processa interação durante diálogos
             if (IsInDialogue) return;
-            
+
             if (Input.IsActionJustPressed("ui_interact"))
             {
                 if (CurrentStateEnum != PlayerStates.Idle && CurrentStateEnum != PlayerStates.Running) return;
@@ -397,6 +403,9 @@ namespace EcoDoFarolCentral
 
                 // Transição para o estado de dano (hurt) via FSM
                 StateMachineInstance.ChangeState("Hurt");
+
+                // Screen shake para feedback visual
+                _camera?.Shake(6f, 0.15f);
             }
         }
 
@@ -410,8 +419,20 @@ namespace EcoDoFarolCentral
             {
                 CombatAttackData currentAttack = CurrentStateEnum == PlayerStates.JumpAttack ? _jumpAttack : _comboAttacks[AttackCombo - 1];
                 float damage = currentAttack.Damage;
+                string attackId = currentAttack.AnimationName; // Usa o nome da animação como identificador único
 
-                enemy.TakeDamage(damage, GlobalPosition);
+                // Se for ShadowBoss, usa o sistema de cooldown por ataque
+                if (enemy is ShadowBoss boss)
+                {
+                    boss.TakeDamageFromAttack(damage, attackId, GlobalPosition);
+                }
+                else
+                {
+                    enemy.TakeDamage(damage, GlobalPosition);
+                }
+
+                // Hit stop para dar impacto ao ataque
+                HitStop.Instance?.Freeze(0.06f);
             }
         }
 

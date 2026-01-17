@@ -8,8 +8,7 @@ namespace Helpers
         [Export] public Resource DialogueResource;
         [Export] public string DialogueStart = "start";
 
-
-        public void Action()
+        public virtual void Action()
         {
             DialogueManager.ShowDialogueBalloon(DialogueResource, DialogueStart);
         }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=93 format=3 uid="uid://qv3k8tdodsg1"]
+[gd_scene load_steps=94 format=3 uid="uid://qv3k8tdodsg1"]
 
 [ext_resource type="Script" uid="uid://emc7k0bwvmob" path="res://Assets/Scripts/Player.cs" id="1_52ee3"]
 [ext_resource type="Texture2D" uid="uid://ig2iu4jv2mse" path="res://Assets/Sprites/Player/Player Attack.png" id="2_52ee3"]
@@ -6,12 +6,13 @@
 [ext_resource type="Texture2D" uid="uid://8p48644ht4vo" path="res://Assets/Sprites/Player/Player Dash.png" id="3_bhhdu"]
 [ext_resource type="Texture2D" uid="uid://5ogsjdh51j8w" path="res://Assets/Sprites/Player/Player death.png" id="4_bhhdu"]
 [ext_resource type="Texture2D" uid="uid://dwm0i2f4py7it" path="res://Assets/Sprites/Player/Player Idle.png" id="4_megsn"]
-[ext_resource type="Texture2D" uid="uid://bdp13tla8lebb" path="res://Assets/Sprites/Player/Player Hit Effect.png" id="5_megsn"]
 [ext_resource type="Texture2D" uid="uid://cjwkk12nk3b5x" path="res://Assets/Sprites/Player/Player Jump.png" id="5_yoq75"]
 [ext_resource type="Texture2D" uid="uid://boer0f6s0nid2" path="res://Assets/Sprites/Player/Player JumpAttack.png" id="6_ksbbd"]
 [ext_resource type="Texture2D" uid="uid://brqg4xt1aeh3l" path="res://Assets/Sprites/Player/Player Run.png" id="7_glx4g"]
+[ext_resource type="Texture2D" uid="uid://b0hvq8u2aap4b" path="res://Assets/Sprites/Player/Player Hit Effect.png.png" id="7_r2kji"]
 [ext_resource type="Texture2D" uid="uid://dm1gh3bk7ka7h" path="res://Assets/Sprites/Player/Playert special 1.png" id="10_yoq75"]
 [ext_resource type="AudioStream" uid="uid://l8g5m1xcop23" path="res://Assets/Audio/Player/run_concrete.wav" id="12_cdutm"]
+[ext_resource type="Script" uid="uid://dik4w6em8f147" path="res://Assets/Scripts/Camera/CameraShake.cs" id="13_shake"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kyqiw"]
 radius = 13.0
@@ -161,24 +162,24 @@ region = Rect2(1092, 0, 156, 156)
 atlas = ExtResource("5_yoq75")
 region = Rect2(1248, 0, 156, 156)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_l3y8b"]
-atlas = ExtResource("5_megsn")
+[sub_resource type="AtlasTexture" id="AtlasTexture_rbeol"]
+atlas = ExtResource("7_r2kji")
 region = Rect2(0, 0, 156, 156)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ujsok"]
-atlas = ExtResource("5_megsn")
+[sub_resource type="AtlasTexture" id="AtlasTexture_heh8i"]
+atlas = ExtResource("7_r2kji")
 region = Rect2(156, 0, 156, 156)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_txwsf"]
-atlas = ExtResource("5_megsn")
+[sub_resource type="AtlasTexture" id="AtlasTexture_mwnd1"]
+atlas = ExtResource("7_r2kji")
 region = Rect2(312, 0, 156, 156)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_i10l2"]
-atlas = ExtResource("5_megsn")
+[sub_resource type="AtlasTexture" id="AtlasTexture_m4vjq"]
+atlas = ExtResource("7_r2kji")
 region = Rect2(468, 0, 156, 156)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_fgqou"]
-atlas = ExtResource("5_megsn")
+[sub_resource type="AtlasTexture" id="AtlasTexture_26my8"]
+atlas = ExtResource("7_r2kji")
 region = Rect2(624, 0, 156, 156)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bfbt0"]
@@ -463,19 +464,19 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_l3y8b")
+"texture": SubResource("AtlasTexture_rbeol")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ujsok")
+"texture": SubResource("AtlasTexture_heh8i")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_txwsf")
+"texture": SubResource("AtlasTexture_mwnd1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_i10l2")
+"texture": SubResource("AtlasTexture_m4vjq")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_fgqou")
+"texture": SubResource("AtlasTexture_26my8")
 }],
 "loop": false,
 "name": &"hurt",
@@ -637,15 +638,16 @@ shape = SubResource("CapsuleShape2D_kyqiw")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_bhhdu")
-animation = &"run"
-frame = 5
-frame_progress = 0.558016
+animation = &"hurt"
+frame = 4
+frame_progress = 1.0
 offset = Vector2(0, -6)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(0, -45)
 zoom = Vector2(4, 4)
 drag_vertical_enabled = true
+script = ExtResource("13_shake")
 
 [node name="Timer to take damage" type="Timer" parent="."]
 wait_time = 0.5
@@ -694,6 +696,7 @@ stream = ExtResource("12_cdutm")
 [node name="Audio_Voice" type="AudioStreamPlayer" parent="."]
 
 [node name="ActionArea" type="Area2D" parent="."]
+visible = false
 position = Vector2(31, 1)
 collision_layer = 16
 collision_mask = 16

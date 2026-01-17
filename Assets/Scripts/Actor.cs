@@ -11,6 +11,7 @@ namespace EcoDoFarolCentral
         [Export] public float Speed = 300.0f;
         [Export] public float JumpVelocity = -400.0f;
         [Export] public float DoubleJumpVelocity = -350.0f;
+        [Export] public float GravityMultiplier = 1.0f;
 
         [ExportGroup("Dash")]
         [Export] public float DashSpeed = 800.0f;
@@ -78,7 +79,7 @@ namespace EcoDoFarolCentral
             if (!IsOnFloor())
             {
                 Vector2 v = Velocity;
-                v.Y += Gravity * (float)delta;
+                v.Y += Gravity * (float)delta * GravityMultiplier;
                 Velocity = v;
             }
         }

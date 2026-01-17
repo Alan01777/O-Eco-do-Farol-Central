@@ -35,14 +35,78 @@ namespace EcoDoFarolCentral
         private Sprite2D _sprite;
         private AnimationPlayer _animPlayer;
         private bool _collected = false;
+        private float _debugTimer = 0f;
+
+        public override void _PhysicsProcess(double delta)
+        {
+            if (_collected) return;
+
+            // Fallback: verifica distância do player a cada frame
+            var player = GetTree().GetFirstNodeInGroup("Player") as Player;
+            if (player != null)
+            {
+                float distance = GlobalPosition.DistanceTo(player.GlobalPosition);
+
+                // Se o player estiver muito perto, força a coleta (fallback para problemas de física)
+                if (distance < 50)
+                {
+                    GD.Print($"[POWER-UP] {ItemName} - Player within 50px, triggering collection via proximity fallback!");
+                    TriggerCollection(player);
+                    return;
+                }
+            }
+
+            // Debug periódico (a cada 1 segundo)
+            _debugTimer += (float)delta;
+            if (_debugTimer >= 1.0f)
+            {
+                _debugTimer = 0;
+                var bodies = _area.GetOverlappingBodies();
+                if (bodies.Count > 0)
+                {
+                    GD.Print($"[POWER-UP] {ItemName} - Currently overlapping: {bodies.Count} bodies");
+                }
+
+                if (player != null)
+                {
+                    float distance = GlobalPosition.DistanceTo(player.GlobalPosition);
+                    if (distance < 100)
+                    {
+                        GD.Print($"[POWER-UP] {ItemName} - Player is NEAR! Distance: {distance:F1}px");
+                    }
+                }
+            }
+        }
+
+        private void TriggerCollection(Player player)
+        {
+            if (_collected) return;
+
+            _collected = true;
+            UnlockAbility(player);
+            PlayCollectionEffect();
+
+            // Registra coleta se tiver ID
+            if (!string.IsNullOrEmpty(ID) && GameManager.Instance != null)
+            {
+                GameManager.Instance.RegisterCollectedItem(ID);
+            }
+
+            // Remove o item
+            QueueFree();
+        }
 
         public override void _Ready()
         {
             // Verifica se já foi coletado
             if (!string.IsNullOrEmpty(ID) && GameManager.Instance != null)
             {
-                if (GameManager.Instance.IsItemCollected(ID))
+                bool isCollected = GameManager.Instance.IsItemCollected(ID);
+                GD.Print($"[POWER-UP] {ItemName} (ID:{ID}) - Already collected? {isCollected}");
+
+                if (isCollected)
                 {
+                    GD.Print($"[POWER-UP] {ItemName} - Removing because already collected");
                     QueueFree();
                     return;
                 }
@@ -57,8 +121,39 @@ namespace EcoDoFarolCentral
             _sprite = GetNode<Sprite2D>("Sprite2D");
             _animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 
+            // Garante que a collision shape tenha um raio adequado
+            var collisionShape = _area.GetNode<CollisionShape2D>("CollisionShape2D");
+            if (collisionShape.Shape is CircleShape2D circle)
+            {
+                if (circle.Radius < 20)
+                {
+                    circle.Radius = 25; // Raio adequado para detecção
+                    GD.Print($"[POWER-UP] Adjusted collision radius to 25 for {ItemName}");
+                }
+            }
+
+            // Garante configuração correta da Area2D para detectar Player (Layer 2)
+            _area.CollisionMask = 2; // Detecta Layer 2 (Player)
+            _area.CollisionLayer = 0; // Não precisa ser detectado por outros
+            _area.Monitoring = true;
+            _area.Monitorable = true;
+
+            // Debug: mostra configuração de colisão
+            GD.Print($"[POWER-UP] {ItemName} at {GlobalPosition} - Area2D mask: {_area.CollisionMask}, monitorable: {_area.Monitorable}, monitoring: {_area.Monitoring}");
+
             // Conecta sinal de colisão
             _area.BodyEntered += OnBodyEntered;
+
+            // Verifica se a CollisionShape está desabilitada
+            var collisionShapeDebug = _area.GetNode<CollisionShape2D>("CollisionShape2D");
+            if (collisionShapeDebug.Disabled)
+            {
+                GD.PrintErr($"[POWER-UP] WARNING: CollisionShape2D is DISABLED for {ItemName}! Enabling it now.");
+                collisionShapeDebug.Disabled = false;
+            }
+
+            // Debug: verifica bodies já dentro da área
+            CallDeferred("CheckOverlappingBodies");
 
             // Aplica icone customizado se existir
             if (CustomIcon != null)
@@ -70,8 +165,20 @@ namespace EcoDoFarolCentral
             _animPlayer.Play("default");
         }
 
+        private void CheckOverlappingBodies()
+        {
+            var bodies = _area.GetOverlappingBodies();
+            GD.Print($"[POWER-UP] {ItemName} - Overlapping bodies count: {bodies.Count}");
+            foreach (var body in bodies)
+            {
+                GD.Print($"[POWER-UP] {ItemName} - Overlapping body: {body.Name}");
+            }
+        }
+
         private void OnBodyEntered(Node2D body)
         {
+            GD.Print($"[POWER-UP] {ItemName} detected body: {body.Name} (type: {body.GetType().Name})");
+
             if (_collected) return;
 
             if (body is Player player)

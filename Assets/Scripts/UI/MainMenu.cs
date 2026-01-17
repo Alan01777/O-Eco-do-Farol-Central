@@ -48,7 +48,7 @@ namespace EcoDoFarolCentral
                 GameManager.Instance.NewGame();
             }
 
-            GetTree().ChangeSceneToFile("res://Scenes/Levels/level_1.tscn");
+            GetTree().ChangeSceneToFile("res://Scenes/UI/Intro.tscn");
         }
 
         private void OnContinuePressed()

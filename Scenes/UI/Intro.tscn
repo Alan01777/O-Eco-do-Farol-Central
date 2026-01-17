@@ -1,0 +1,173 @@
+[gd_scene load_steps=9 format=3 uid="uid://yr3cydgk41bt"]
+
+[ext_resource type="Script" uid="uid://dv0wv7tgi5sep" path="res://Assets/Scripts/UI/Intro.cs" id="1_ysgm0"]
+[ext_resource type="Texture2D" uid="uid://chrxen5bhglj8" path="res://Assets/Environment/Village/background.png" id="2_bjyge"]
+[ext_resource type="FontFile" uid="uid://cpqe4yugsrisy" path="res://Assets/Fonts/final_fantasy_36_font.ttf" id="2_n66p7"]
+[ext_resource type="AudioStream" uid="uid://cv7aw5xgfus3p" path="res://Assets/Sounds/typewriter.wav" id="3_bjyge"]
+[ext_resource type="PackedScene" uid="uid://cvwrdbaif18wd" path="res://Scenes/UI/TransitionScene.tscn" id="4_3l18w"]
+
+[sub_resource type="Animation" id="Animation_n66p7"]
+resource_name = "default"
+length = 25.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect/CenterContainer/VBoxContainer/RichTextLabel:visible_characters")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 22.7333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 374]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ColorRect/CenterContainer/VBoxContainer/Button:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 3.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TypeWriter:stream")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_bjyge")]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TypeWriter:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 7.55316, 15.1287),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, true]
+}
+
+[sub_resource type="Animation" id="Animation_bjyge"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect/CenterContainer/VBoxContainer/RichTextLabel:visible_characters")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [-1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ColorRect/CenterContainer/VBoxContainer/Button:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TypeWriter:stream")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TypeWriter:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3l18w"]
+_data = {
+&"RESET": SubResource("Animation_bjyge"),
+&"default": SubResource("Animation_n66p7")
+}
+
+[node name="Intro" type="CanvasLayer"]
+script = ExtResource("1_ysgm0")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(958.5, 543.5)
+scale = Vector2(5.01302, 3.72569)
+texture = ExtResource("2_bjyge")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.13425, 0.124852, 0.359406, 0.760784)
+
+[node name="CenterContainer" type="CenterContainer" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/CenterContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ColorRect/CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(1200, 900)
+layout_mode = 2
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("2_n66p7")
+theme_override_font_sizes/normal_font_size = 60
+text = "Em um certo lugar do mundo, os moradores foram tomados  pela escuridão; seus pesadelos ganharam vida. O local, antes tão radiante e iluminado, havia se tornado um lugar de medo e desesperança. No início, o farol iluminava cada canto do vilarejo e a todos os seus residentes. Hoje, apenas uma guardiã tem permissão para ir ao farol e enfrentar as sombras de sua cidade natal.
+
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="ColorRect/CenterContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Continuar"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_3l18w")
+}
+autoplay = "default"
+
+[node name="TypeWriter" type="AudioStreamPlayer" parent="."]
+
+[node name="TransitionScene" parent="." instance=ExtResource("4_3l18w")]
+
+[connection signal="pressed" from="ColorRect/CenterContainer/VBoxContainer/Button" to="." method="OnContinuePressed"]
