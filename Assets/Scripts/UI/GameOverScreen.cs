@@ -46,7 +46,6 @@ namespace EcoDoFarolCentral
 
         private void OnRetryPressed()
         {
-            GD.Print("[GAME OVER] Retry pressed");
             GetTree().Paused = false;
 
             // Remove o modal antes de recarregar
@@ -57,7 +56,6 @@ namespace EcoDoFarolCentral
 
         private void OnMainMenuPressed()
         {
-            GD.Print("[GAME OVER] Returning to main menu");
             GetTree().Paused = false;
 
             // Remove o modal antes de trocar de cena
@@ -74,7 +72,6 @@ namespace EcoDoFarolCentral
             var scene = GD.Load<PackedScene>("res://Scenes/UI/GameOverScreen.tscn");
             if (scene == null)
             {
-                GD.PrintErr("[GAME OVER] GameOverScreen.tscn not found!");
                 return;
             }
 

@@ -6,6 +6,7 @@ namespace EcoDoFarolCentral
     {
         private Button _newGameButton;
         private Button _continueButton;
+        private Button _creditsButton;
         private Button _quitButton;
 
         public override void _Ready()
@@ -13,11 +14,13 @@ namespace EcoDoFarolCentral
             // Obtém botões
             _newGameButton = GetNode<Button>("CanvasLayer/CenterContainer/VBoxContainer/NewGameButton");
             _continueButton = GetNode<Button>("CanvasLayer/CenterContainer/VBoxContainer/ContinueButton");
+            _creditsButton = GetNode<Button>("CanvasLayer/CenterContainer/VBoxContainer/CreditsButton");
             _quitButton = GetNode<Button>("CanvasLayer/CenterContainer/VBoxContainer/QuitButton");
 
             // Conecta sinais
             _newGameButton.Pressed += OnNewGamePressed;
             _continueButton.Pressed += OnContinuePressed;
+            _creditsButton.Pressed += OnCreditsPressed;
             _quitButton.Pressed += OnQuitPressed;
 
             // Verifica se existe save
@@ -34,13 +37,11 @@ namespace EcoDoFarolCentral
 
             if (hasSaveFile)
             {
-                GD.Print("[MAIN MENU] Save file detected");
             }
         }
 
         private void OnNewGamePressed()
         {
-            GD.Print("[MAIN MENU] Starting new game...");
 
             // Inicializa novo jogo via GameManager
             if (GameManager.Instance != null)
@@ -53,7 +54,6 @@ namespace EcoDoFarolCentral
 
         private void OnContinuePressed()
         {
-            GD.Print("[MAIN MENU] Loading saved game...");
 
             // Carrega dados do save
             if (GameManager.Instance != null)
@@ -64,10 +64,15 @@ namespace EcoDoFarolCentral
             GetTree().ChangeSceneToFile("res://Scenes/Levels/level_1.tscn");
         }
 
+        private void OnCreditsPressed()
+        {
+            GetTree().ChangeSceneToFile("res://Scenes/UI/Credits.tscn");
+        }
+
         private void OnQuitPressed()
         {
-            GD.Print("[MAIN MENU] Quitting game...");
             GetTree().Quit();
         }
     }
 }
+

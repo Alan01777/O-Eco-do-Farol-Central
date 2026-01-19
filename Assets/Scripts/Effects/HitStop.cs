@@ -21,7 +21,6 @@ namespace EcoDoFarolCentral
         /// <param name="duration">Duração do freeze em segundos (padrão: 0.06s)</param>
         public async void Freeze(float duration = 0.06f)
         {
-            GD.Print("Freezing");
             // Se já tem um freeze ativo, ignora
             if (Engine.TimeScale < 1.0f) return;
 

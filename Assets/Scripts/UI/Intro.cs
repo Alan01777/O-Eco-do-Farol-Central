@@ -9,7 +9,6 @@ namespace EcoDoFarolCentral
 
         public override void _Ready()
         {
-            GD.Print("[INTRO] _Ready called");
 
             // Obtém referências
             _continueButton = GetNode<Button>("ColorRect/CenterContainer/VBoxContainer/Button");
@@ -26,12 +25,10 @@ namespace EcoDoFarolCentral
             // Conecta o botão
             _continueButton.Pressed += OnContinuePressed;
 
-            GD.Print("[INTRO] Button connected, waiting for click...");
         }
 
         public async void OnContinuePressed()
         {
-            GD.Print("[INTRO] Transitioning to Level 1...");
 
             // Toca animação de fade out
             _transitionPlayer.Play("Transition");

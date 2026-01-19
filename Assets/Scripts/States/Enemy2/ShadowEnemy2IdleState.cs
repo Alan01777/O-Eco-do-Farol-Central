@@ -9,6 +9,7 @@ namespace EcoDoFarolCentral
 
         public override void Enter()
         {
+            if (Enemy.CurrentStateEnum == ShadowEnemy2.EnemyStates.Dead) return;
             Enemy.CurrentStateEnum = ShadowEnemy2.EnemyStates.Idle;
             Enemy.PlayAnimation("idle");
             Enemy.Velocity = Vector2.Zero;
@@ -18,6 +19,8 @@ namespace EcoDoFarolCentral
 
         public override void PhysicsUpdate(double delta)
         {
+            if (Enemy.CurrentStateEnum == ShadowEnemy2.EnemyStates.Dead) return;
+
             Enemy.ApplyGravity(delta);
 
             _idleTimer += (float)delta;

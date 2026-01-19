@@ -47,7 +47,6 @@ namespace EcoDoFarolCentral.States.Goblin
                 _isFakeCharging = true;
                 _fakeChargeTimer = FAKE_CHARGE_DURATION;
                 Goblin.PlayRandomAttackSound(); // Toca som de ataque durante fake charge
-                GD.Print("[FLEE] FAKE CHARGE! Goblin will briefly charge at player");
             }
 
             // Atualiza label de estado, se existir
@@ -71,7 +70,6 @@ namespace EcoDoFarolCentral.States.Goblin
                     _currentFleeDirection = -directionToPlayer;
                 }
 
-                GD.Print($"[FLEE ENTER] Initial flee direction: {_currentFleeDirection} (away from player at {directionToPlayer}, fakeCharge={_isFakeCharging})");
             }
             else
             {
@@ -103,7 +101,6 @@ namespace EcoDoFarolCentral.States.Goblin
                 if (_fakeChargeTimer <= 0)
                 {
                     _isFakeCharging = false;
-                    GD.Print("[FLEE] Fake charge ended, returning to normal flee");
                 }
             }
 
@@ -122,7 +119,6 @@ namespace EcoDoFarolCentral.States.Goblin
                 {
                     if (_directionCommitTimer <= 0)
                     {
-                        GD.Print($"[FLEE] Direction change: {_currentFleeDirection} -> {newFleeDirection}");
                         _currentFleeDirection = newFleeDirection;
                         _directionCommitTimer = DIRECTION_COMMIT_TIME; // Reseta o timer
                     }
@@ -195,12 +191,10 @@ namespace EcoDoFarolCentral.States.Goblin
                 var collider = Goblin.WallCheck.GetCollider();
                 if (collider is Node node)
                 {
-                    GD.Print($"[WALLCHECK] Colliding with: {node.Name} (Type: {node.GetType().Name})");
 
                     // Check collision layer
                     if (collider is CollisionObject2D collisionObj)
                     {
-                        GD.Print($"[WALLCHECK] Raycast mask={Goblin.WallCheck.CollisionMask}, Object layer={collisionObj.CollisionLayer}");
                     }
                 }
             }
@@ -214,7 +208,6 @@ namespace EcoDoFarolCentral.States.Goblin
 
                     if (isCliff)
                     {
-                        GD.Print($"[FLEE] CLIFF DETECTED! Reversing direction from {_currentFleeDirection} to {-_currentFleeDirection}");
                         // Inverte direção de fuga
                         _currentFleeDirection *= -1;
                         _consecutiveObstacles = 0; // Reseta pânico ao evitar precipício

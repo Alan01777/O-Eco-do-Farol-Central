@@ -129,14 +129,12 @@ namespace EcoDoFarolCentral
             }
             else
             {
-                GD.PrintErr("[PLAYER] HurtBox not found! Player won't be able to take damage!");
             }
 
             // Inicializa sistema de habilidades
             Abilities = new PlayerAbilities();
             Abilities.Name = "Abilities";
             AddChild(Abilities);
-            GD.Print("[PLAYER] Abilities system initialized");
 
 
             // Configura Máquina de Estados (FSM)
@@ -187,11 +185,9 @@ namespace EcoDoFarolCentral
             {
                 dialogueMgrInstance.Connect("dialogue_started", Callable.From((Resource res) => OnDialogueStarted(res)));
                 dialogueMgrInstance.Connect("dialogue_ended", Callable.From((Resource res) => OnDialogueEnded(res)));
-                GD.Print("[PLAYER] Connected to DialogueManager signals");
             }
             else
             {
-                GD.PrintErr("[PLAYER] DialogueManager instance not found!");
             }
 
             // Obtém referência da câmera para screen shake
@@ -550,14 +546,12 @@ namespace EcoDoFarolCentral
             {
                 StateMachineInstance.ChangeState("Idle");
             }
-            GD.Print($"[PLAYER] Respawned at safe position: {_lastSafePosition}");
         }
 
         public void CastFireball()
         {
             if (FireballScene == null)
             {
-                GD.PrintErr("[PLAYER] FireballScene is not set!");
                 return;
             }
 
@@ -616,15 +610,15 @@ namespace EcoDoFarolCentral
         private void OnDialogueStarted(Resource dialogueResource)
         {
             IsInDialogue = true;
-            Velocity = Vector2.Zero; // Para o jogador imediatamente
+            Velocity = Vector2.Zero; // Para o jogador
+            CurrentStateEnum = PlayerStates.Idle;
             StateMachineInstance.ChangeState("Idle"); // Força estado idle
-            GD.Print("[PLAYER] Dialogue started - movement disabled");
+            UpdateAnimations(); // Força atualização da animação para idle
         }
 
         private void OnDialogueEnded(Resource dialogueResource)
         {
             IsInDialogue = false;
-            GD.Print("[PLAYER] Dialogue ended - movement enabled");
         }
     }
 }

@@ -1,0 +1,177 @@
+[gd_scene load_steps=13 format=3 uid="uid://twf0nbuu2xab"]
+
+[ext_resource type="Script" uid="uid://h4osmt7i4jm4" path="res://Assets/Scripts/Helpers/LightBulbActionable.cs" id="1_0jw0u"]
+[ext_resource type="Texture2D" uid="uid://dvbx1kopxt3i6" path="res://Assets/Environment/Lighthouse/Inside.png" id="1_83lr5"]
+[ext_resource type="Shader" uid="uid://by2vynihftn3u" path="res://Assets/Shaders/highlight.gdshader" id="1_s3aiv"]
+[ext_resource type="AudioStream" uid="uid://bdxpch858isnk" path="res://Assets/Sounds/light.mp3" id="3_s3aiv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eq5y8"]
+shader = ExtResource("1_s3aiv")
+shader_parameter/highlight_color = Color(1, 0.9, 0.5, 0.8)
+shader_parameter/outline_width = 2.0
+shader_parameter/pulse_speed = 2.0
+shader_parameter/pulse_intensity = 0.3
+shader_parameter/enabled = false
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qy3rd"]
+atlas = ExtResource("1_83lr5")
+region = Rect2(112.666, 63.2955, 14.3384, 16.8874)
+
+[sub_resource type="Gradient" id="Gradient_smuj1"]
+offsets = PackedFloat32Array(0, 0.986842, 1)
+colors = PackedColorArray(1, 0.705882, 0.266667, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ip2ru"]
+gradient = SubResource("Gradient_smuj1")
+use_hdr = true
+fill = 1
+fill_from = Vector2(0.490741, 0.467593)
+fill_to = Vector2(0.828704, 0.175926)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_83lr5"]
+radius = 33.1361
+
+[sub_resource type="Animation" id="Animation_c84pj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PointLight2D2:enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PointLight2D2:shadow_enabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PointLight2D2:energy")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("lights:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_eq5y8"]
+resource_name = "light"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PointLight2D2:enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PointLight2D2:shadow_enabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PointLight2D2:energy")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.5, 1.0, 1.5, 2.0, 2.5]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("lights:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nycyi"]
+_data = {
+&"RESET": SubResource("Animation_c84pj"),
+&"light": SubResource("Animation_eq5y8")
+}
+
+[node name="LighBulb" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_eq5y8")
+scale = Vector2(0.7, 0.7)
+texture = SubResource("AtlasTexture_qy3rd")
+
+[node name="PointLight2D2" type="PointLight2D" parent="."]
+scale = Vector2(2.60547, 2.78516)
+enabled = false
+energy = 0.0
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_ip2ru")
+
+[node name="Area2D" type="Area2D" parent="." node_paths=PackedStringArray("LightNode", "AnimPlayer", "SpriteNode")]
+collision_layer = 16
+collision_mask = 2
+script = ExtResource("1_0jw0u")
+LightNode = NodePath("../PointLight2D2")
+AnimPlayer = NodePath("../AnimationPlayer")
+ActivateAnimation = "light"
+SpriteNode = NodePath("../Sprite2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_83lr5")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_nycyi")
+}
+
+[node name="lights" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_s3aiv")
+
+[connection signal="body_entered" from="Area2D" to="Area2D" method="OnBodyEntered"]
+[connection signal="body_exited" from="Area2D" to="Area2D" method="OnBodyExited"]

@@ -1,0 +1,47 @@
+[gd_scene load_steps=9 format=3 uid="uid://dcf5f1mybw541"]
+
+[ext_resource type="Script" uid="uid://bd1rapkg86jbm" path="res://Assets/Scripts/NPCs/OldMan.cs" id="1_gvadt"]
+[ext_resource type="Texture2D" uid="uid://b8cqnah8jgubq" path="res://Assets/portraits/dancarina.png" id="2_gvadt"]
+[ext_resource type="Script" uid="uid://b8bt4vc7jwmmq" path="res://Assets/Scripts/Helpers/Actionable.cs" id="3_leyc4"]
+[ext_resource type="Resource" uid="uid://ddaa5qyf005l7" path="res://dialogues/old_man.dialogue" id="4_ob7hv"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h6285"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dnwhp"]
+atlas = ExtResource("2_gvadt")
+region = Rect2(0, 0, 200, 200)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hve5b"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dnwhp")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_aoim1"]
+radius = 20.025
+
+[node name="OldMan" type="CharacterBody2D"]
+script = ExtResource("1_gvadt")
+
+[node name="CharacterBody2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_h6285")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(1, -1)
+scale = Vector2(0.2, 0.2)
+sprite_frames = SubResource("SpriteFrames_hve5b")
+animation = &"idle"
+
+[node name="Actionable" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 16
+script = ExtResource("3_leyc4")
+DialogueResource = ExtResource("4_ob7hv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Actionable"]
+shape = SubResource("CircleShape2D_aoim1")

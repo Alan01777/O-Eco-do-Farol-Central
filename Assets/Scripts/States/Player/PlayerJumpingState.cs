@@ -35,7 +35,6 @@ namespace EcoDoFarolCentral
             // Double Jump
             if (Input.IsActionJustPressed("jump"))
             {
-                GD.Print($"[JUMP STATE] Double Jump: CanDoubleJump={Player.CanDoubleJump}, Abilities.CanDoubleJump={Player.Abilities.CanDoubleJump}");
                 if (Player.CanDoubleJump && Player.Abilities.CanDoubleJump)
                 {
                     Player.CurrentStateEnum = Player.PlayerStates.DoubleJump;
@@ -46,7 +45,6 @@ namespace EcoDoFarolCentral
             // Jump Attack
             if (Input.IsActionJustPressed("attack"))
             {
-                GD.Print($"[JUMP STATE] Jump Attack: Abilities.CanJumpAttack={Player.Abilities.CanJumpAttack}");
                 if (Player.Abilities.CanJumpAttack)
                 {
                     StateMachine.ChangeState("Attacking");

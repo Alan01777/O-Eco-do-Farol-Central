@@ -14,13 +14,16 @@ namespace EcoDoFarolCentral
 
         public override void PhysicsUpdate(double delta)
         {
+            if (Enemy.CurrentStateEnum == ShadowEnemy.EnemyStates.Dead) return;
+
             if (Enemy.TargetPlayer == null)
             {
                 StateMachine.ChangeState("Idle");
                 return;
             }
 
-            float distance = Enemy.GlobalPosition.DistanceTo(Enemy.TargetPlayer.GlobalPosition);
+            // Usa valores cacheados (atualizam 2x por segundo)
+            float distance = Enemy.GetCachedDistanceToPlayer();
 
             // Se o inimigo está muito longe, volta para o estado Idle
             if (distance > Enemy.DetectionRange * 1.5f)
@@ -37,7 +40,8 @@ namespace EcoDoFarolCentral
             }
 
             Enemy.ApplyGravity(delta);
-            float direction = Mathf.Sign(Enemy.TargetPlayer.GlobalPosition.X - Enemy.GlobalPosition.X);
+            // Usa direção cacheada (atualiza 2x por segundo)
+            float direction = Enemy.GetCachedDirectionToPlayer();
             Enemy.MoveTowardsPlayer(direction);
         }
     }

@@ -19,7 +19,6 @@ namespace EcoDoFarolCentral
 
             if (player == null)
             {
-                GD.PrintErr("[GAME SCENE] Player not found in scene!");
                 return;
             }
 
@@ -27,7 +26,6 @@ namespace EcoDoFarolCentral
             if (GameManager.Instance != null)
             {
                 GameManager.Instance.CurrentPlayer = player;
-                GD.Print("[GAME SCENE] Player registered with GameManager");
 
                 // Se carregamos um save, aplicamos agora
                 if (SaveSystem.SaveFileExists())
@@ -37,7 +35,6 @@ namespace EcoDoFarolCentral
             }
             else
             {
-                GD.PrintErr("[GAME SCENE] GameManager instance not found!");
             }
         }
     }

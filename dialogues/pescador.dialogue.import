@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://b7h4d7qe5kjhy"
+path="res://.godot/imported/pescador.dialogue-b178cd2469843ef94b6b79ffba05e160.tres"
+
+[deps]
+
+source_file="res://dialogues/pescador.dialogue"
+dest_files=["res://.godot/imported/pescador.dialogue-b178cd2469843ef94b6b79ffba05e160.tres"]
+
+[params]
+
+defaults=true

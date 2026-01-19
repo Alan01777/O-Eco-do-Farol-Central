@@ -5,10 +5,24 @@ namespace EcoDoFarolCentral;
 public partial class HealthBar : ProgressBar
 {
     private Actor _owner;
-    //[Export] public Label FpsCounter; //debug
+    private StyleBoxFlat _fillStyle;
+
+    // Colors for health gradient
+    private static readonly Color HealthColorFull = new Color(0.2f, 0.85f, 0.3f);    // Green
+    private static readonly Color HealthColorMid = new Color(0.95f, 0.8f, 0.2f);     // Yellow
+    private static readonly Color HealthColorLow = new Color(0.9f, 0.2f, 0.2f);      // Red
 
     public override void _Ready()
     {
+        // Get the fill style for dynamic color changes
+        var fillStyleVariant = GetThemeStylebox("fill");
+        if (fillStyleVariant is StyleBoxFlat styleBox)
+        {
+            // Create a unique copy so we don't modify the shared resource
+            _fillStyle = (StyleBoxFlat)styleBox.Duplicate();
+            AddThemeStyleboxOverride("fill", _fillStyle);
+        }
+
         // Usa CallDeferred para garantir que o player já foi carregado após troca de cena
         CallDeferred(nameof(FindAndConnectToPlayer));
     }
@@ -33,7 +47,6 @@ public partial class HealthBar : ProgressBar
 
         if (_owner == null)
         {
-            GD.PrintErr($"HealthBar ({Name}) could not find an Actor owner!");
             // Tenta novamente em alguns frames
             GetTree().CreateTimer(0.5).Timeout += FindAndConnectToPlayer;
             return;
@@ -41,18 +54,52 @@ public partial class HealthBar : ProgressBar
 
         MaxValue = _owner.MaxHealth;
         Value = _owner.CurrentHealth;
+        UpdateHealthColor();
 
         // Conecta ao sinal de mudança de vida
         if (!_owner.IsConnected(Actor.SignalName.HealthChanged, Callable.From<float, float>(OnHealthChanged)))
         {
             _owner.HealthChanged += OnHealthChanged;
-            GD.Print($"[HEALTHBAR] Connected to {_owner.Name}'s HealthChanged signal");
         }
     }
-    
+
     public void OnHealthChanged(float current, float max)
     {
         Value = current;
         MaxValue = max;
+        UpdateHealthColor();
+    }
+
+    /// <summary>
+    /// Updates the health bar color based on current health percentage.
+    /// Red (0-30%) → Yellow (30-60%) → Green (60-100%)
+    /// </summary>
+    private void UpdateHealthColor()
+    {
+        if (_fillStyle == null) return;
+
+        float healthPercent = MaxValue > 0 ? (float)(Value / MaxValue) : 1.0f;
+        Color newColor;
+
+        if (healthPercent <= 0.3f)
+        {
+            // Low health: Red to Yellow
+            float t = healthPercent / 0.3f;
+            newColor = HealthColorLow.Lerp(HealthColorMid, t);
+        }
+        else if (healthPercent <= 0.6f)
+        {
+            // Mid health: Yellow to Green
+            float t = (healthPercent - 0.3f) / 0.3f;
+            newColor = HealthColorMid.Lerp(HealthColorFull, t);
+        }
+        else
+        {
+            // Full health: Green
+            newColor = HealthColorFull;
+        }
+
+        _fillStyle.BgColor = newColor;
     }
 }
+

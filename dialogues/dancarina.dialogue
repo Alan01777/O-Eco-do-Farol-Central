@@ -1,0 +1,28 @@
+~ start
+Dançarina: Oh, uma visitante! Bem-vinda ao nosso vilarejo!
+Dançarina: Eu costumava dançar nas festas da colheita... antes de tudo isso começar.
+Dançarina: Agora mal posso sair de casa com medo dessas criaturas das sombras.
+Dançarina: Você parece diferente... forte. É uma guardiã?
+- Sim, sou uma guardiã
+	Aelin: Sou Aelin, guardiã do Farol. Vim ajudar.
+	Dançarina: Graças aos céus! Faz tanto tempo que não vemos uma guardiã por aqui.
+	Dançarina: Por favor, tenha cuidado. As sombras que vêm da caverna são terríveis.
+	=> continue
+- Estou apenas de passagem
+	Aelin: Estou só de passagem, na verdade.
+	Dançarina: Passagem? Por aqui? Nestes tempos?
+	Dançarina: Você é muito corajosa... ou muito inconsequente.
+	=> continue
+- O que aconteceu aqui?
+	Aelin: O que aconteceu com este lugar?
+	Dançarina: A luz do farol começou a enfraquecer há algumas semanas.
+	Dançarina: Primeiro vieram os pesadelos... depois as sombras se tornaram reais.
+	Dançarina: Muitos fugiram. Os que ficaram... nem todos tiveram sorte.
+	=> continue
+
+~ continue
+Dançarina: Sabe... eu ainda guardo esperança.
+Dançarina: Dizem que quando o farol brilhar novamente, as sombras vão desaparecer.
+Dançarina: Talvez um dia eu possa dançar de novo sob as estrelas, sem medo.
+Dançarina: Cuide-se, viajante. E obrigada por ouvir uma velha dançarina tagarela!
+=> END

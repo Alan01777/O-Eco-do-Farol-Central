@@ -52,9 +52,8 @@ namespace EcoDoFarolCentral
 
             CurrentHealth = Mathf.Max(0, CurrentHealth - amount);
             EmitSignal(SignalName.HealthChanged, CurrentHealth, MaxHealth);
-            GD.Print($"{Name} took {amount} damage. Health: {CurrentHealth}/{MaxHealth}");
 
-            // Inicia timer de invencibilidade após receber dano
+            // Inicia timer de invencbilidade após receber dano
             if (_invincibilityTimer != null)
             {
                 _invincibilityTimer.Start();
@@ -71,7 +70,6 @@ namespace EcoDoFarolCentral
             if (_isDead) return;
             _isDead = true;
             EmitSignal(SignalName.Died);
-            GD.Print($"{Name} has died.");
         }
 
         public void ApplyGravity(double delta)

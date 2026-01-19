@@ -4,9 +4,15 @@ namespace EcoDoFarolCentral
 {
     public class PlayerAttackingState : PlayerState
     {
+        // Safety timeout to prevent getting stuck
+        private const float MAX_ATTACK_DURATION = 2.0f;
+        private float _attackTimer = 0f;
+
         public override void Enter()
         {
             Player.IsAttacking = true;
+            _attackTimer = 0f;
+
             if (Player.IsOnFloor())
             {
                 Player.CurrentStateEnum = Player.PlayerStates.Attacking;
@@ -35,6 +41,14 @@ namespace EcoDoFarolCentral
 
         public override void PhysicsUpdate(double delta)
         {
+            // Safety timeout - exit if stuck for too long
+            _attackTimer += (float)delta;
+            if (_attackTimer >= MAX_ATTACK_DURATION)
+            {
+                ForceExitAttack();
+                return;
+            }
+
             if (Player.IsOnFloor())
             {
                 Player.ApplyGravity(delta);
@@ -59,7 +73,6 @@ namespace EcoDoFarolCentral
             {
                 // Verifica se o próximo nível do combo está desbloqueado
                 int nextCombo = (Player.AttackCombo % 3) + 1;
-                GD.Print($"[ATTACK STATE] Combo: AttackCombo={Player.AttackCombo}, NextCombo={nextCombo}, MaxComboLevel={Player.Abilities.MaxComboLevel}");
 
                 if (nextCombo <= Player.Abilities.MaxComboLevel)
                 {
@@ -80,7 +93,6 @@ namespace EcoDoFarolCentral
                 else
                 {
                     // Não pode avançar combo - não desbloqueado ainda
-                    GD.Print($"[ATTACK STATE] Combo blocked: Next level {nextCombo} > Max level {Player.Abilities.MaxComboLevel}");
                     Player.IsAttacking = false;
                     Player.ResetCombo();
                     Player.DisableAllHitBoxes();
@@ -94,6 +106,17 @@ namespace EcoDoFarolCentral
                 Player.DisableAllHitBoxes();
                 StateMachine.ChangeState("Idle");
             }
+        }
+
+        /// <summary>
+        /// Forces exit from attack state (used by safety timeout)
+        /// </summary>
+        private void ForceExitAttack()
+        {
+            Player.IsAttacking = false;
+            Player.ResetCombo();
+            Player.DisableAllHitBoxes();
+            StateMachine.ChangeState("Idle");
         }
 
         public override void Exit()

@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://b0d5wa8bmev1s" path="res://Assets/Sprites/Shadow Monster/Shadow Monster hit.png" id="4_oj47r"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_66t4v"]
-height = 38.0
+height = 34.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ahrq0"]
 atlas = ExtResource("1_0xj1x")
@@ -568,7 +568,6 @@ Speed = 60.0
 JumpVelocity = -200.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource("CapsuleShape2D_66t4v")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -589,12 +588,14 @@ visible = false
 shape = SubResource("CapsuleShape2D_vbmtp")
 
 [node name="HurtBox" type="Area2D" parent="."]
+visible = false
 collision_layer = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 shape = SubResource("CapsuleShape2D_vbmtp")
 
 [node name="AttackArea" type="Area2D" parent="."]
+visible = false
 collision_mask = 8
 
 [node name="attack_lvl1" type="CollisionPolygon2D" parent="AttackArea"]

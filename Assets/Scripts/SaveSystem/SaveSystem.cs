@@ -22,7 +22,6 @@ namespace EcoDoFarolCentral
 
                 if (saveFile == null)
                 {
-                    GD.PrintErr($"[SAVE SYSTEM] Failed to open save file: {FileAccess.GetOpenError()}");
                     return false;
                 }
 
@@ -39,14 +38,11 @@ namespace EcoDoFarolCentral
                 saveFile.StoreString(jsonString);
                 saveFile.Close();
 
-                GD.Print($"[SAVE SYSTEM] Game saved successfully to: {SAVE_PATH}");
-                GD.Print($"[SAVE SYSTEM] Save data: Position={data.PlayerPosition}, Health={data.CurrentHealth}/{data.MaxHealth}");
 
                 return true;
             }
             catch (System.Exception e)
             {
-                GD.PrintErr($"[SAVE SYSTEM] Error saving game: {e.Message}");
                 return false;
             }
         }
@@ -58,7 +54,6 @@ namespace EcoDoFarolCentral
         {
             if (!SaveFileExists())
             {
-                GD.Print("[SAVE SYSTEM] No save file found, returning default data");
                 return new SaveData();
             }
 
@@ -68,7 +63,6 @@ namespace EcoDoFarolCentral
 
                 if (saveFile == null)
                 {
-                    GD.PrintErr($"[SAVE SYSTEM] Failed to open save file: {FileAccess.GetOpenError()}");
                     return new SaveData();
                 }
 
@@ -81,7 +75,6 @@ namespace EcoDoFarolCentral
 
                 if (parseResult != Error.Ok)
                 {
-                    GD.PrintErr($"[SAVE SYSTEM] JSON parse error at line {json.GetErrorLine()}: {json.GetErrorMessage()}");
                     return new SaveData();
                 }
 
@@ -96,15 +89,11 @@ namespace EcoDoFarolCentral
 
                 var data = SaveData.FromDictionary(systemDict);
 
-                GD.Print($"[SAVE SYSTEM] Game loaded successfully");
-                GD.Print($"[SAVE SYSTEM] Loaded data: Position={data.PlayerPosition}, Health={data.CurrentHealth}/{data.MaxHealth}");
-                GD.Print($"[SAVE SYSTEM] Save date: {data.SaveDate}");
 
                 return data;
             }
             catch (System.Exception e)
             {
-                GD.PrintErr($"[SAVE SYSTEM] Error loading game: {e.Message}");
                 return new SaveData();
             }
         }
@@ -125,7 +114,6 @@ namespace EcoDoFarolCentral
             if (SaveFileExists())
             {
                 DirAccess.RemoveAbsolute(SAVE_PATH);
-                GD.Print("[SAVE SYSTEM] Save file deleted");
             }
         }
 

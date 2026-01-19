@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=4 uid="uid://c2bx4n0gc1dui"]
+[gd_scene load_steps=66 format=4 uid="uid://c2bx4n0gc1dui"]
 
 [ext_resource type="Script" uid="uid://bumnwqvvoms71" path="res://Assets/Scripts/Levels/Level3.cs" id="1_cbup6"]
 [ext_resource type="Texture2D" uid="uid://dvbx1kopxt3i6" path="res://Assets/Environment/Lighthouse/Inside.png" id="1_ckbkd"]
@@ -9,34 +9,22 @@
 [ext_resource type="Texture2D" uid="uid://cbgebr14qavqi" path="res://Assets/Environment/Village/houses.png" id="5_lk1ev"]
 [ext_resource type="PackedScene" uid="uid://depomp517hedg" path="res://Scenes/Backgrounds/Night.tscn" id="5_x5s1r"]
 [ext_resource type="Texture2D" uid="uid://bn4l18mpxo5go" path="res://Assets/Environment/Underground/tileset.png" id="5_x6m50"]
+[ext_resource type="PackedScene" uid="uid://u0i6xshp5tfp" path="res://Scenes/Actors/pescador.tscn" id="9_b81ri"]
 [ext_resource type="PackedScene" uid="uid://cvwrdbaif18wd" path="res://Scenes/UI/TransitionScene.tscn" id="9_x6m50"]
 [ext_resource type="Script" uid="uid://cwwl7texigvsi" path="res://Assets/Scripts/Helpers/LighthouseActionable.cs" id="11_hkeaf"]
 [ext_resource type="PackedScene" uid="uid://dapvw1gi082js" path="res://Scenes/Actors/shadow_enemy.tscn" id="12_jkw7r"]
 [ext_resource type="PackedScene" uid="uid://v0g1frkcctak" path="res://Scenes/Actors/shadow_enemy_2.tscn" id="13_avjic"]
 [ext_resource type="PackedScene" uid="uid://nx7qgdldqf4" path="res://Scenes/Actors/shadow_boss.tscn" id="14_3uval"]
 [ext_resource type="PackedScene" uid="uid://hctkhd8ngh1r" path="res://Scenes/Helpers/power_up.tscn" id="15_socs1"]
-[ext_resource type="Texture2D" uid="uid://db7b0vulawyg7" path="res://Assets/Sprites/UI/Icons/combolevel2.png" id="16_socs1"]
-
-[sub_resource type="Gradient" id="Gradient_smuj1"]
-offsets = PackedFloat32Array(0, 0.986842, 1)
-colors = PackedColorArray(1, 0.705882, 0.266667, 1, 0, 0, 0, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_5iseo"]
-gradient = SubResource("Gradient_smuj1")
-use_hdr = true
-fill = 1
-fill_from = Vector2(0.490741, 0.467593)
-fill_to = Vector2(0.828704, 0.175926)
-
-[sub_resource type="Gradient" id="Gradient_ckbkd"]
-offsets = PackedFloat32Array(0, 0.828947)
-colors = PackedColorArray(1, 0.748316, 0.569697, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_x5s1r"]
-gradient = SubResource("Gradient_ckbkd")
-fill = 1
-fill_from = Vector2(0.49537, 0.518519)
-fill_to = Vector2(0.912037, 0.0740741)
+[ext_resource type="PackedScene" uid="uid://twf0nbuu2xab" path="res://Scenes/Environmental/ligh_bulb.tscn" id="17_k4uyx"]
+[ext_resource type="Texture2D" uid="uid://cb8rgey6sroi4" path="res://Assets/Environment/Village/Sign.png" id="18_utsj3"]
+[ext_resource type="Shader" uid="uid://by2vynihftn3u" path="res://Assets/Shaders/highlight.gdshader" id="18_wg02j"]
+[ext_resource type="Resource" uid="uid://bksfcwbxrhftr" path="res://dialogues/ancient_sign.dialogue" id="19_3uner"]
+[ext_resource type="Resource" uid="uid://b7h4d7qe5kjhy" path="res://dialogues/pescador.dialogue" id="19_vmolf"]
+[ext_resource type="Script" uid="uid://mbp1mthk14fg" path="res://Assets/Scripts/Helpers/HighlightActionable.cs" id="19_wg02j"]
+[ext_resource type="Texture2D" uid="uid://o075rkehv6q2" path="res://Assets/Sprites/Items/heal.png" id="23_vmolf"]
+[ext_resource type="PackedScene" uid="uid://v5xr7nmgmv68" path="res://Scenes/UI/HUD.tscn" id="24_thlwc"]
+[ext_resource type="AudioStream" uid="uid://cb6nttr367cm1" path="res://Assets/Audio/level3_bgm.mp3" id="25_qqosq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_smuj1"]
 texture = ExtResource("1_ckbkd")
@@ -826,6 +814,47 @@ tracks/2/keys = {
 "update": 0,
 "values": [1.0]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Alcapao:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(291, 61)]
+}
+
+[sub_resource type="Animation" id="Animation_k4uyx"]
+resource_name = "alcapao"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Alcapao:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(291, 61), Vector2(250, 61)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Player/Camera2D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.0333333),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [6.0, 1.0],
+"method": &"Shake"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_w5ayf"]
 resource_name = "default"
@@ -910,6 +939,7 @@ tracks/4/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ya3ly"]
 _data = {
 &"RESET": SubResource("Animation_x5s1r"),
+&"alcapao": SubResource("Animation_k4uyx"),
 &"default": SubResource("Animation_w5ayf"),
 &"ligar_farol": SubResource("Animation_ckbkd")
 }
@@ -994,72 +1024,36 @@ size = Vector2(35.5526, 83)
 [sub_resource type="CircleShape2D" id="CircleShape2D_76n5f"]
 radius = 28.405
 
-[node name="Level3" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k4uyx"]
+size = Vector2(50, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_utsj3"]
+atlas = ExtResource("1_ckbkd")
+region = Rect2(109.399, 31.0691, 19.4365, 9.87755)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jpkto"]
+radius = 16.7294
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wg02j"]
+shader = ExtResource("18_wg02j")
+shader_parameter/highlight_color = Color(1, 0.9, 0.5, 0.8)
+shader_parameter/outline_width = 2.0
+shader_parameter/pulse_speed = 2.0
+shader_parameter/pulse_intensity = 0.3
+shader_parameter/enabled = false
+
+[node name="Level3" type="Node2D" node_paths=PackedStringArray("FarolAnimationPlayer", "TrapdoorAnimationPlayer", "LanternsContainer", "EnemiesContainer")]
 script = ExtResource("1_cbup6")
+FarolAnimationPlayer = NodePath("AnimationPlayer")
+TrapdoorAnimationPlayer = NodePath("AnimationPlayer")
+TrapdoorOpenAnimation = "alcapao"
+LanternsContainer = NodePath("Node")
+EnemiesContainer = NodePath("Enemies")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-165.5, 1014)
 scale = Vector2(1.09967, 0.579124)
 texture = ExtResource("2_76n5f")
-
-[node name="lights" type="Node" parent="."]
-
-[node name="PointLight2D6" type="PointLight2D" parent="lights"]
-position = Vector2(249.567, 391.251)
-scale = Vector2(2.60547, 2.78516)
-shadow_enabled = true
-shadow_color = Color(0, 0, 0, 0.603922)
-texture = SubResource("GradientTexture2D_5iseo")
-
-[node name="PointLight2D2" type="PointLight2D" parent="lights"]
-position = Vector2(278.666, 855.261)
-scale = Vector2(2.60547, 2.78516)
-texture = SubResource("GradientTexture2D_5iseo")
-
-[node name="PointLight2D" type="PointLight2D" parent="lights"]
-position = Vector2(135, 1017)
-scale = Vector2(2.60547, 2.78516)
-texture = SubResource("GradientTexture2D_5iseo")
-
-[node name="PointLight2D3" type="PointLight2D" parent="lights"]
-position = Vector2(73.5565, 760.803)
-scale = Vector2(2.60547, 2.78516)
-texture = SubResource("GradientTexture2D_5iseo")
-
-[node name="PointLight2D4" type="PointLight2D" parent="lights"]
-position = Vector2(232.4, 598.104)
-scale = Vector2(2.60547, 2.78516)
-texture = SubResource("GradientTexture2D_5iseo")
-
-[node name="PointLight2D5" type="PointLight2D" parent="lights"]
-position = Vector2(102.314, 488.732)
-scale = Vector2(2.60547, 2.78516)
-texture = SubResource("GradientTexture2D_5iseo")
-
-[node name="PointLight2D7" type="PointLight2D" parent="lights"]
-position = Vector2(71.2916, 278.809)
-scale = Vector2(2.60547, 2.78516)
-texture = SubResource("GradientTexture2D_5iseo")
-
-[node name="PointLight2D8" type="PointLight2D" parent="lights"]
-position = Vector2(118.788, 120.703)
-scale = Vector2(2.60547, 2.78516)
-texture = SubResource("GradientTexture2D_5iseo")
-
-[node name="PointLight2D9" type="PointLight2D" parent="lights"]
-position = Vector2(247.174, 118.389)
-scale = Vector2(2.60547, 2.78516)
-texture = SubResource("GradientTexture2D_5iseo")
-
-[node name="PointLight2D10" type="PointLight2D" parent="lights"]
-position = Vector2(-13.8392, 43.9797)
-scale = Vector2(2.60547, 2.78516)
-texture = SubResource("GradientTexture2D_5iseo")
-
-[node name="PointLight2D11" type="PointLight2D" parent="lights"]
-position = Vector2(377, 41)
-scale = Vector2(2.8125, 1.96875)
-texture = SubResource("GradientTexture2D_x5s1r")
 
 [node name="MapLayers" type="Node2D" parent="."]
 
@@ -1072,7 +1066,7 @@ tile_map_data = PackedByteArray("AAAAADwAAAABAAEAAAAAAD0AAAABAAEAAAAAAD4AAAABAAE
 tile_set = SubResource("TileSet_d1swa")
 
 [node name="Props" type="TileMapLayer" parent="MapLayers"]
-tile_map_data = PackedByteArray("AAASAEIAAAAGAAAAAAATAD0AAAAGAAAAAAARACkAAAAGAAAAAAAUACQAAAAGAAAAAAAJABUAAAAGAAAAAAAUAAUAAAAGAAAAAAAFAAgAAAAHAAAAAAAIAEIAAAAHAAAAAAACADQAAAAHAAAAAAAUADAAAAAHAAAAAAANADoAAAAEAAAAAAAMADoAAAAEAAAAAAANADkAAAAEAAAAAAALADoAAAAEAAEAAAANAEIAAAACAAMAAAAQAEIAAAACAAMAAAAHACkAAAACAAMAAAANAAgAAAACAAMAAAAJACkAAAAAAAQAAAAKACkAAAAAAAQAAAALAEIAAAAAAAQAAAATAEIAAAAAAAQAAAALAAgAAAAAAAQAAAAKAAgAAAAAAAQAAAAGABYAAAAEAAUAAAAHABUAAAAGAAMAAAAFABUAAAAGAAMAABAFACAAAAABAAQAAAAUACgAAAABAAQAAAAGADEAAAABAAQAAAASADoAAAABAAQAAAASABYAAAABAAQAAAADAA0AAAABAAQAAAAPAAUAAAABAAQAAAAUABEAAAAFAAMAAAATABAAAAAFAAMAAAABAA8AAAAFAAMAAAAVABUAAAAJAAEAAAAVABwAAAAJAAEAAAAVABYAAAAFAAQAAAABACEAAAAFAAQAAAABADQAAAAFAAQAAAABADUAAAAFAAQAAAABAD4AAAAFAAQAAAAVAD4AAAAJAAEAAAAVADEAAAAJAAEAAAAVACUAAAAJAAEAAAAVAA4AAAAJAAEAAAANABEAAAAJAAEAAAAVAAYAAAAJAAEAAAAUAAcAAAAIAAEAAAADAAcAAAAIAAEAAAAIAAoAAAAIAAEAAAAGABcAAAAIAAEAAAAMAB0AAAAIAAEAAAAFACsAAAAIAAEAAAAFADYAAAAIAAEAAAAMADsAAAAIAAEAAAAJADgAAAAAAAEAAAATADYAAAAAAAEAAAALAC4AAAAAAAEAAAAEACUAAAAAAAEAAAATACAAAAAAAAEAAAATABkAAAAAAAEAAAAFAA4AAAAAAAEAAAAUAAkAAAAAAAEAAAASACMAAAACAAUAAAATACMAAAACAAUAAAADADQAAAACAAUAAAAEADQAAAACAAUAAAAPAEEAAAACAAUAAAAOAEEAAAACAAUAAAAOAEAAAAACAAUAAAAPAEAAAAACAAUAAAANAEAAAAACAAUAAAANAEEAAAACAAUAAAAQAEAAAAACAAUAAAAQAEEAAAACAAUAAAADACAAAAACAAUAAAACACAAAAACAAUAAAAFABQAAAACAAUAAAAGABQAAAACAAUAAAAHABQAAAACAAUAAAASAAwAAAACAAUAAAATAAwAAAACAAUAAAACAAUAAAACAAUAAAADAAUAAAACAAUAAAATAAUAAAACAAUAAAASAAUAAAACAAUAAAAIAAgAAAACAAUAAAAHAAgAAAACAAUAAAAOABsAAAABAAMAAAAEAB0AAAABAAMAAAANAA4AAAABAAMAAAALAAUAAAABAAMAAAANACkAAAABAAMAAAAFADUAAAABAAMAAAAEAEIAAAABAAMAAAAGAEMAAAAEAAUAAAAFAEIAAAAGAAMAABAJAEMAAAAFAAEAAAAKAEMAAAAFAAEAAAADADUAAAAFAAEAAAAQACoAAAAFAAIAAAAPACoAAAAFAAEAAAAQACkAAAAFAAIAAAASACUAAAAEAAIAAAASACQAAAAEAAIAAAADACEAAAAFAAIAAAACACEAAAAEAAEAAAASABwAAAAEAAEAAAAUABwAAAAEAAAAAAALABwAAAAFAAAAAAAMABwAAAAEAAAAAAAMABsAAAAEAAAAAAANABwAAAAEAAIAAAAIABwAAAAEAAAAAAAHABwAAAAGAAUAAAACABYAAAAGAAUAAAAQABwAAAAGAAUAAAALABEAAAAGAAUAAAAKABAAAAABAAUAAAALABAAAAACAAUAAAAMABAAAAAAAAQAAAADABUAAAAAAAQAAAAPABsAAAAAAAQAAAARABsAAAAAAAQAAAAEADsAAAABAAQAAAAIAD8AAAAHAAQAAAARADUAAAAHAAQAAAAEAC8AAAAHAAQAAAAOACUAAAAHAAQAAAAGAB4AAAAHAAQAAAAPABgAAAAHAAQAAAAEABEAAAAHAAQAAAAPAAcAAAAHAAQAAAAHAAcAAAAHAAQAAAAJAB4AAAADAAUAAAAQABsAAAADAAUAAAATACQAAAADAAUAAAAFACkAAAADAAUAAAATADAAAAADAAUAAAAFADQAAAADAAUAAAAIAEEAAAABAAUAAAAUAD0AAAABAAUAAAAKADkAAAABAAUAAAAPACkAAAABAAUAAAABACAAAAABAAUAAAAJABsAAAABAAUAAAAIABQAAAABAAUAAAAJABQAAAABAAUAAAAJABAAAAABAAUAAAARAA0AAAABAAUAAAAGAAgAAAADAAUAAAAVADAAAAAAAAQAAAA=")
+tile_map_data = PackedByteArray("AAASAEIAAAAGAAAAAAATAD0AAAAGAAAAAAARACkAAAAGAAAAAAAUACQAAAAGAAAAAAAJABUAAAAGAAAAAAAUAAUAAAAGAAAAAAAFAAgAAAAHAAAAAAAIAEIAAAAHAAAAAAACADQAAAAHAAAAAAAUADAAAAAHAAAAAAANADoAAAAEAAAAAAAMADoAAAAEAAAAAAANADkAAAAEAAAAAAALADoAAAAEAAEAAAANAEIAAAACAAMAAAAQAEIAAAACAAMAAAAHACkAAAACAAMAAAANAAgAAAACAAMAAAAJACkAAAAAAAQAAAAKACkAAAAAAAQAAAALAEIAAAAAAAQAAAATAEIAAAAAAAQAAAALAAgAAAAAAAQAAAAKAAgAAAAAAAQAAAAGABYAAAAEAAUAAAAHABUAAAAGAAMAAAAFABUAAAAGAAMAABAFACAAAAABAAQAAAAUACgAAAABAAQAAAAGADEAAAABAAQAAAASADoAAAABAAQAAAASABYAAAABAAQAAAADAA0AAAABAAQAAAAPAAUAAAABAAQAAAAUABEAAAAFAAMAAAATABAAAAAFAAMAAAABAA8AAAAFAAMAAAAVABUAAAAJAAEAAAAVABwAAAAJAAEAAAAVABYAAAAFAAQAAAABACEAAAAFAAQAAAABADQAAAAFAAQAAAABADUAAAAFAAQAAAABAD4AAAAFAAQAAAAVAD4AAAAJAAEAAAAVADEAAAAJAAEAAAAVACUAAAAJAAEAAAAVAA4AAAAJAAEAAAANABEAAAAJAAEAAAAVAAYAAAAJAAEAAAAUAAcAAAAIAAEAAAADAAcAAAAIAAEAAAAIAAoAAAAIAAEAAAAGABcAAAAIAAEAAAAMAB0AAAAIAAEAAAAFACsAAAAIAAEAAAAFADYAAAAIAAEAAAAMADsAAAAIAAEAAAAJADgAAAAAAAEAAAATADYAAAAAAAEAAAALAC4AAAAAAAEAAAAEACUAAAAAAAEAAAATACAAAAAAAAEAAAATABkAAAAAAAEAAAAFAA4AAAAAAAEAAAAUAAkAAAAAAAEAAAASACMAAAACAAUAAAATACMAAAACAAUAAAADADQAAAACAAUAAAAEADQAAAACAAUAAAAPAEEAAAACAAUAAAAOAEEAAAACAAUAAAAOAEAAAAACAAUAAAAPAEAAAAACAAUAAAANAEAAAAACAAUAAAANAEEAAAACAAUAAAAQAEAAAAACAAUAAAAQAEEAAAACAAUAAAADACAAAAACAAUAAAACACAAAAACAAUAAAAFABQAAAACAAUAAAAGABQAAAACAAUAAAAHABQAAAACAAUAAAASAAwAAAACAAUAAAATAAwAAAACAAUAAAACAAUAAAACAAUAAAADAAUAAAACAAUAAAATAAUAAAACAAUAAAASAAUAAAACAAUAAAAIAAgAAAACAAUAAAAHAAgAAAACAAUAAAAOABsAAAABAAMAAAAEAB0AAAABAAMAAAANAA4AAAABAAMAAAALAAUAAAABAAMAAAANACkAAAABAAMAAAAFADUAAAABAAMAAAAEAEIAAAABAAMAAAAGAEMAAAAEAAUAAAAFAEIAAAAGAAMAABAJAEMAAAAFAAEAAAAKAEMAAAAFAAEAAAADADUAAAAFAAEAAAAQACoAAAAFAAIAAAAPACoAAAAFAAEAAAAQACkAAAAFAAIAAAASACUAAAAEAAIAAAASACQAAAAEAAIAAAADACEAAAAFAAIAAAACACEAAAAEAAEAAAASABwAAAAEAAEAAAAUABwAAAAEAAAAAAALABwAAAAFAAAAAAAMABwAAAAEAAAAAAAMABsAAAAEAAAAAAANABwAAAAEAAIAAAAIABwAAAAEAAAAAAAHABwAAAAGAAUAAAACABYAAAAGAAUAAAAQABwAAAAGAAUAAAALABEAAAAGAAUAAAAKABAAAAABAAUAAAALABAAAAACAAUAAAAMABAAAAAAAAQAAAADABUAAAAAAAQAAAAPABsAAAAAAAQAAAARABsAAAAAAAQAAAAEADsAAAABAAQAAAAJAB4AAAADAAUAAAAQABsAAAADAAUAAAATACQAAAADAAUAAAAFACkAAAADAAUAAAATADAAAAADAAUAAAAFADQAAAADAAUAAAAIAEEAAAABAAUAAAAUAD0AAAABAAUAAAAKADkAAAABAAUAAAAPACkAAAABAAUAAAABACAAAAABAAUAAAAJABsAAAABAAUAAAAIABQAAAABAAUAAAAJABQAAAABAAUAAAAJABAAAAABAAUAAAARAA0AAAABAAUAAAAGAAgAAAADAAUAAAAVADAAAAAAAAQAAAA=")
 tile_set = SubResource("TileSet_smuj1")
 
 [node name="PointLight2D" type="PointLight2D" parent="MapLayers"]
@@ -1084,7 +1078,7 @@ shadow_enabled = true
 texture = SubResource("GradientTexture2D_lk1ev")
 
 [node name="Player" parent="." instance=ExtResource("4_lk1ev")]
-position = Vector2(255.627, 34.7236)
+position = Vector2(-219.464, 1075.1)
 scale = Vector2(0.5, 0.5)
 Speed = 100.0
 JumpVelocity = -250.0
@@ -1168,13 +1162,107 @@ Speed = 30.0
 DashSpeed = 300.0
 MaxHealth = 300.0
 
+[node name="Node" type="Node" parent="."]
+
+[node name="LighBulb12" parent="Node" instance=ExtResource("17_k4uyx")]
+position = Vector2(179.764, 438.136)
+
+[node name="LighBulb13" parent="Node" instance=ExtResource("17_k4uyx")]
+position = Vector2(184.887, 667.105)
+
+[node name="LighBulb14" parent="Node" instance=ExtResource("17_k4uyx")]
+position = Vector2(172, 136)
+
+[node name="Alcapao" type="CharacterBody2D" parent="."]
+position = Vector2(291, 61)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Alcapao"]
+position = Vector2(9.73441, -0.778511)
+shape = SubResource("RectangleShape2D_k4uyx")
+
+[node name="Sprite2D" type="Sprite2D" parent="Alcapao"]
+position = Vector2(10.7344, 3.22149)
+scale = Vector2(3, 1)
+texture = SubResource("AtlasTexture_utsj3")
+
+[node name="Alcapao2" type="CharacterBody2D" parent="."]
+position = Vector2(30, 59)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Alcapao2"]
+position = Vector2(9.73441, -0.778511)
+shape = SubResource("RectangleShape2D_k4uyx")
+
+[node name="Sprite2D" type="Sprite2D" parent="Alcapao2"]
+position = Vector2(10.7344, 3.22149)
+scale = Vector2(2.6, 1)
+texture = SubResource("AtlasTexture_utsj3")
+
+[node name="pescador" parent="." instance=ExtResource("9_b81ri")]
+position = Vector2(-195, 1080)
+scale = Vector2(0.5, 0.5)
+wander = false
+WanderSpeed = 0.0
+Speed = 0.0
+
+[node name="Actionable" parent="pescador" index="2"]
+DialogueResource = ExtResource("19_vmolf")
+
+[node name="placa" type="Node2D" parent="."]
+position = Vector2(-47, 1072)
+
+[node name="Area2D" type="Area2D" parent="placa" node_paths=PackedStringArray("SpriteNode")]
+collision_layer = 16
+collision_mask = 2
+script = ExtResource("19_wg02j")
+SpriteNode = NodePath("../Sprite2D")
+DialogueResource = ExtResource("19_3uner")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="placa/Area2D"]
+position = Vector2(-1.35547, 4.68278)
+shape = SubResource("CircleShape2D_jpkto")
+
+[node name="Sprite2D" type="Sprite2D" parent="placa"]
+material = SubResource("ShaderMaterial_wg02j")
+position = Vector2(0.644525, 6.68278)
+scale = Vector2(0.55, 0.457931)
+texture = ExtResource("18_utsj3")
+
 [node name="Power-up" parent="." instance=ExtResource("15_socs1")]
-position = Vector2(-122.122, 1067.58)
-Type = 3
-ItemName = "DoubleAttack lvl2 Jump"
-ID = "DoubleAttack lvl2 Jump"
-CustomIcon = ExtResource("16_socs1")
+position = Vector2(-121.387, 1071.91)
+Type = 8
+ItemName = "Cura"
+Description = "Cura"
+ID = "95"
+CustomIcon = ExtResource("23_vmolf")
+
+[node name="Power-up2" parent="." instance=ExtResource("15_socs1")]
+position = Vector2(315.755, 783.582)
+Type = 8
+ItemName = "Cura"
+Description = "Cura"
+ID = "189"
+CustomIcon = ExtResource("23_vmolf")
+
+[node name="Power-up3" parent="." instance=ExtResource("15_socs1")]
+position = Vector2(246.811, 146.472)
+Type = 8
+ItemName = "Cura"
+Description = "Cura"
+ID = "564"
+CustomIcon = ExtResource("23_vmolf")
+
+[node name="CanvasLayer" parent="." instance=ExtResource("24_thlwc")]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("25_qqosq")
+volume_db = -23.31
+autoplay = true
+parameters/looping = true
 
 [connection signal="body_entered" from="CaveArea" to="." method="OnCaveAreaEntered"]
+[connection signal="body_entered" from="placa/Area2D" to="placa/Area2D" method="OnBodyEntered"]
+[connection signal="body_exited" from="placa/Area2D" to="placa/Area2D" method="OnBodyExited"]
 
 [editable path="Player"]
+[editable path="pescador"]
+[editable path="CanvasLayer"]

@@ -38,7 +38,6 @@ namespace EcoDoFarolCentral
         {
             if (CurrentPlayer == null)
             {
-                GD.PrintErr("[GAME MANAGER] Cannot save: Player reference is null");
                 return false;
             }
 
@@ -88,7 +87,6 @@ namespace EcoDoFarolCentral
         {
             if (CurrentPlayer == null)
             {
-                GD.PrintErr("[GAME MANAGER] Cannot apply save: Player reference is null");
                 return;
             }
 
@@ -103,7 +101,6 @@ namespace EcoDoFarolCentral
                 CurrentPlayer.Abilities.LoadAbilities(CurrentSave.UnlockedAbilities, CurrentSave.MaxComboLevel);
             }
 
-            GD.Print($"[GAME MANAGER] Save data applied to player");
         }
 
         /// <summary>
@@ -112,7 +109,6 @@ namespace EcoDoFarolCentral
         public void NewGame()
         {
             CurrentSave = new SaveData();
-            GD.Print("[GAME MANAGER] New game started");
         }
 
         // --- Helpers para rastrear itens coletados ---
@@ -135,7 +131,6 @@ namespace EcoDoFarolCentral
                 CurrentSave.CollectedItems.Add(id);
                 // Opcional: Salvar imediatamente ao coletar itens importantes?
                 // SaveGame(); 
-                GD.Print($"[GAME MANAGER] Item collected registered: {id}");
             }
         }
 
@@ -148,7 +143,6 @@ namespace EcoDoFarolCentral
         {
             if (CurrentPlayer == null)
             {
-                GD.PrintErr("[GAME MANAGER] Cannot save for transition: Player reference is null");
                 return;
             }
 
@@ -164,7 +158,6 @@ namespace EcoDoFarolCentral
             }
 
             _sceneTransitionPending = true;
-            GD.Print("[GAME MANAGER] Player data saved for scene transition");
         }
 
         /// <summary>
@@ -176,7 +169,6 @@ namespace EcoDoFarolCentral
 
             if (CurrentPlayer == null)
             {
-                GD.PrintErr("[GAME MANAGER] Cannot apply transition data: Player reference is null");
                 return;
             }
 
@@ -188,7 +180,6 @@ namespace EcoDoFarolCentral
             if (TransitionSpawnPosition.HasValue)
             {
                 CurrentPlayer.GlobalPosition = TransitionSpawnPosition.Value;
-                GD.Print($"[GAME MANAGER] Player positioned at transition spawn: {TransitionSpawnPosition.Value}");
                 TransitionSpawnPosition = null; // Limpa após usar
             }
 
@@ -199,7 +190,6 @@ namespace EcoDoFarolCentral
             }
 
             _sceneTransitionPending = false;
-            GD.Print("[GAME MANAGER] Transition data applied to player");
         }
 
         /// <summary>
@@ -208,7 +198,6 @@ namespace EcoDoFarolCentral
         public void RegisterPlayer(Player player)
         {
             CurrentPlayer = player;
-            GD.Print("[GAME MANAGER] Player registered");
 
             // Aplica dados de transição ou save carregado se houver
             ApplyTransitionDataIfPending();

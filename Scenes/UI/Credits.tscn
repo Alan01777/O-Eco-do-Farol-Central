@@ -1,0 +1,199 @@
+[gd_scene load_steps=3 format=3 uid="uid://bd4ujgx8r42lb"]
+
+[ext_resource type="Script" uid="uid://dboddb5pc8yn0" path="res://Assets/Scripts/UI/Credits.cs" id="1_credits"]
+
+[sub_resource type="Theme" id="Theme_credits"]
+
+[node name="Credits" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_credits")
+script = ExtResource("1_credits")
+ScrollSpeed = 60.0
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.05, 0.05, 0.1, 1)
+
+[node name="CreditsContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -400.0
+offset_top = 600.0
+offset_right = 400.0
+offset_bottom = 2000.0
+grow_horizontal = 2
+theme_override_constants/separation = 30
+
+[node name="Title" type="Label" parent="CreditsContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.5, 1)
+theme_override_font_sizes/font_size = 64
+text = "O ECO DO FAROL CENTRAL"
+horizontal_alignment = 1
+
+[node name="Spacer1" type="Control" parent="CreditsContainer"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+
+[node name="DevelopedBy" type="Label" parent="CreditsContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.8, 1)
+theme_override_font_sizes/font_size = 24
+text = "Desenvolvido por"
+horizontal_alignment = 1
+
+[node name="Developer" type="Label" parent="CreditsContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 36
+text = "SCS Games"
+horizontal_alignment = 1
+
+[node name="Spacer2" type="Control" parent="CreditsContainer"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+
+[node name="ProgrammingTitle" type="Label" parent="CreditsContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.8, 1)
+theme_override_font_sizes/font_size = 24
+text = "Programação"
+horizontal_alignment = 1
+
+[node name="Francisco Alan" type="Label" parent="CreditsContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 28
+text = "Alan"
+horizontal_alignment = 1
+
+[node name="Spacer3" type="Control" parent="CreditsContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="ArtTitle" type="Label" parent="CreditsContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.8, 1)
+theme_override_font_sizes/font_size = 24
+text = "Arte e Design"
+horizontal_alignment = 1
+
+[node name="Artist" type="Label" parent="CreditsContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 28
+text = "Maria Rita"
+horizontal_alignment = 1
+
+[node name="Spacer4" type="Control" parent="CreditsContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="SpecialThanksTitle" type="Label" parent="CreditsContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.8, 0.4, 1)
+theme_override_font_sizes/font_size = 32
+text = "Agradecimentos Especiais"
+horizontal_alignment = 1
+
+[node name="Thanks1" type="Label" parent="CreditsContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "Godot Engine"
+horizontal_alignment = 1
+
+[node name="Thanks2" type="Label" parent="CreditsContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "Comunidade Godot Brasil"
+horizontal_alignment = 1
+
+[node name="Thanks4" type="Label" parent="CreditsContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "Equipe SCS Games"
+horizontal_alignment = 1
+
+[node name="Thanks3" type="Label" parent="CreditsContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "Você, por jogar!"
+horizontal_alignment = 1
+
+[node name="Spacer6" type="Control" parent="CreditsContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="MadeWith" type="Label" parent="CreditsContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5, 0.5, 0.6, 1)
+theme_override_font_sizes/font_size = 20
+text = "Feito com Godot Engine 4.4"
+horizontal_alignment = 1
+
+[node name="Year" type="Label" parent="CreditsContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5, 0.5, 0.6, 1)
+theme_override_font_sizes/font_size = 20
+text = "© 2026"
+horizontal_alignment = 1
+
+[node name="Spacer7" type="Control" parent="CreditsContainer"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+
+[node name="ThankYou" type="Label" parent="CreditsContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.5, 1)
+theme_override_font_sizes/font_size = 48
+text = "Obrigado por jogar!"
+horizontal_alignment = 1
+
+[node name="BackButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -60.0
+offset_right = 170.0
+offset_bottom = -20.0
+grow_vertical = 0
+theme_override_colors/font_hover_color = Color(1, 0.8, 0.4, 1)
+theme_override_colors/font_color = Color(0.7, 0.7, 0.8, 1)
+theme_override_font_sizes/font_size = 18
+text = "← Voltar (ESC)"
+
+[node name="SkipHint" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -40.0
+offset_right = 100.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.5, 0.5, 0.6, 0.7)
+theme_override_font_sizes/font_size = 14
+text = "Pressione qualquer tecla para pular"
+horizontal_alignment = 1

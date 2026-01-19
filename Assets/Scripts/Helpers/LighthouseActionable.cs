@@ -1,4 +1,5 @@
 using Godot;
+using EcoDoFarolCentral;
 
 namespace Helpers
 {
@@ -22,22 +23,27 @@ namespace Helpers
         {
             if (_isActivated)
             {
-                GD.Print("[LIGHTHOUSE] Farol já está ativado!");
                 return;
             }
 
-            GD.Print("[LIGHTHOUSE] Ativando o farol...");
+            _isActivated = true;
 
+            // Toca animação local se configurada
             if (LighthouseAnimationPlayer != null)
             {
                 LighthouseAnimationPlayer.Play(ActivateAnimation);
-                _isActivated = true;
-                GD.Print("[LIGHTHOUSE] Farol ativado com sucesso!");
+            }
+
+            // Notifica o Level3 para iniciar sequência de final
+            var level3 = GetTree().CurrentScene as Level3;
+            if (level3 != null)
+            {
+                level3.ActivateLighthouse();
             }
             else
             {
-                GD.PrintErr("[LIGHTHOUSE] AnimationPlayer não configurado!");
             }
         }
     }
 }
+

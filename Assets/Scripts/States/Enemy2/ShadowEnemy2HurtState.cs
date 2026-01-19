@@ -16,6 +16,9 @@ namespace EcoDoFarolCentral
 
         public override void PhysicsUpdate(double delta)
         {
+            // Don't process if enemy is dead
+            if (Enemy.CurrentStateEnum == ShadowEnemy2.EnemyStates.Dead) return;
+
             Enemy.ApplyGravity(delta);
             // Aplica fricção no knockback
             Enemy.Velocity = Enemy.Velocity.Lerp(new Vector2(0, Enemy.Velocity.Y), (float)delta * 5f);

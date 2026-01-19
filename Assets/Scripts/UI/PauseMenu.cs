@@ -74,7 +74,6 @@ namespace EcoDoFarolCentral
 
         private void OnRestartPressed()
         {
-            GD.Print("[PAUSE MENU] Loading last checkpoint...");
             Resume();
             _isPaused = false;
 
@@ -104,7 +103,6 @@ namespace EcoDoFarolCentral
 
         private void OnQuitPressed()
         {
-            GD.Print("[PAUSE MENU] Returning to main menu...");
             Resume();
             _isPaused = false;
 

@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://bksfcwbxrhftr"
+path="res://.godot/imported/ancient_sign.dialogue-774aac715443156b880cc7e802c5649d.tres"
+
+[deps]
+
+source_file="res://dialogues/ancient_sign.dialogue"
+dest_files=["res://.godot/imported/ancient_sign.dialogue-774aac715443156b880cc7e802c5649d.tres"]
+
+[params]
+
+defaults=true

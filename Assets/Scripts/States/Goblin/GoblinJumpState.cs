@@ -12,7 +12,6 @@ namespace EcoDoFarolCentral.States.Goblin
 
         public override void Enter()
         {
-            GD.Print($"[JUMP STATE] ENTER - IsOnFloor: {Goblin.IsOnFloor()}, VelocityY: {Goblin.Velocity.Y}");
 
             Goblin.CurrentStateEnum = GoblinShadow.GoblinStates.Jumping;
             _hasJumped = false;
@@ -65,13 +64,11 @@ namespace EcoDoFarolCentral.States.Goblin
                         jumpForce
                     );
                     _hasJumped = true;
-                    GD.Print("[JUMP STATE] JUMPED!");
                 }
                 else
                 {
                     // Se não está no chão ao entrar, considera que já pulou
                     _hasJumped = true;
-                    GD.Print("[JUMP STATE] Not on floor, setting _hasJumped = true");
                 }
             }
             else
@@ -96,7 +93,6 @@ namespace EcoDoFarolCentral.States.Goblin
 
             if (canExit || forceExit)
             {
-                GD.Print($"[JUMP STATE] EXIT - Timer: {_jumpTimer:F2}, CanExit: {canExit}, ForceExit: {forceExit}");
 
                 if (Goblin.TargetPlayer != null && Goblin.IsPlayerInRange())
                 {
@@ -111,7 +107,6 @@ namespace EcoDoFarolCentral.States.Goblin
 
         public override void Exit()
         {
-            GD.Print($"[JUMP STATE] EXIT METHOD - Timer: {_jumpTimer:F2}, HasJumped: {_hasJumped}");
         }
     }
 }

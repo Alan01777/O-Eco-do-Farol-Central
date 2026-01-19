@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://b8ud1jw3jqld8"
+path="res://.godot/imported/placa_inicio.dialogue-af4b3a02b149a1192fcb2e32e2486958.tres"
+
+[deps]
+
+source_file="res://dialogues/placa_inicio.dialogue"
+dest_files=["res://.godot/imported/placa_inicio.dialogue-af4b3a02b149a1192fcb2e32e2486958.tres"]
+
+[params]
+
+defaults=true

@@ -35,7 +35,6 @@ namespace EcoDoFarolCentral
             {
                 CanDoubleJump = true;
                 EmitSignal(SignalName.AbilityUnlocked, "DoubleJump");
-                GD.Print("[ABILITIES] Double Jump unlocked!");
             }
         }
 
@@ -48,7 +47,6 @@ namespace EcoDoFarolCentral
             {
                 CanDash = true;
                 EmitSignal(SignalName.AbilityUnlocked, "Dash");
-                GD.Print("[ABILITIES] Dash unlocked!");
             }
         }
 
@@ -61,7 +59,6 @@ namespace EcoDoFarolCentral
             {
                 CanWallJump = true;
                 EmitSignal(SignalName.AbilityUnlocked, "WallJump");
-                GD.Print("[ABILITIES] Wall Jump unlocked!");
             }
         }
 
@@ -74,7 +71,6 @@ namespace EcoDoFarolCentral
             {
                 CanJumpAttack = true;
                 EmitSignal(SignalName.AbilityUnlocked, "JumpAttack");
-                GD.Print("[ABILITIES] Jump Attack unlocked!");
             }
         }
 
@@ -87,7 +83,6 @@ namespace EcoDoFarolCentral
             {
                 CanCastFireball = true;
                 EmitSignal(SignalName.AbilityUnlocked, "Fireball");
-                GD.Print("[ABILITIES] Fireball unlocked!");
             }
         }
 
@@ -100,7 +95,6 @@ namespace EcoDoFarolCentral
             {
                 MaxComboLevel = level;
                 EmitSignal(SignalName.AbilityUnlocked, $"ComboLevel{level}");
-                GD.Print($"[ABILITIES] Combo Level {level} unlocked!");
             }
         }
 
@@ -112,7 +106,20 @@ namespace EcoDoFarolCentral
             actor.MaxHealth += amount;
             actor.CurrentHealth = actor.MaxHealth; // cura tudo
             EmitSignal(SignalName.AbilityUnlocked, "HealthUpgrade");
-            GD.Print($"[ABILITIES] Health upgraded by {amount}!");
+        }
+
+        /// <summary>
+        /// Cura o jogador (não ultrapassa vida máxima)
+        /// </summary>
+        public void Heal(Actor actor, float amount)
+        {
+            float oldHealth = actor.CurrentHealth;
+            actor.CurrentHealth = Mathf.Min(actor.CurrentHealth + amount, actor.MaxHealth);
+            float healedAmount = actor.CurrentHealth - oldHealth;
+
+            // Emite sinal para atualizar a health bar
+            actor.EmitSignal(Actor.SignalName.HealthChanged, actor.CurrentHealth, actor.MaxHealth);
+
         }
 
         /// <summary>
@@ -145,7 +152,6 @@ namespace EcoDoFarolCentral
 
             if (maxComboLevel > 1) UnlockComboLevel(maxComboLevel);
 
-            GD.Print($"[ABILITIES] Abilities loaded. MaxCombo: {MaxComboLevel}");
         }
 
         /// <summary>
@@ -155,7 +161,6 @@ namespace EcoDoFarolCentral
         {
             if (data == null) return;
             _collectedPowerUps[data.AbilityName] = data;
-            GD.Print($"[ABILITIES] Registered power-up data: {data.AbilityName} with icon: {data.Icon != null}");
         }
 
         /// <summary>

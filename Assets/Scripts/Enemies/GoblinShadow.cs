@@ -21,6 +21,13 @@ namespace EcoDoFarolCentral
         [Export] public float HurtDuration = 0.4f;
         [Export] public Vector2 KnockbackIntensity = new Vector2(100f, -100f);
 
+        // Cache de posição do player (atualiza 2x por segundo)
+        private float _positionCheckInterval = 0.5f; // 2 verificações por segundo
+        private float _positionCheckTimer = 0f;
+        private float _cachedDistanceToPlayer = float.MaxValue;
+        private bool _cachedPlayerInRange = false;
+        private bool _cachedPlayerSafe = true;
+
         private AnimatedSprite2D _sprite;
         public Player TargetPlayer { get; private set; }
 
@@ -61,7 +68,6 @@ namespace EcoDoFarolCentral
             WallCheck.CollisionMask = 1;
             FloorCheck.CollisionMask = 1;
 
-            GD.Print($"[GOBLIN INIT] WallCheck.CollisionMask = {WallCheck.CollisionMask}, FloorCheck.CollisionMask = {FloorCheck.CollisionMask}");
 
             var players = GetTree().GetNodesInGroup("player");
             if (players.Count > 0) TargetPlayer = players[0] as Player;
@@ -107,11 +113,37 @@ namespace EcoDoFarolCentral
                 if (players.Count > 0) TargetPlayer = players[0] as Player;
             }
 
+            // Atualiza cache de posição do player (2x por segundo)
+            _positionCheckTimer -= (float)delta;
+            if (_positionCheckTimer <= 0)
+            {
+                _positionCheckTimer = _positionCheckInterval;
+                UpdatePlayerPositionCache();
+            }
+
             StateMachineInstance.PhysicsUpdate(delta);
             MoveAndSlide();
 
             // Atualiza direção dos raycasts baseado no movimento
             UpdateRaycasts();
+        }
+
+        /// <summary>
+        /// Atualiza o cache de posição do player (chamado 2x por segundo)
+        /// </summary>
+        private void UpdatePlayerPositionCache()
+        {
+            if (TargetPlayer == null)
+            {
+                _cachedDistanceToPlayer = float.MaxValue;
+                _cachedPlayerInRange = false;
+                _cachedPlayerSafe = true;
+                return;
+            }
+
+            _cachedDistanceToPlayer = GlobalPosition.DistanceTo(TargetPlayer.GlobalPosition);
+            _cachedPlayerInRange = _cachedDistanceToPlayer < DetectionRange;
+            _cachedPlayerSafe = _cachedDistanceToPlayer > SafeDistance;
         }
 
         private void UpdateRaycasts()
@@ -137,17 +169,20 @@ namespace EcoDoFarolCentral
             // Target position continua vertical (0, 50)
         }
 
-        public bool IsPlayerInRange()
-        {
-            if (TargetPlayer == null) return false;
-            return GlobalPosition.DistanceTo(TargetPlayer.GlobalPosition) < DetectionRange;
-        }
+        /// <summary>
+        /// Retorna se o player está no range de detecção (usa cache, atualiza 2x/s)
+        /// </summary>
+        public bool IsPlayerInRange() => _cachedPlayerInRange;
 
-        public bool IsPlayerSafe()
-        {
-            if (TargetPlayer == null) return true;
-            return GlobalPosition.DistanceTo(TargetPlayer.GlobalPosition) > SafeDistance;
-        }
+        /// <summary>
+        /// Retorna se o player está fora da distância segura (usa cache, atualiza 2x/s)
+        /// </summary>
+        public bool IsPlayerSafe() => _cachedPlayerSafe;
+
+        /// <summary>
+        /// Retorna a distância cacheada até o player (atualiza 2x/s)
+        /// </summary>
+        public float GetCachedDistanceToPlayer() => _cachedDistanceToPlayer;
 
         public bool IsCliff()
         {

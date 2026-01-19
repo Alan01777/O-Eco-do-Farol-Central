@@ -33,7 +33,6 @@ namespace EcoDoFarolCentral
 
         public void OnLightHouseAreaEntered(Node2D body)
         {
-            GD.Print($"Body type: {body.GetType().Name}, Body name: {body.Name}");
 
             // Verifica se é o Player diretamente ou se o Owner é o Player
             if (body is Player || body.Owner is Player)
@@ -44,7 +43,6 @@ namespace EcoDoFarolCentral
 
         public void OnVillageAreaEntered(Node2D body)
         {
-            GD.Print($"Body type: {body.GetType().Name}, Body name: {body.Name}");
 
             // Verifica se é o Player diretamente ou se o Owner é o Player
             if (body is Player || body.Owner is Player)

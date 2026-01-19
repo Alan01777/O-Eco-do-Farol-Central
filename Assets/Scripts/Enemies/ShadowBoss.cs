@@ -67,7 +67,6 @@ namespace EcoDoFarolCentral
             if (_hurtbox != null)
             {
                 _hurtbox.BodyEntered += OnBodyEntered;
-                GD.Print("[SHADOWBOSS] Hurtbox conectada para dano por contato");
             }
 
             // Conecta sinal da hitbox para aplicar dano dos ataques
@@ -79,7 +78,6 @@ namespace EcoDoFarolCentral
             // Conecta sinal de animação terminada
             _animPlayer.AnimationFinished += OnAnimationFinished;
 
-            GD.Print("[SHADOWBOSS] Inicializado");
         }
 
         public override void _PhysicsProcess(double delta)
@@ -143,7 +141,6 @@ namespace EcoDoFarolCentral
                 _stateTimer = WanderTime;
                 _currentState = BossState.Wander;
                 UpdateGroundCheckPosition();
-                GD.Print($"[SHADOWBOSS] Começando wander para: {(_moveDirection > 0 ? "direita" : "esquerda")}");
             }
         }
 
@@ -163,13 +160,11 @@ namespace EcoDoFarolCentral
                 // Verifica se há chão à frente
                 if (!_groundCheck.IsColliding())
                 {
-                    GD.Print("[SHADOWBOSS] Abismo detectado! Virando...");
                     shouldTurn = true;
                 }
                 // Verifica se bateu em parede
                 else if (IsOnWall())
                 {
-                    GD.Print("[SHADOWBOSS] Parede detectada! Virando...");
                     shouldTurn = true;
                 }
 
@@ -194,7 +189,6 @@ namespace EcoDoFarolCentral
                 // Volta para idle
                 _stateTimer = IdleTime;
                 _currentState = BossState.Idle;
-                GD.Print("[SHADOWBOSS] Voltando para idle");
             }
         }
 
@@ -259,7 +253,6 @@ namespace EcoDoFarolCentral
                 _sprite.FlipH = _moveDirection < 0;
                 UpdateHitboxDirection();
                 _animPlayer.Play("attack3");
-                GD.Print("[SHADOWBOSS] Atacando com attack3!");
             }
             else
             */
@@ -268,7 +261,6 @@ namespace EcoDoFarolCentral
             {
                 // Attack2 ataca para trás, então a hitbox deve estar na direção oposta
                 _animPlayer.Play("attack2");
-                GD.Print("[SHADOWBOSS] Atacando com attack2 (para trás)!");
             }
             // Attack1 - ataque padrão para frente
             else
@@ -277,7 +269,6 @@ namespace EcoDoFarolCentral
                 _sprite.FlipH = _moveDirection < 0;
                 UpdateHitboxDirection();
                 _animPlayer.Play("attack1");
-                GD.Print("[SHADOWBOSS] Atacando com attack1 (para frente)!");
             }
         }
 
@@ -329,7 +320,6 @@ namespace EcoDoFarolCentral
                     // Abismo ou parede detectada! Para o sonic mode
                     _isInSonicMode = false;
                     Velocity = new Vector2(0, Velocity.Y);
-                    GD.Print("[SHADOWBOSS] Modo sonic interrompido - abismo/parede detectada!");
                 }
                 else
                 {
@@ -359,7 +349,6 @@ namespace EcoDoFarolCentral
                 _currentState = BossState.Idle;
                 _stateTimer = 0.5f; // Pequena pausa após atacar
                 Velocity = new Vector2(0, Velocity.Y); // Para o movimento do sonic mode
-                GD.Print("[SHADOWBOSS] Ataque finalizado");
             }
         }
 
@@ -378,7 +367,6 @@ namespace EcoDoFarolCentral
                 float damage = _isInSonicMode ? Attack3Damage : Attack1Damage;
                 player.TakeDamage(damage, GlobalPosition);
                 _hasHitPlayerThisAttack = true; // Marca que já acertou
-                GD.Print($"[SHADOWBOSS] Ataque acertou o player! Dano: {damage}");
             }
         }
 
@@ -442,7 +430,6 @@ namespace EcoDoFarolCentral
 
             base.TakeDamage(amount, sourcePosition);
 
-            GD.Print($"[SHADOWBOSS] Tomou {amount} de dano do ataque '{attackId}'! Vida: {CurrentHealth}");
 
             if (CurrentHealth <= 0)
             {
@@ -480,7 +467,6 @@ namespace EcoDoFarolCentral
             if (_hurtbox != null)
                 _hurtbox.SetDeferred(Area2D.PropertyName.Monitoring, false);
 
-            GD.Print("[SHADOWBOSS] Morreu!");
         }
 
         /// <summary>
@@ -494,7 +480,6 @@ namespace EcoDoFarolCentral
             if (body is Player player)
             {
                 player.TakeDamage(ContactDamage, GlobalPosition);
-                GD.Print($"[SHADOWBOSS] Dano de contato aplicado ao player: {ContactDamage}");
             }
         }
     }

@@ -10,7 +10,8 @@ namespace EcoDoFarolCentral
         private WanderState _currentState = WanderState.Idle;
 
         // Configurações de andar só (Wander)
-        [ExportGroup("Wander")]
+        [ExportGroup("Wander")] 
+        [Export] public bool wander = true;
         [Export] public float WanderSpeed = 50f;
         [Export] public float MinWalkTime = 1.5f;
         [Export] public float MaxWalkTime = 3f;
@@ -74,7 +75,7 @@ namespace EcoDoFarolCentral
         {
             Velocity = new Vector2(0, Velocity.Y);
 
-            if (_stateTimer <= 0)
+            if (_stateTimer <= 0 && wander)
             {
                 // Transição para Walking
                 _currentState = WanderState.Walking;

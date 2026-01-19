@@ -9,6 +9,7 @@ namespace EcoDoFarolCentral
     {
         public override void Enter()
         {
+            if (Enemy.CurrentStateEnum == ShadowEnemy.EnemyStates.Dead) return;
             Enemy.CurrentStateEnum = ShadowEnemy.EnemyStates.Idle;
             Enemy.PlayAnimation("idle");
             Enemy.StartSleepTimer();
@@ -16,6 +17,8 @@ namespace EcoDoFarolCentral
 
         public override void PhysicsUpdate(double delta)
         {
+            if (Enemy.CurrentStateEnum == ShadowEnemy.EnemyStates.Dead) return;
+
             if (Enemy.IsPlayerInRange())
             {
                 StateMachine.ChangeState("Chase");

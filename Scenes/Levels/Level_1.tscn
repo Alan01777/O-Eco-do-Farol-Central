@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=4 uid="uid://etys2gkah27w"]
+[gd_scene load_steps=69 format=4 uid="uid://etys2gkah27w"]
 
 [ext_resource type="Texture2D" uid="uid://bn4l18mpxo5go" path="res://Assets/Environment/Underground/tileset.png" id="1_7r2dd"]
 [ext_resource type="PackedScene" uid="uid://qv3k8tdodsg1" path="res://Scenes/Actors/Player.tscn" id="1_qxrlw"]
@@ -23,6 +23,13 @@
 [ext_resource type="PackedScene" uid="uid://cn0olsadklj3w" path="res://Scenes/Actors/Old_Man.tscn" id="20_fayjm"]
 [ext_resource type="PackedScene" uid="uid://caxbvsg14ioey" path="res://Scenes/Actors/Villager1.tscn" id="21_nojx8"]
 [ext_resource type="AudioStream" uid="uid://cdpkbhj7odtgr" path="res://Assets/Sounds/Village/village-79043.mp3" id="22_vvknj"]
+[ext_resource type="Texture2D" uid="uid://o075rkehv6q2" path="res://Assets/Sprites/Items/heal.png" id="24_uigiy"]
+[ext_resource type="Script" uid="uid://mbp1mthk14fg" path="res://Assets/Scripts/Helpers/HighlightActionable.cs" id="25_3w8oo"]
+[ext_resource type="PackedScene" uid="uid://dcf5f1mybw541" path="res://Scenes/Actors/dancarina.tscn" id="25_trgpn"]
+[ext_resource type="Resource" uid="uid://b0go71s2k1jdq" path="res://dialogues/dancarina.dialogue" id="26_2dy8h"]
+[ext_resource type="Resource" uid="uid://b8ud1jw3jqld8" path="res://dialogues/placa_inicio.dialogue" id="26_3w8oo"]
+[ext_resource type="Shader" uid="uid://by2vynihftn3u" path="res://Assets/Shaders/highlight.gdshader" id="27_4gffl"]
+[ext_resource type="Texture2D" uid="uid://cb8rgey6sroi4" path="res://Assets/Environment/Village/Sign.png" id="28_it58x"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_31phq"]
 polygon = PackedVector2Array(-65.7612, -5.08028, 97.3717, 129.264, -101.323, 129.829, -101.323, -23.7079, -86.6467, -101.605)
@@ -809,6 +816,17 @@ b = Vector2(29.2646, 55.8556)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_pmbdk"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_eyw8r"]
+radius = 24.4655
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6eh4x"]
+shader = ExtResource("27_4gffl")
+shader_parameter/highlight_color = Color(1, 0.9, 0.5, 0.8)
+shader_parameter/outline_width = 2.0
+shader_parameter/pulse_speed = 2.0
+shader_parameter/pulse_intensity = 0.3
+shader_parameter/enabled = false
+
 [node name="Level1" type="Node2D"]
 script = ExtResource("1_tjl6l")
 
@@ -824,11 +842,15 @@ tile_set = SubResource("TileSet_afv7b")
 
 [node name="props" type="TileMapLayer" parent="MapLayers"]
 position = Vector2(21, 0)
-tile_map_data = PackedByteArray("AAAhAA8AAAAQAAYAAAApAA8AAAABAAYAAAAWAA0AAAAHAAEAAAAJAA4AAAAGAAUAAAAOAA8AAAAKAAIAAABCAA4AAAABAAAAAABGAA4AAAABAAAAAABGAAsAAAABAAYAAAA/AA8AAAABAAYAAACPAA0AAAAHAAEAABBlAAwAAAAHAAEAABB6AAwAAAAHAAEAAABkAA8AAAAKAAIAAABjAA8AAAAKAAIAAABiAA8AAAAKAAIAAABeAA4AAAAGAAUAAACGAA0AAAANAAMAAACIAAoAAAAQAAMAAABVAA0AAAANAAMAAABXAAoAAAAQAAMAAAAcAA0AAAANAAMAAAAeAAoAAAAQAAMAAADsAAcAAAABAAYAAADsAAUAAAABAAYAAADpAAcAAAABAAYAAADfAAYAAAAGAAUAAAC3AA8AAAAQAAYAAACaAA8AAAAKAAIAAADcAAcAAAAKAAIAAADiAAcAAAAKAAIAAACiAA0AAAANAAMAAADkAAUAAAANAAMAAADmAAIAAAAQAAMAAACkAAoAAAAQAAMAAAClACwAAAAQAAMAAADUAA4AAAAGAAUAAADRAA8AAAAKAAIAAADQAA8AAAAKAAIAAAACARgAAAABAAAAAAAPARkAAAAQAAYAAAAJARkAAAAKAAIAAAAcARcAAAANAAMAAAAeARQAAAAQAAMAAAALARMAAAABAAYAAAALARIAAAAKAAIAAAA=")
+tile_map_data = PackedByteArray("AAAhAA8AAAAQAAYAAAApAA8AAAABAAYAAAAWAA0AAAAHAAEAAAAJAA4AAAAGAAUAAAAOAA8AAAAKAAIAAABGAA4AAAABAAAAAABGAAsAAAABAAYAAACPAA0AAAAHAAEAABBlAAwAAAAHAAEAABB6AAwAAAAHAAEAAABkAA8AAAAKAAIAAABjAA8AAAAKAAIAAABiAA8AAAAKAAIAAABeAA4AAAAGAAUAAACGAA0AAAANAAMAAACIAAoAAAAQAAMAAABVAA0AAAANAAMAAABXAAoAAAAQAAMAAAAcAA0AAAANAAMAAAAeAAoAAAAQAAMAAADsAAcAAAABAAYAAADsAAUAAAABAAYAAADpAAcAAAABAAYAAADfAAYAAAAGAAUAAAC3AA8AAAAQAAYAAACaAA8AAAAKAAIAAADcAAcAAAAKAAIAAADiAAcAAAAKAAIAAACiAA0AAAANAAMAAADkAAUAAAANAAMAAADmAAIAAAAQAAMAAACkAAoAAAAQAAMAAAClACwAAAAQAAMAAADUAA4AAAAGAAUAAADRAA8AAAAKAAIAAADQAA8AAAAKAAIAAAACARgAAAABAAAAAAAPARkAAAAQAAYAAAAJARkAAAAKAAIAAAAcARcAAAANAAMAAAAeARQAAAAQAAMAAAALARMAAAABAAYAAAALARIAAAAKAAIAAABDAA8AAAABAAYAAABBAA8AAAABAAYAAABEAA0AAAABAAYAAAA=")
 tile_set = SubResource("TileSet_u5ghp")
 
 [node name="jump" parent="." instance=ExtResource("10_hwvp3")]
 position = Vector2(878.694, 152.93)
+ItemName = "botas brilhantes"
+Description = "Na verdade, são botas do primeiro Guardião do Farol, o vilarejo guarda o item raro como recordação e benevolência.
+
+Pressione a tecla ESPAÇO para pular no ar."
 HealthUpgradeAmount = 0.0
 ID = "jump"
 CustomIcon = ExtResource("15_pmbdk")
@@ -836,13 +858,16 @@ CustomIcon = ExtResource("15_pmbdk")
 [node name="dash" parent="." instance=ExtResource("10_hwvp3")]
 position = Vector2(1703.14, 78.5949)
 Type = 1
-ItemName = "Dash"
+ItemName = "Colete Medroso"
+Description = "É possível escutar os sussurros dos seus maiores medo, mas apenas uma alma corajosa é capaz de usar ele sem ser consumido pelas trevas.
+
+Pressione a tecla SHIFT para usar um avanço"
 HealthUpgradeAmount = 0.0
 ID = "dash"
 CustomIcon = ExtResource("17_pmbdk")
 
 [node name="Player" parent="." instance=ExtResource("1_qxrlw")]
-position = Vector2(51, 251)
+position = Vector2(886.546, 254.632)
 collision_layer = 1
 collision_mask = 1
 
@@ -870,17 +895,6 @@ script = ExtResource("1_v158k")
 
 [node name="HUD" parent="." instance=ExtResource("4_3dryh")]
 
-[node name="Control" parent="HUD" index="0"]
-offset_top = 1.0
-offset_bottom = 41.0
-metadata/_edit_use_anchors_ = true
-
-[node name="HealthBar" parent="HUD/Control" index="0"]
-layout_mode = 1
-offset_top = -1.0
-offset_bottom = 26.0
-metadata/_edit_use_anchors_ = true
-
 [node name="PauseMenu" parent="." instance=ExtResource("6_pause")]
 visible = false
 
@@ -896,7 +910,7 @@ Damage = 20.0
 RespawnDelay = 0.0
 
 [node name="CollisionShape2D" parent="DangerZone" index="0"]
-position = Vector2(91.25, 9.92511)
+position = Vector2(108.5, 57.3127)
 
 [node name="TransitionArea" type="Area2D" parent="."]
 position = Vector2(3934.35, 383.191)
@@ -983,6 +997,7 @@ position = Vector2(4421, 405)
 
 [node name="Villager1" parent="Npcs" instance=ExtResource("21_nojx8")]
 position = Vector2(265, 252)
+scale = Vector2(0.8, 0.8)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("22_vvknj")
@@ -1000,15 +1015,61 @@ shape = SubResource("WorldBoundaryShape2D_pmbdk")
 [node name="attack2" parent="." instance=ExtResource("10_hwvp3")]
 position = Vector2(4428.76, 268.473)
 Type = 3
-ItemName = "Atque level 2"
+ItemName = "Atque nivel 2"
+Description = "Apenas uma faca simples, de um vilarejo simples, com um antigo portador simples.
+
+Permite realizar uma sequência de dois ataques."
 HealthUpgradeAmount = 0.0
 ID = "combo2"
 CustomIcon = ExtResource("16_pmbdk")
 
-[connection signal="HealthChanged" from="Player" to="HUD/Control/HealthBar" method="OnHealthChanged"]
+[node name="Power-up" parent="." instance=ExtResource("10_hwvp3")]
+position = Vector2(3625.47, 117.581)
+Type = 8
+ItemName = "Cura"
+Description = "Restaura vida."
+ID = "20"
+CustomIcon = ExtResource("24_uigiy")
+
+[node name="placa" type="Node2D" parent="."]
+position = Vector2(126, 249)
+
+[node name="Area2D" type="Area2D" parent="placa" node_paths=PackedStringArray("SpriteNode")]
+collision_layer = 16
+collision_mask = 2
+script = ExtResource("25_3w8oo")
+SpriteNode = NodePath("../Sprite2D")
+DialogueResource = ExtResource("26_3w8oo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="placa/Area2D"]
+position = Vector2(-1.35547, 4.68278)
+shape = SubResource("CircleShape2D_eyw8r")
+
+[node name="Sprite2D" type="Sprite2D" parent="placa"]
+material = SubResource("ShaderMaterial_6eh4x")
+position = Vector2(0.644525, 6.68278)
+scale = Vector2(1, 0.8)
+texture = ExtResource("28_it58x")
+
+[node name="dancarina" parent="." instance=ExtResource("25_trgpn")]
+position = Vector2(926, 250)
+wander = false
+WanderSpeed = 0.0
+Speed = 0.0
+
+[node name="AnimatedSprite2D" parent="dancarina" index="1"]
+position = Vector2(2, -6)
+scale = Vector2(0.3, 0.3)
+
+[node name="Actionable" parent="dancarina" index="2"]
+DialogueResource = ExtResource("26_2dy8h")
+
 [connection signal="body_entered" from="TransitionArea" to="." method="OnCaveAreaEntered"]
+[connection signal="body_entered" from="placa/Area2D" to="placa/Area2D" method="OnBodyEntered"]
+[connection signal="body_exited" from="placa/Area2D" to="placa/Area2D" method="OnBodyExited"]
 
 [editable path="Player"]
 [editable path="HUD"]
 [editable path="DangerZone"]
 [editable path="TransitionScene"]
+[editable path="dancarina"]

@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://b0go71s2k1jdq"
+path="res://.godot/imported/dancarina.dialogue-914c90d767896d37f385d9fe380db808.tres"
+
+[deps]
+
+source_file="res://dialogues/dancarina.dialogue"
+dest_files=["res://.godot/imported/dancarina.dialogue-914c90d767896d37f385d9fe380db808.tres"]
+
+[params]
+
+defaults=true

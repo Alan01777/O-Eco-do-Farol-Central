@@ -19,6 +19,9 @@ namespace EcoDoFarolCentral
 
         public override void PhysicsUpdate(double delta)
         {
+            // Don't process if enemy is dead
+            if (Enemy.CurrentStateEnum == ShadowEnemy.EnemyStates.Dead) return;
+
             _hurtTimer -= (float)delta;
             Enemy.ApplyGravity(delta);
 

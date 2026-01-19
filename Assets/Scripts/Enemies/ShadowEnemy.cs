@@ -12,6 +12,14 @@ namespace EcoDoFarolCentral
         public AnimatedSprite2D SpriteInstance => _sprite;
 
         private float _attackCooldownTimer = 0f;
+
+        // Cache de posição do player (atualiza 2x por segundo)
+        private float _positionCheckInterval = 0.5f; // 2 verificações por segundo
+        private float _positionCheckTimer = 0f;
+        private float _cachedDistanceToPlayer = float.MaxValue;
+        private float _cachedDirectionToPlayer = 0f;
+        private bool _cachedPlayerInRange = false;
+
         [ExportGroup("General")]
         [Export] public float HurtDuration = 0.4f;
         [Export] public Vector2 KnockbackIntensity = new Vector2(150f, -50f);
@@ -171,8 +179,34 @@ namespace EcoDoFarolCentral
                 if (players.Count > 0) TargetPlayer = players[0] as Player;
             }
 
+            // Atualiza cache de posição do player (2x por segundo)
+            _positionCheckTimer -= (float)delta;
+            if (_positionCheckTimer <= 0)
+            {
+                _positionCheckTimer = _positionCheckInterval;
+                UpdatePlayerPositionCache();
+            }
+
             StateMachineInstance.PhysicsUpdate(delta);
             MoveAndSlide();
+        }
+
+        /// <summary>
+        /// Atualiza o cache de posição do player (chamado 2x por segundo)
+        /// </summary>
+        private void UpdatePlayerPositionCache()
+        {
+            if (TargetPlayer == null)
+            {
+                _cachedDistanceToPlayer = float.MaxValue;
+                _cachedDirectionToPlayer = 0f;
+                _cachedPlayerInRange = false;
+                return;
+            }
+
+            _cachedDistanceToPlayer = GlobalPosition.DistanceTo(TargetPlayer.GlobalPosition);
+            _cachedDirectionToPlayer = Mathf.Sign(TargetPlayer.GlobalPosition.X - GlobalPosition.X);
+            _cachedPlayerInRange = _cachedDistanceToPlayer < DetectionRange;
         }
 
         public override void TakeDamage(float amount, Vector2? sourcePosition = null)
@@ -180,7 +214,6 @@ namespace EcoDoFarolCentral
             if (_isDead) return;
 
             base.TakeDamage(amount, sourcePosition);
-            GD.Print($"[ENEMY] {Name} took {amount} damage! Current health: {CurrentHealth}");
 
             if (CurrentHealth > 0)
             {
@@ -193,11 +226,20 @@ namespace EcoDoFarolCentral
             }
         }
 
-        public bool IsPlayerInRange()
-        {
-            if (TargetPlayer == null) return false;
-            return GlobalPosition.DistanceTo(TargetPlayer.GlobalPosition) < DetectionRange;
-        }
+        /// <summary>
+        /// Retorna se o player está no range de detecção (usa cache, atualiza 2x/s)
+        /// </summary>
+        public bool IsPlayerInRange() => _cachedPlayerInRange;
+
+        /// <summary>
+        /// Retorna a distância cacheada até o player (atualiza 2x/s)
+        /// </summary>
+        public float GetCachedDistanceToPlayer() => _cachedDistanceToPlayer;
+
+        /// <summary>
+        /// Retorna a direção cacheada para o player (atualiza 2x/s)
+        /// </summary>
+        public float GetCachedDirectionToPlayer() => _cachedDirectionToPlayer;
 
         public void MoveTowardsPlayer(float direction)
         {
@@ -248,6 +290,7 @@ namespace EcoDoFarolCentral
         public override void Die()
         {
             if (CurrentStateEnum == EnemyStates.Dead) return;
+
             base.Die();
             CurrentStateEnum = EnemyStates.Dead;
             AnimControllerInstance.Play("death");
@@ -266,7 +309,6 @@ namespace EcoDoFarolCentral
             var contactHitBox = GetNodeOrNull<Area2D>("HitBox");
             if (contactHitBox != null) contactHitBox.CollisionLayer = 0;
 
-            GD.Print($"[ENEMY] {Name} has died.");
         }
 
         private void OnAttackAreaAreaEntered(Area2D area)
@@ -278,7 +320,6 @@ namespace EcoDoFarolCentral
             {
                 float damage = _currentAttack.Damage;
                 player.TakeDamage(damage, GlobalPosition);
-                GD.Print($"[COMBAT] Enemy hit player for {damage} damage! (Attack: {_currentAttack.AnimationName})");
             }
         }
 

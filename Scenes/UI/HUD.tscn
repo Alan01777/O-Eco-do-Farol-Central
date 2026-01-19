@@ -1,27 +1,88 @@
-[gd_scene load_steps=4 format=3 uid="uid://v5xr7nmgmv68"]
+[gd_scene load_steps=8 format=3 uid="uid://v5xr7nmgmv68"]
 
 [ext_resource type="Script" uid="uid://dv0oyitfpfqxq" path="res://Assets/Scripts/UI/HealthBar.cs" id="1_sd512"]
+[ext_resource type="Texture2D" uid="uid://dwm0i2f4py7it" path="res://Assets/Sprites/Player/Player Idle.png" id="1_xaom8"]
 [ext_resource type="Script" uid="uid://d4n28o0htgh08" path="res://Assets/Scripts/UI/AbilitiesHUD.cs" id="3_abilities"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sd512"]
-bg_color = Color(0.419608, 0.815686, 0, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_portrait_frame"]
+bg_color = Color(0.1, 0.1, 0.15, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.6, 0.5, 0.3, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4bm6u"]
+atlas = ExtResource("1_xaom8")
+region = Rect2(56.1075, 46.8731, 44.2861, 67.5896)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_health_bg"]
+bg_color = Color(0.15, 0.15, 0.2, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.3, 0.3, 0.35, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_health_fill"]
+bg_color = Color(0.2, 0.8, 0.3, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 
 [node name="CanvasLayer" type="CanvasLayer"]
 
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_left = 13.0
-offset_top = 23.0
-offset_right = 53.0
-offset_bottom = 63.0
+[node name="HealthContainer" type="HBoxContainer" parent="."]
+offset_left = 15.0
+offset_top = 15.0
+offset_right = 350.0
+offset_bottom = 85.0
+theme_override_constants/separation = 10
 
-[node name="HealthBar" type="ProgressBar" parent="Control"]
-layout_mode = 0
-offset_right = 300.0
-offset_bottom = 27.0
-theme_override_styles/background = SubResource("StyleBoxFlat_sd512")
-rounded = true
+[node name="PortraitFrame" type="PanelContainer" parent="HealthContainer"]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_portrait_frame")
+
+[node name="Portrait" type="TextureRect" parent="HealthContainer/PortraitFrame"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = SubResource("AtlasTexture_4bm6u")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="HealthBarContainer" type="VBoxContainer" parent="HealthContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_constants/separation = 4
+
+[node name="CharacterName" type="Label" parent="HealthContainer/HealthBarContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.85, 0.7, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.5)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+text = "Aelin"
+
+[node name="HealthBar" type="ProgressBar" parent="HealthContainer/HealthBarContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 24)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_health_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_health_fill")
+value = 100.0
+show_percentage = false
 script = ExtResource("1_sd512")
 
 [node name="AbilitiesContainer" type="HBoxContainer" parent="."]

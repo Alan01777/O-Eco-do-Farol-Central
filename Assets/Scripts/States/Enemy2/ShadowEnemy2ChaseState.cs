@@ -6,20 +6,24 @@ namespace EcoDoFarolCentral
     {
         public override void Enter()
         {
+            if (Enemy.CurrentStateEnum == ShadowEnemy2.EnemyStates.Dead) return;
             Enemy.CurrentStateEnum = ShadowEnemy2.EnemyStates.Chasing;
             Enemy.PlayChaseSound();
         }
 
         public override void PhysicsUpdate(double delta)
         {
+            if (Enemy.CurrentStateEnum == ShadowEnemy2.EnemyStates.Dead) return;
+
             if (Enemy.TargetPlayer == null)
             {
                 StateMachine.ChangeState("Idle");
                 return;
             }
 
-            float distance = Enemy.GlobalPosition.DistanceTo(Enemy.TargetPlayer.GlobalPosition);
-            float direction = Mathf.Sign(Enemy.TargetPlayer.GlobalPosition.X - Enemy.GlobalPosition.X);
+            // Usa valores cacheados (atualizam 2x por segundo)
+            float distance = Enemy.GetCachedDistanceToPlayer();
+            float direction = Enemy.GetCachedDirectionToPlayer();
 
             // Checa range do ataque único
             float attackRange = Enemy.AttackRange;

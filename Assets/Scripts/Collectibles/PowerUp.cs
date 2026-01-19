@@ -16,7 +16,8 @@ namespace EcoDoFarolCentral
             ComboLevel3,
             JumpAttack,
             Fireball,
-            HealthUpgrade
+            HealthUpgrade,
+            Heal
         }
 
         [ExportGroup("Power-up Configuration")]
@@ -24,6 +25,7 @@ namespace EcoDoFarolCentral
         [Export] public string ItemName { get; set; } = "Double Jump";
         [Export(PropertyHint.MultilineText)] public string Description { get; set; } = "Allows you to jump in mid-air!";
         [Export] public float HealthUpgradeAmount { get; set; } = 25f;
+        [Export] public float HealAmount { get; set; } = 50f;
 
         [ExportGroup("Persistence")]
         [Export] public string ID { get; set; } = "";
@@ -50,7 +52,6 @@ namespace EcoDoFarolCentral
                 // Se o player estiver muito perto, força a coleta (fallback para problemas de física)
                 if (distance < 50)
                 {
-                    GD.Print($"[POWER-UP] {ItemName} - Player within 50px, triggering collection via proximity fallback!");
                     TriggerCollection(player);
                     return;
                 }
@@ -64,7 +65,6 @@ namespace EcoDoFarolCentral
                 var bodies = _area.GetOverlappingBodies();
                 if (bodies.Count > 0)
                 {
-                    GD.Print($"[POWER-UP] {ItemName} - Currently overlapping: {bodies.Count} bodies");
                 }
 
                 if (player != null)
@@ -72,7 +72,6 @@ namespace EcoDoFarolCentral
                     float distance = GlobalPosition.DistanceTo(player.GlobalPosition);
                     if (distance < 100)
                     {
-                        GD.Print($"[POWER-UP] {ItemName} - Player is NEAR! Distance: {distance:F1}px");
                     }
                 }
             }
@@ -102,11 +101,9 @@ namespace EcoDoFarolCentral
             if (!string.IsNullOrEmpty(ID) && GameManager.Instance != null)
             {
                 bool isCollected = GameManager.Instance.IsItemCollected(ID);
-                GD.Print($"[POWER-UP] {ItemName} (ID:{ID}) - Already collected? {isCollected}");
 
                 if (isCollected)
                 {
-                    GD.Print($"[POWER-UP] {ItemName} - Removing because already collected");
                     QueueFree();
                     return;
                 }
@@ -128,7 +125,6 @@ namespace EcoDoFarolCentral
                 if (circle.Radius < 20)
                 {
                     circle.Radius = 25; // Raio adequado para detecção
-                    GD.Print($"[POWER-UP] Adjusted collision radius to 25 for {ItemName}");
                 }
             }
 
@@ -139,7 +135,6 @@ namespace EcoDoFarolCentral
             _area.Monitorable = true;
 
             // Debug: mostra configuração de colisão
-            GD.Print($"[POWER-UP] {ItemName} at {GlobalPosition} - Area2D mask: {_area.CollisionMask}, monitorable: {_area.Monitorable}, monitoring: {_area.Monitoring}");
 
             // Conecta sinal de colisão
             _area.BodyEntered += OnBodyEntered;
@@ -148,7 +143,6 @@ namespace EcoDoFarolCentral
             var collisionShapeDebug = _area.GetNode<CollisionShape2D>("CollisionShape2D");
             if (collisionShapeDebug.Disabled)
             {
-                GD.PrintErr($"[POWER-UP] WARNING: CollisionShape2D is DISABLED for {ItemName}! Enabling it now.");
                 collisionShapeDebug.Disabled = false;
             }
 
@@ -168,16 +162,13 @@ namespace EcoDoFarolCentral
         private void CheckOverlappingBodies()
         {
             var bodies = _area.GetOverlappingBodies();
-            GD.Print($"[POWER-UP] {ItemName} - Overlapping bodies count: {bodies.Count}");
             foreach (var body in bodies)
             {
-                GD.Print($"[POWER-UP] {ItemName} - Overlapping body: {body.Name}");
             }
         }
 
         private void OnBodyEntered(Node2D body)
         {
-            GD.Print($"[POWER-UP] {ItemName} detected body: {body.Name} (type: {body.GetType().Name})");
 
             if (_collected) return;
 
@@ -263,9 +254,12 @@ namespace EcoDoFarolCentral
                     abilities.UpgradeHealth(player, HealthUpgradeAmount);
                     ShowMessage($"Health increased by {HealthUpgradeAmount}!");
                     break;
+                case PowerUpType.Heal:
+                    abilities.Heal(player, HealAmount);
+                    ShowMessage($"Healed for {HealAmount}!");
+                    break;
             }
 
-            GD.Print($"[POWER-UP] {player.Name} collected {ItemName}");
         }
 
         private void PlayCollectionEffect()
@@ -288,8 +282,6 @@ namespace EcoDoFarolCentral
             var modalScene = GD.Load<PackedScene>("res://Scenes/UI/PowerUpModal.tscn");
             if (modalScene == null)
             {
-                GD.PrintErr("[POWER-UP] PowerUpModal.tscn not found!");
-                GD.Print($"[POWER-UP MESSAGE] {message}");
                 return;
             }
 

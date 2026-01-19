@@ -9,8 +9,7 @@ namespace EcoDoFarolCentral
         public AnimationPlayer transitionScene;
         public Player player;
         [Export] public string caveAreaPath = "res://Scenes/Levels/Level_2.tscn";
-
-        // Called when the node enters the scene tree for the first time.
+        
         public override void _Ready()
         {
             transitionScene = GetNodeOrNull<AnimationPlayer>("TransitionScene/AnimationPlayer");
