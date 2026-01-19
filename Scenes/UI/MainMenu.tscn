@@ -161,7 +161,7 @@ theme_override_constants/separation = 20
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9, 0.95, 1, 1)
 theme_override_font_sizes/font_size = 48
-text = "O ECO DO FAROL CENTRAL"
+text = "Ecos da Esperança"
 horizontal_alignment = 1
 
 [node name="Spacer" type="Control" parent="CanvasLayer/CenterContainer/VBoxContainer"]
