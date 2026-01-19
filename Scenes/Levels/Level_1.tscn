@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=4 uid="uid://etys2gkah27w"]
+[gd_scene load_steps=70 format=4 uid="uid://etys2gkah27w"]
 
 [ext_resource type="Texture2D" uid="uid://bn4l18mpxo5go" path="res://Assets/Environment/Underground/tileset.png" id="1_7r2dd"]
 [ext_resource type="PackedScene" uid="uid://qv3k8tdodsg1" path="res://Scenes/Actors/Player.tscn" id="1_qxrlw"]
@@ -30,6 +30,7 @@
 [ext_resource type="Resource" uid="uid://b8ud1jw3jqld8" path="res://dialogues/placa_inicio.dialogue" id="26_3w8oo"]
 [ext_resource type="Shader" uid="uid://by2vynihftn3u" path="res://Assets/Shaders/highlight.gdshader" id="27_4gffl"]
 [ext_resource type="Texture2D" uid="uid://cb8rgey6sroi4" path="res://Assets/Environment/Village/Sign.png" id="28_it58x"]
+[ext_resource type="Resource" uid="uid://1b3jrv8f2k3g" path="res://placa_controles.dialogue" id="31_xlfcq"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_31phq"]
 polygon = PackedVector2Array(-65.7612, -5.08028, 97.3717, 129.264, -101.323, 129.829, -101.323, -23.7079, -86.6467, -101.605)
@@ -867,7 +868,7 @@ ID = "dash"
 CustomIcon = ExtResource("17_pmbdk")
 
 [node name="Player" parent="." instance=ExtResource("1_qxrlw")]
-position = Vector2(886.546, 254.632)
+position = Vector2(-51.7407, 250.186)
 collision_layer = 1
 collision_mask = 1
 
@@ -1064,9 +1065,31 @@ scale = Vector2(0.3, 0.3)
 [node name="Actionable" parent="dancarina" index="2"]
 DialogueResource = ExtResource("26_2dy8h")
 
+[node name="placa2" type="Node2D" parent="."]
+position = Vector2(1471.53, 231.128)
+
+[node name="Area2D" type="Area2D" parent="placa2" node_paths=PackedStringArray("SpriteNode")]
+collision_layer = 16
+collision_mask = 2
+script = ExtResource("25_3w8oo")
+SpriteNode = NodePath("../Sprite2D")
+DialogueResource = ExtResource("31_xlfcq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="placa2/Area2D"]
+position = Vector2(-0.529908, 15.8715)
+shape = SubResource("CircleShape2D_eyw8r")
+
+[node name="Sprite2D" type="Sprite2D" parent="placa2"]
+material = SubResource("ShaderMaterial_6eh4x")
+position = Vector2(0.470087, 19.8715)
+scale = Vector2(1, 0.8)
+texture = ExtResource("28_it58x")
+
 [connection signal="body_entered" from="TransitionArea" to="." method="OnCaveAreaEntered"]
 [connection signal="body_entered" from="placa/Area2D" to="placa/Area2D" method="OnBodyEntered"]
 [connection signal="body_exited" from="placa/Area2D" to="placa/Area2D" method="OnBodyExited"]
+[connection signal="body_entered" from="placa2/Area2D" to="placa2/Area2D" method="OnBodyEntered"]
+[connection signal="body_exited" from="placa2/Area2D" to="placa2/Area2D" method="OnBodyExited"]
 
 [editable path="Player"]
 [editable path="HUD"]

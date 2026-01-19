@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://1b3jrv8f2k3g"
+path="res://.godot/imported/placa_controles.dialogue-cf25836838a3d6715eff7cfea2fc1c53.tres"
+
+[deps]
+
+source_file="res://placa_controles.dialogue"
+dest_files=["res://.godot/imported/placa_controles.dialogue-cf25836838a3d6715eff7cfea2fc1c53.tres"]
+
+[params]
+
+defaults=true

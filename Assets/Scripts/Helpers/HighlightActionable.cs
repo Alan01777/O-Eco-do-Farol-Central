@@ -22,6 +22,10 @@ namespace EcoDoFarolCentral
                 _shaderMaterial = shader;
                 SetHighlightEnabled(false); // Começa desativado
             }
+            else
+            {
+                GD.PrintErr($"HighlightActionable: SpriteNode is null or Material is not ShaderMaterial on {Name}");
+            }
 
             // Conecta sinais de entrada/saída da área para detectar player
             BodyEntered += OnBodyEntered;
@@ -30,9 +34,14 @@ namespace EcoDoFarolCentral
 
         private void OnBodyEntered(Node2D body)
         {
+            GD.Print($"HighlightActionable DEBUG: Body entered: {body.Name} (Type: {body.GetType().Name})");
             if (body is Player)
             {
                 SetHighlightEnabled(true);
+            }
+            else
+            {
+                // GD.Print($"HighlightActionable: Body entered is not Player: {body.Name}");
             }
         }
 
@@ -49,6 +58,7 @@ namespace EcoDoFarolCentral
             if (_shaderMaterial != null)
             {
                 _shaderMaterial.SetShaderParameter("enabled", enabled);
+                // GD.Print($"HighlightActionable: SetHighlightEnabled({enabled}) on {Name}");
             }
         }
     }

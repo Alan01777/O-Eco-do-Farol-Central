@@ -116,7 +116,7 @@ ui_skip={
 
 [internationalization]
 
-locale/translations_pot_files=PackedStringArray("res://dialogues/old_man.dialogue", "res://dialogues/villager1.dialogue", "res://dialogues/ancient_sign.dialogue", "res://dialogues/pescador.dialogue", "res://dialogues/dancarina.dialogue", "res://dialogues/placa_inicio.dialogue")
+locale/translations_pot_files=PackedStringArray("res://dialogues/old_man.dialogue", "res://dialogues/villager1.dialogue", "res://dialogues/ancient_sign.dialogue", "res://dialogues/pescador.dialogue", "res://dialogues/dancarina.dialogue", "res://dialogues/placa_inicio.dialogue", "res://placa_controles.dialogue")
 
 [layer_names]
 

@@ -1,0 +1,10 @@
+~ start
+Placa: Guia de controles.
+- Combate
+	Placa: Pressione o botão esquerdo do mouse para atacar.
+- Movimentação
+	Placa: Use as teclas WASD para se movimentar
+	Placa: Pressione a tecla SHIFT para usar um avanço (caso habilitado)
+- Mundo
+	Placa: Certos objetos e NPCs são interativos. Pressione E para interagir com eles.
+=> END
