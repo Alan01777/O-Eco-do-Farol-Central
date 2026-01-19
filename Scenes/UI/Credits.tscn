@@ -40,7 +40,7 @@ theme_override_constants/separation = 30
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.9, 0.5, 1)
 theme_override_font_sizes/font_size = 64
-text = "O ECO DO FAROL CENTRAL"
+text = "Ecos da Esperança"
 horizontal_alignment = 1
 
 [node name="Spacer1" type="Control" parent="CreditsContainer"]

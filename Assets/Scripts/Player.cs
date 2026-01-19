@@ -192,6 +192,8 @@ namespace EcoDoFarolCentral
 
             // Obtém referência da câmera para screen shake
             _camera = GetNodeOrNull<CameraShake>("Camera2D");
+
+
         }
 
         public override void _PhysicsProcess(double delta)
@@ -614,6 +616,7 @@ namespace EcoDoFarolCentral
             CurrentStateEnum = PlayerStates.Idle;
             StateMachineInstance.ChangeState("Idle"); // Força estado idle
             UpdateAnimations(); // Força atualização da animação para idle
+
         }
 
         private void OnDialogueEnded(Resource dialogueResource)
