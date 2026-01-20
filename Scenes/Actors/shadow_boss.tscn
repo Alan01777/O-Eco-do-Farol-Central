@@ -1078,6 +1078,8 @@ height = 66.0
 [node name="ShadowBoss" type="CharacterBody2D"]
 script = ExtResource("1_so2nu")
 IdleTime = 3.0
+MaxHealth = 500.0
+CurrentHealth = 500.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false

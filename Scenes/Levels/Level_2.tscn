@@ -1335,8 +1335,8 @@ Damage = 25.0
 RespawnDelay = 0.0
 
 [node name="DangerZone11" parent="DangerZones" instance=ExtResource("14_p6wrx")]
-position = Vector2(1075, 587)
-scale = Vector2(0.0545626, 0.222917)
+position = Vector2(1072, 587)
+scale = Vector2(0.557469, -0.26267)
 Damage = 25.0
 RespawnDelay = 0.0
 

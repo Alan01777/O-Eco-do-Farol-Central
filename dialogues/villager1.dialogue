@@ -1,19 +1,19 @@
 ~ start
-Homen Estranho: Ei… você veio de fora, certo? Da região das montanhas?
-Homen Estranho: Não é seguro ficar muito tempo aqui na praça. As sombras ainda rondam… mas se precisar de algo, posso tentar ajudar.
+Homem Estranho: Ei… você veio de fora, certo? Da região das montanhas?
+Homem Estranho: Não é seguro ficar muito tempo aqui na praça. As sombras ainda rondam… mas se precisar de algo, posso tentar ajudar.
 - Como está a situação no vilarejo?
 	Aelin: Vejo que cheguei tarde. Qual a situação do vilarejo?
-	Homen Estranho: Quem teve sorte, fugiu. Quem ficou… se tranca ao anoitecer. O ancião diz que ainda há esperança, mas…
-Homen Estranho: A ponte que leva até o farol foi destruída por aqueles monstros...
-Homen Estranho: Agora, o único caminho que leva até lá, é pelas cavernas de onde a própria escuridão nasce.
-Homen Estranho: Mas aquele lugar está infestado de pesadelos...
-Homen Estranho: O ancião da vila ainda está por lá, esperando sua chegada. Por favor, se o encontrar, diga pra ele voltar o mais rápido possível.
+	Homem Estranho: Quem teve sorte, fugiu. Quem ficou… se tranca ao anoitecer. O ancião diz que ainda há esperança, mas…
+Homem Estranho: A ponte que leva até o farol foi destruída por aqueles monstros...
+Homem Estranho: Agora, o único caminho que leva até lá é pelas cavernas de onde a própria escuridão nasce.
+Homem Estranho: Mas aquele lugar está infestado de pesadelos...
+Homem Estranho: O ancião da vila ainda está por lá, esperando sua chegada. Por favor, se o encontrar, diga para ele voltar o mais rápido possível.
 - Você sabe algo sobre a caverna à frente?
 	Aelin: O que sabe sobre essa caverna?
-	Homen Estranho: Apenas que é de lá que as sombras surgiram.
-	Homen Estranho: Contávamos histórias para assustar as crianças da vila sobre como haviam monstros naquele lugar, sabe?
-	Homen Estranho: Nunca pensei que elas se tornariam verdade...
+	Homem Estranho: Apenas que é de lá que as sombras surgiram.
+	Homem Estranho: Contávamos histórias para assustar as crianças da vila sobre como havia monstros naquele lugar, sabe?
+	Homem Estranho: Nunca pensei que elas se tornariam verdade...
 - Entendo, obrigada. Irei trazer a esperança de volta para todos.
-	Aelin: Não se preucupe. Irei trazer a esperança para o seu povo novamente.
-	Homen Estranho: Cuidado lá fora. E… boa sorte.
+	Aelin: Não se preocupe. Irei trazer a esperança para o seu povo novamente.
+	Homem Estranho: Cuidado lá fora. E… boa sorte.
 => END

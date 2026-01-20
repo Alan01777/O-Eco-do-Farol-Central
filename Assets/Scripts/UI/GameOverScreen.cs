@@ -50,8 +50,29 @@ namespace EcoDoFarolCentral
 
             // Remove o modal antes de recarregar
             QueueFree();
-            
-            GameManager.Instance.LoadGame();
+
+            // Carrega o último checkpoint salvo
+            if (SaveSystem.SaveFileExists())
+            {
+                GameManager.Instance?.LoadGame();
+
+                // Troca para a cena salva (aplica os dados automaticamente via GameManager)
+                var savedScene = GameManager.Instance?.CurrentSave?.CurrentScene;
+                if (!string.IsNullOrEmpty(savedScene))
+                {
+                    GetTree().ChangeSceneToFile(savedScene);
+                }
+                else
+                {
+                    // Fallback: recarrega cena atual se não houver cena salva
+                    GetTree().ReloadCurrentScene();
+                }
+            }
+            else
+            {
+                // Sem save disponível, apenas recarrega a cena
+                GetTree().ReloadCurrentScene();
+            }
         }
 
         private void OnMainMenuPressed()

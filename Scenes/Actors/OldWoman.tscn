@@ -6,7 +6,8 @@
 [ext_resource type="Script" uid="uid://b8bt4vc7jwmmq" path="res://Assets/Scripts/Helpers/Actionable.cs" id="3_pafcd"]
 [ext_resource type="Resource" uid="uid://ddaa5qyf005l7" path="res://dialogues/old_man.dialogue" id="4_eyrnh"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4jas4"]
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_684eh"]
+a = Vector2(0, 3.98228)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lq8u0"]
 atlas = ExtResource("1_tw5w8")
@@ -92,13 +93,17 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tlgf6"]
-radius = 20.025
+radius = 38.0
 
 [node name="Old Woman" type="CharacterBody2D"]
+collision_layer = 0
 script = ExtResource("1_684eh")
 
 [node name="CharacterBody2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_4jas4")
+visible = false
+position = Vector2(-3, 15)
+scale = Vector2(4.7955, 0.575969)
+shape = SubResource("SegmentShape2D_684eh")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(15, -12)
@@ -113,4 +118,5 @@ script = ExtResource("3_pafcd")
 DialogueResource = ExtResource("4_eyrnh")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Actionable"]
+position = Vector2(-2, 0)
 shape = SubResource("CircleShape2D_tlgf6")

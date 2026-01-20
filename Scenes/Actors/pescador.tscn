@@ -1,13 +1,14 @@
 [gd_scene load_steps=9 format=3 uid="uid://u0i6xshp5tfp"]
 
 [ext_resource type="Script" uid="uid://bd1rapkg86jbm" path="res://Assets/Scripts/NPCs/OldMan.cs" id="1_jw336"]
-[ext_resource type="Texture2D" uid="uid://qwptjwyab1qf" path="res://Assets/portraits/anciao_da_vila.png" id="2_rtf06"]
+[ext_resource type="Texture2D" uid="uid://ucppyfmc7x1g" path="res://Assets/portraits/pescador.png" id="2_rtf06"]
 [ext_resource type="Script" uid="uid://b8bt4vc7jwmmq" path="res://Assets/Scripts/Helpers/Actionable.cs" id="4_s6pyl"]
 [ext_resource type="Resource" uid="uid://ddaa5qyf005l7" path="res://dialogues/old_man.dialogue" id="5_mia28"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h6285"]
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_jw336"]
+a = Vector2(0, 8.81194)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_jw336"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_b6kce"]
 atlas = ExtResource("2_rtf06")
 region = Rect2(0, 0, 200, 200)
 
@@ -15,7 +16,7 @@ region = Rect2(0, 0, 200, 200)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_jw336")
+"texture": SubResource("AtlasTexture_b6kce")
 }],
 "loop": true,
 "name": &"idle",
@@ -25,11 +26,13 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_aoim1"]
 radius = 20.025
 
-[node name="OldMan" type="CharacterBody2D"]
+[node name="OldMan2" type="CharacterBody2D"]
+collision_layer = 0
 script = ExtResource("1_jw336")
 
 [node name="CharacterBody2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_h6285")
+scale = Vector2(3.20284, 1.70224)
+shape = SubResource("SegmentShape2D_jw336")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-1, -14)
@@ -38,6 +41,7 @@ sprite_frames = SubResource("SpriteFrames_hve5b")
 animation = &"idle"
 
 [node name="Actionable" type="Area2D" parent="."]
+visible = false
 collision_layer = 16
 collision_mask = 16
 script = ExtResource("4_s6pyl")

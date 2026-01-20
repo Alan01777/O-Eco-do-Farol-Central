@@ -7,7 +7,9 @@
 [ext_resource type="Script" uid="uid://b8bt4vc7jwmmq" path="res://Assets/Scripts/Helpers/Actionable.cs" id="5_mxppf"]
 [ext_resource type="Resource" uid="uid://d4frscbnh3x8w" path="res://dialogues/villager1.dialogue" id="6_te7y7"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oe3xp"]
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_oe3xp"]
+a = Vector2(-9, 0.00562463)
+b = Vector2(11, -0.00687408)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mxppf"]
 atlas = ExtResource("1_l2ssg")
@@ -126,12 +128,17 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_cm7uh"]
+radius = 37.3363
 
 [node name="Villager1" type="CharacterBody2D"]
+collision_layer = 0
 script = ExtResource("1_oe3xp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_oe3xp")
+position = Vector2(-1, 12)
+rotation = -6.28256
+shape = SubResource("SegmentShape2D_oe3xp")
+one_way_collision = true
 one_way_collision_margin = 0.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -147,5 +154,6 @@ script = ExtResource("5_mxppf")
 DialogueResource = ExtResource("6_te7y7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Actionable"]
-position = Vector2(23, 0)
+position = Vector2(-2, -12)
+scale = Vector2(1.60897, 1)
 shape = SubResource("CircleShape2D_cm7uh")

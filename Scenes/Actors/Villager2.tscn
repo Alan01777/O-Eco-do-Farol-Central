@@ -95,6 +95,8 @@ animations = [{
 radius = 20.025
 
 [node name="Villager2" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 1
 script = ExtResource("1_qxd73")
 
 [node name="CharacterBody2D" type="CollisionShape2D" parent="."]

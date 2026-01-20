@@ -112,7 +112,7 @@ animations = [{
 
 [node name="Fireball" type="Area2D"]
 collision_layer = 128
-collision_mask = 5
+collision_mask = 13
 script = ExtResource("1_script")
 Speed = 200.0
 Damage = 40.0

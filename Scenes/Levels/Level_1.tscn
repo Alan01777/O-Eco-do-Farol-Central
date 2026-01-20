@@ -57,7 +57,6 @@ texture = ExtResource("3_rb0md")
 29:4/0/texture_origin = Vector2i(0, 10)
 29:4/0/occlusion_layer_0/polygon_0/polygon = SubResource("OccluderPolygon2D_7hll7")
 29:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(109.226, -12.9829, 29.6349, -11.854, -64.0678, -10.1605)
-29:4/0/physics_layer_0/polygon_0/one_way = true
 15:0/size_in_atlas = Vector2i(13, 16)
 15:0/0 = 0
 15:0/0/texture_origin = Vector2i(0, -7)
@@ -68,8 +67,7 @@ texture = ExtResource("3_rb0md")
 44:0/0 = 0
 44:0/0/texture_origin = Vector2i(0, -2)
 44:0/0/occlusion_layer_0/polygon_0/polygon = SubResource("OccluderPolygon2D_nojx8")
-44:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-83.5421, -55.6007, -86, -80.5, -3.95132, -110.919, 83.5421, -81.002, 82.4132, -54.4717, 145.634, -30.1993, 165.955, -19.4743, -171.036, -21.1678)
-44:0/0/physics_layer_0/polygon_0/one_way = true
+44:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-83.2599, -78.4619, -0.282242, -109.508, 78.7441, -80.7198, 82.131, -52.4961, 168.495, -20.8855, 84.3888, -47.4158, 53.9073, -81.2842, 0.84671, -103.299, -56.1651, -80.7198, -81.5665, -50.2382, -169.06, -21.45, -85.5178, -54.1895)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_afv7b"]
 texture = ExtResource("8_jv26f")
@@ -999,6 +997,7 @@ position = Vector2(4421, 405)
 [node name="Villager1" parent="Npcs" instance=ExtResource("21_nojx8")]
 position = Vector2(265, 252)
 scale = Vector2(0.8, 0.8)
+collision_layer = 1
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("22_vvknj")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=4 uid="uid://c2bx4n0gc1dui"]
+[gd_scene load_steps=67 format=4 uid="uid://c2bx4n0gc1dui"]
 
 [ext_resource type="Script" uid="uid://bumnwqvvoms71" path="res://Assets/Scripts/Levels/Level3.cs" id="1_cbup6"]
 [ext_resource type="Texture2D" uid="uid://dvbx1kopxt3i6" path="res://Assets/Environment/Lighthouse/Inside.png" id="1_ckbkd"]
@@ -25,6 +25,7 @@
 [ext_resource type="Texture2D" uid="uid://o075rkehv6q2" path="res://Assets/Sprites/Items/heal.png" id="23_vmolf"]
 [ext_resource type="PackedScene" uid="uid://v5xr7nmgmv68" path="res://Scenes/UI/HUD.tscn" id="24_thlwc"]
 [ext_resource type="AudioStream" uid="uid://cb6nttr367cm1" path="res://Assets/Audio/level3_bgm.mp3" id="25_qqosq"]
+[ext_resource type="PackedScene" uid="uid://dhsbxi4ky7lxr" path="res://Scenes/UI/PauseMenu.tscn" id="26_tso2j"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_smuj1"]
 texture = ExtResource("1_ckbkd")
@@ -1078,7 +1079,7 @@ shadow_enabled = true
 texture = SubResource("GradientTexture2D_lk1ev")
 
 [node name="Player" parent="." instance=ExtResource("4_lk1ev")]
-position = Vector2(-219.464, 1075.1)
+position = Vector2(369.399, 43.9938)
 scale = Vector2(0.5, 0.5)
 Speed = 100.0
 JumpVelocity = -250.0
@@ -1258,6 +1259,13 @@ stream = ExtResource("25_qqosq")
 volume_db = -23.31
 autoplay = true
 parameters/looping = true
+
+[node name="PauseMenu" parent="." instance=ExtResource("26_tso2j")]
+
+[node name="Power-up4" parent="." instance=ExtResource("15_socs1")]
+position = Vector2(354.264, 45.21)
+Type = 6
+ID = "25235235"
 
 [connection signal="body_entered" from="CaveArea" to="." method="OnCaveAreaEntered"]
 [connection signal="body_entered" from="placa/Area2D" to="placa/Area2D" method="OnBodyEntered"]

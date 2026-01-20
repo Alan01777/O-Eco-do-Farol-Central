@@ -1,13 +1,13 @@
 ~ start
 Pescador: Caramba!
-Pescador: Não me assusta assim. Eu pensei que era mais um daqueles monstros.
+Pescador: Não me assusta assim. Eu pensei que fosse mais um mais um daqueles monstros.
 Pescador: Pra você estar aqui, você deve ser ou louca ou uma guardiã.
 Pescador: Então, quem é você?
 - Louca
 	Aelin: Pra ser honesta, meus pais nunca me acharam normal.
 	=> continue
 - Guardiã
-	Aelin: Sou uma guardiã. Estou aqui pra cumprir com meu dever e acabar com as sombras na região.
+	Aelin: Sou uma guardiã. Estou aqui pra cumprir meu dever e acabar com as sombras na região.
 	=> continue
 - Os dois
 	Aelin: Tem que ser um pouco maluca pra ser uma guardiã, então pode-se dizer que sou as duas.
@@ -15,6 +15,6 @@ Pescador: Então, quem é você?
 
 ~ continue
 Aelin: Como chegou até aqui?
-Pescador: Bom, eu tava indo guardar meu equipamento no farol antes do primeiro ataque.
-Pescador: Quando tudo começou, eu me escondi por aqui. Fiquei com medo de voltar, já que a ponte que levava até a vila foi destruída.
+Pescador: Bom, eu estava indo guardar meu equipamento no farol antes do primeiro ataque.
+Pescador: Quando tudo começou, eu me escondi por aqui. Fiquei com medo de voltar, já que a ponte que levava até à vila foi destruída.
 => END

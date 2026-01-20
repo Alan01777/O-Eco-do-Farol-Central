@@ -52,7 +52,7 @@ namespace EcoDoFarolCentral
             if (Player.IsOnFloor())
             {
                 Player.ApplyGravity(delta);
-                Player.HandleMovement(0, 0.1f);
+                Player.HandleMovement(0, 0.0f);
 
                 // Lógica de encadeamento de combos
                 if (Input.IsActionJustPressed("attack"))
