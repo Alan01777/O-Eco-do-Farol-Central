@@ -846,7 +846,7 @@ tile_set = SubResource("TileSet_u5ghp")
 
 [node name="jump" parent="." instance=ExtResource("10_hwvp3")]
 position = Vector2(878.694, 152.93)
-ItemName = "botas brilhantes"
+ItemName = "Botas Brilhantes"
 Description = "Na verdade, são botas do primeiro Guardião do Farol, o vilarejo guarda o item raro como recordação e benevolência.
 
 Pressione a tecla ESPAÇO para pular no ar."
@@ -860,7 +860,7 @@ Type = 1
 ItemName = "Colete Medroso"
 Description = "É possível escutar os sussurros dos seus maiores medo, mas apenas uma alma corajosa é capaz de usar ele sem ser consumido pelas trevas.
 
-Pressione a tecla SHIFT para usar um avanço"
+Pressione a tecla SHIFT para usar um avanço no ar ou no solo."
 HealthUpgradeAmount = 0.0
 ID = "dash"
 CustomIcon = ExtResource("17_pmbdk")
@@ -1015,7 +1015,7 @@ shape = SubResource("WorldBoundaryShape2D_pmbdk")
 [node name="attack2" parent="." instance=ExtResource("10_hwvp3")]
 position = Vector2(4428.76, 268.473)
 Type = 3
-ItemName = "Atque nivel 2"
+ItemName = "Ataque nivel 2"
 Description = "Apenas uma faca simples, de um vilarejo simples, com um antigo portador simples.
 
 Permite realizar uma sequência de dois ataques."

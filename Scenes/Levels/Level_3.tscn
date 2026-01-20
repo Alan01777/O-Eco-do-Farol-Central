@@ -1079,7 +1079,7 @@ shadow_enabled = true
 texture = SubResource("GradientTexture2D_lk1ev")
 
 [node name="Player" parent="." instance=ExtResource("4_lk1ev")]
-position = Vector2(369.399, 43.9938)
+position = Vector2(-226.498, 1072.98)
 scale = Vector2(0.5, 0.5)
 Speed = 100.0
 JumpVelocity = -250.0
@@ -1261,11 +1261,6 @@ autoplay = true
 parameters/looping = true
 
 [node name="PauseMenu" parent="." instance=ExtResource("26_tso2j")]
-
-[node name="Power-up4" parent="." instance=ExtResource("15_socs1")]
-position = Vector2(354.264, 45.21)
-Type = 6
-ID = "25235235"
 
 [connection signal="body_entered" from="CaveArea" to="." method="OnCaveAreaEntered"]
 [connection signal="body_entered" from="placa/Area2D" to="placa/Area2D" method="OnBodyEntered"]
