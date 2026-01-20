@@ -1144,15 +1144,19 @@ shape = SubResource("CircleShape2D_76n5f")
 
 [node name="shadow_enemy_2" parent="Enemies" instance=ExtResource("13_avjic")]
 position = Vector2(76.4268, 851.598)
+scale = Vector2(0.8, 0.8)
 
 [node name="Shadow Enemy2" parent="Enemies" instance=ExtResource("12_jkw7r")]
 position = Vector2(203, 667)
+scale = Vector2(0.8, 0.8)
 
 [node name="shadow_enemy_3" parent="Enemies" instance=ExtResource("13_avjic")]
 position = Vector2(165, 451)
+scale = Vector2(0.8, 0.8)
 
 [node name="shadow_enemy_4" parent="Enemies" instance=ExtResource("13_avjic")]
 position = Vector2(168, 274)
+scale = Vector2(0.8, 0.8)
 
 [node name="ShadowBoss" parent="." instance=ExtResource("14_3uval")]
 position = Vector2(70.9367, 37.9089)

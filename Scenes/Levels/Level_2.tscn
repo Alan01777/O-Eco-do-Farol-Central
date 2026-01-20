@@ -921,7 +921,8 @@ sources/0 = SubResource("TileSetAtlasSource_jixyi")
 texture = ExtResource("4_npaxn")
 1:0/size_in_atlas = Vector2i(5, 5)
 1:0/0 = 0
-1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-22.4635, -27.7209, 15.135, -27.4022, 15.7722, 5.73535, 31.7038, 6.69125, 34.2528, 40.4661, -40.6254, 40.1475, -38.7136, 5.73535, -22.7821, 5.09809)
+1:0/0/physics_layer_0/polygon_0/one_way = true
 10:2/size_in_atlas = Vector2i(3, 2)
 10:2/0 = 0
 7:1/size_in_atlas = Vector2i(3, 3)
@@ -993,7 +994,7 @@ tile_map_data = PackedByteArray("AAA3ACkAAAABAAAAAAA=")
 tile_set = SubResource("TileSet_q5gq6")
 
 [node name="Player" parent="MapLayers" instance=ExtResource("4_jixyi")]
-position = Vector2(2734, 236)
+position = Vector2(2745.52, 239.2)
 
 [node name="PauseMenu" parent="." instance=ExtResource("2_rujef")]
 visible = false
